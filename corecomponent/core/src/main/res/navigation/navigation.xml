@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/weather_list">
+
+    <fragment
+        android:id="@+id/weather_list"
+        android:name="com.komeyama.simple.weather.weather_list.WeatherListFragment"
+        android:label="WeatherListFragment">
+
+        <action
+            android:id="@+id/action_weather_list_to_favorite_site"
+            app:destination="@id/favorite_site" />
+
+        <action
+            android:id="@+id/action_weather_list_to_weather_detail"
+            app:destination="@id/weather_detail" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/favorite_site"
+        android:name="com.komeyama.simple.weather.weather_list.FavoriteSiteFragment"
+        android:label="FavoriteSiteFragment" />
+
+    <fragment
+        android:id="@+id/weather_detail"
+        android:name="com.komeyama.simple.weather.weather_list.WeatherDetailFragment"
+        android:label="WeatherDetailFragment" />
+
+</navigation>

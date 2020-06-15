@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-783768203/api.iml" filepath="$PROJECT_DIR$/.idea/modules/-783768203/api.iml" group="simple-weather-forecast/data/api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="simple-weather-forecast/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1675322864/core.iml" filepath="$PROJECT_DIR$/.idea/modules/-1675322864/core.iml" group="simple-weather-forecast/corecomponent/core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2001982718/corecomponent.iml" filepath="$PROJECT_DIR$/.idea/modules/2001982718/corecomponent.iml" group="simple-weather-forecast/corecomponent" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/222909162/data.iml" filepath="$PROJECT_DIR$/.idea/modules/222909162/data.iml" group="simple-weather-forecast/data" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/667453891/db.iml" filepath="$PROJECT_DIR$/.idea/modules/667453891/db.iml" group="simple-weather-forecast/data/db" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1754902602/feature.iml" filepath="$PROJECT_DIR$/.idea/modules/-1754902602/feature.iml" group="simple-weather-forecast/feature" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1263254641/repository.iml" filepath="$PROJECT_DIR$/.idea/modules/-1263254641/repository.iml" group="simple-weather-forecast/data/repository" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1286809905/simple-weather-forecast.iml" filepath="$PROJECT_DIR$/.idea/modules/-1286809905/simple-weather-forecast.iml" group="simple-weather-forecast" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1282298213/weather.iml" filepath="$PROJECT_DIR$/.idea/modules/-1282298213/weather.iml" group="simple-weather-forecast/feature/weather" />
+    </modules>
+  </component>
+</project>

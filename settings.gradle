@@ -2,7 +2,6 @@ include 'data:repository'
 include 'data:db'
 include 'data:api'
 include 'corecomponent:core'
-include 'feature:favorite_site'
-include 'feature:weather_list'
+include 'feature:weather'
 include ':app'
 rootProject.name = "simple-weather-forecast"
