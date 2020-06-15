@@ -1,12 +1,34 @@
 package com.komeyama.simple.weather.weather_list
 
-import androidx.fragment.app.Fragment
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import com.komeyama.simple.weather.repository.internal.WeatherRepository
 import dagger.Module
 import dagger.Provides
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class WeatherListFragment : Fragment(R.layout.weather_list) {
+class WeatherListFragment : DaggerFragment() {
+
+    @Inject
+    lateinit var weatherRepository: WeatherRepository
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
+        weatherRepository.dummyFunc()
+        return inflater.inflate(
+                R.layout.weather_list,
+                container,
+                false
+        )
+    }
 }
 
 @Module

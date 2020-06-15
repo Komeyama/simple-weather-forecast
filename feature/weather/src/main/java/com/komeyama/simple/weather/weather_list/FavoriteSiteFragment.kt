@@ -5,7 +5,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import dagger.Module
 import dagger.Provides
-import dagger.android.ContributesAndroidInjector
 
 class FavoriteSiteFragment : Fragment(R.layout.favorite_site) {
 }

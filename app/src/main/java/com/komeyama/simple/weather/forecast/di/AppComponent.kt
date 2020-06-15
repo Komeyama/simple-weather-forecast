@@ -3,6 +3,7 @@ package com.komeyama.simple.weather.forecast.di
 import android.app.Application
 import com.komeyama.simple.weather.forecast.MainActivityModule
 import com.komeyama.simple.weather.forecast.MainApplication
+import com.komeyama.simple.weather.repository.internal.WeatherRepository
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -13,7 +14,8 @@ import javax.inject.Singleton
 @Component(
         modules = [
             AndroidSupportInjectionModule::class,
-            MainActivityModule.MainActivityBuilder::class
+            MainActivityModule.MainActivityBuilder::class,
+            RepositoryComponentModule::class
         ]
 )
 interface AppComponent : AndroidInjector<MainApplication> {
