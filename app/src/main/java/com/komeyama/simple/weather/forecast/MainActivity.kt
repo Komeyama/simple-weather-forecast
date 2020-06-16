@@ -25,7 +25,7 @@ abstract class MainActivityModule {
     @ContributesAndroidInjector(
             modules = [FavoriteSiteFragmentModule::class]
     )
-    abstract fun contributeFavoriteSiteFragment(): FavoriteSiteFragment
+    abstract fun contributeFavoritePlaceFragment(): FavoritePlaceFragment
 
     @ContributesAndroidInjector(
             modules = [WeatherDetailFragmentModule::class]

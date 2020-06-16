@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import dagger.Module
 import dagger.Provides
 
-class FavoriteSiteFragment : Fragment(R.layout.favorite_site) {
+class FavoritePlaceFragment : Fragment(R.layout.favorite_place) {
 }
 
 @Module
@@ -17,7 +17,7 @@ abstract class FavoriteSiteFragmentModule {
         @JvmStatic
         @Provides
         fun providesLifecycleOwnerLiveData(
-                favoriteSiteFragment: FavoriteSiteFragment
+                favoriteSiteFragment: FavoritePlaceFragment
         ): LiveData<LifecycleOwner> {
             return favoriteSiteFragment.viewLifecycleOwnerLiveData
         }

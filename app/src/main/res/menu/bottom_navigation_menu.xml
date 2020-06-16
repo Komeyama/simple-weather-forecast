@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/weather_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_featured_play_list_24"
+        android:title="@string/weather_list"/>
+
+    <item
+        android:id="@+id/favorite_site"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/favorite_place"/>
+
+</menu>
