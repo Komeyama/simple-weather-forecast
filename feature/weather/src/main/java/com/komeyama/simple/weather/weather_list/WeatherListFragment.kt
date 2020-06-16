@@ -6,23 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.komeyama.simple.weather.repository.internal.WeatherRepository
+import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
+import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
+import javax.inject.Provider
 
 class WeatherListFragment : DaggerFragment() {
 
     @Inject
-    lateinit var weatherRepository: WeatherRepository
+    lateinit var weatherListViewModelProvider: Provider<WeatherListViewModel>
+    private val sessionsViewModel: WeatherListViewModel by assistedActivityViewModels {
+        weatherListViewModelProvider.get()
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        weatherRepository.dummyFunc()
+        sessionsViewModel.callWeatherRepositoryMethod()
         return inflater.inflate(
                 R.layout.weather_list,
                 container,
