@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.forecast.di
 
 import android.app.Application
+import com.komeyama.simple.weather.api.ApiModule
 import com.komeyama.simple.weather.forecast.MainActivityModule
 import com.komeyama.simple.weather.forecast.MainApplication
 import com.komeyama.simple.weather.repository.internal.WeatherRepository
@@ -15,7 +16,8 @@ import javax.inject.Singleton
         modules = [
             AndroidSupportInjectionModule::class,
             MainActivityModule.MainActivityBuilder::class,
-            RepositoryComponentModule::class
+            RepositoryComponentModule::class,
+            ApiComponentModule::class
         ]
 )
 interface AppComponent : AndroidInjector<MainApplication> {

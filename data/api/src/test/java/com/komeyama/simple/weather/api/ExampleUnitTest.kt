@@ -12,6 +12,7 @@ import java.io.IOException
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    /*
     @Test
     fun api_test() {
         val forecastInfo = fetchForecastInfo()
@@ -37,4 +38,5 @@ class ExampleUnitTest {
         Thread.sleep(1000)
         return forecastInfo
     }
+    */
 }
