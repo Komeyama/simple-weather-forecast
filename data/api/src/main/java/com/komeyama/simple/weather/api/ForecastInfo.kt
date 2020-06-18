@@ -14,9 +14,9 @@ data class ForecastInfo(
 ) : Serializable
 
 data class DetailLocation(
-        var area: Boolean,
-        var pref: Boolean,
-        var city: Boolean
+        var area: String,
+        var prefecture: String,
+        var city: String
 ) : Serializable
 
 data class DetailDescription(

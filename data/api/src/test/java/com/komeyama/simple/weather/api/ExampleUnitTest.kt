@@ -1,10 +1,8 @@
 package com.komeyama.simple.weather.api
 
+import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -14,30 +12,22 @@ import java.io.IOException
 class ExampleUnitTest {
 
     @Test
-    fun api_test() {
-        val forecastInfo = fetchForecastInfo()
-        Thread.sleep(1000)
-        print(forecastInfo)
+    fun api_city_correct_test() {
+        assertEquals("東京", fetchForecastInfo("130010")?.location?.city)
+        assertEquals("静岡", fetchForecastInfo("220010")?.location?.city)
     }
 
-    private fun fetchForecastInfo(): ForecastInfo? {
+    @Test
+    fun api_cityID_is_not_existence_test() {
+        assertEquals(null, fetchForecastInfo("1300100"))
+    }
 
+    private fun fetchForecastInfo(cityId: String): ForecastInfo? {
         val apiModule = ApiModule()
         val retrofit = apiModule.retrofit()
-        val call = apiModule.provideIGetForecastInfo(retrofit).getForecastInfo("410020")
-        var forecastInfo: ForecastInfo? = null
-        call.enqueue(object : Callback<ForecastInfo> {
-            override fun onResponse(call: Call<ForecastInfo>?, response: Response<ForecastInfo>?) {
-                try{
-                    forecastInfo = response?.body()
-                }catch (e: IOException){}
-            }
-
-            override fun onFailure(call: Call<ForecastInfo>?, t: Throwable?) {
-                print(t)
-            }
-        })
-        Thread.sleep(1000)
-        return forecastInfo
+        return runBlocking {
+            val response = apiModule.provideIGetForecastInfo(retrofit).getForecastInfo(cityId)
+            response.body()
+        }
     }
 }
