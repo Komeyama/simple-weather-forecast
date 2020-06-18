@@ -22,7 +22,7 @@ class ExampleUnitTest {
         assertEquals(null, fetchForecastInfo("1300100"))
     }
 
-    private fun fetchForecastInfo(cityId: String): ForecastInfo? {
+    private fun fetchForecastInfo(cityId: String): com.komeyama.simple.weather.model.ForecastInfo? {
         val apiModule = ApiModule()
         val retrofit = apiModule.retrofit()
         return runBlocking {

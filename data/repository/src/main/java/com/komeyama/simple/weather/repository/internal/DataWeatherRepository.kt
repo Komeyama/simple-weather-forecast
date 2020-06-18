@@ -1,6 +1,6 @@
 package com.komeyama.simple.weather.repository.internal
 
-import com.komeyama.simple.weather.api.ForecastInfo
+import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.api.ForecastService
 import dagger.Binds
 import dagger.Module

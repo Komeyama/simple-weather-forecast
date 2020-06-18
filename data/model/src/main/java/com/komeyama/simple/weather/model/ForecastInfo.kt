@@ -1,4 +1,4 @@
-package com.komeyama.simple.weather.api
+package com.komeyama.simple.weather.model
 
 import java.io.Serializable
 
