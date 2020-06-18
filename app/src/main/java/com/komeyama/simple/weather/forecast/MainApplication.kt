@@ -4,6 +4,7 @@ import com.komeyama.simple.weather.forecast.di.AppComponent
 import com.komeyama.simple.weather.forecast.di.createAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import timber.log.Timber
 
 open class MainApplication : DaggerApplication() {
 
@@ -17,5 +18,10 @@ open class MainApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        setTimber()
+    }
+
+    fun setTimber() {
+        Timber.plant(Timber.DebugTree())
     }
 }

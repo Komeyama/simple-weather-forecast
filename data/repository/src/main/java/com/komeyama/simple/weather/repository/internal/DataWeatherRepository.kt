@@ -1,11 +1,11 @@
 package com.komeyama.simple.weather.repository.internal
 
-import android.util.Log
 import com.komeyama.simple.weather.api.ForecastInfo
 import com.komeyama.simple.weather.api.ForecastService
 import dagger.Binds
 import dagger.Module
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
@@ -16,7 +16,7 @@ internal class DataWeatherRepository @Inject constructor(
         val forecastInfo: ForecastInfo? = runBlocking {
             forecastService.getForecastInfo("410020").body()
         }
-        Log.d("DataWeatherRepository", forecastInfo.toString())
+        Timber.d("dummyFunc: %s",  forecastInfo.toString())
     }
 }
 
