@@ -2,7 +2,7 @@ package com.komeyama.simple.weather.repository.internal
 
 import android.util.Log
 import com.komeyama.simple.weather.api.ForecastInfo
-import com.komeyama.simple.weather.api.IGetForecastInfo
+import com.komeyama.simple.weather.api.ForecastService
 import dagger.Binds
 import dagger.Module
 import retrofit2.Call
@@ -12,17 +12,17 @@ import java.io.IOException
 import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
-        val aa: IGetForecastInfo
+        private val forecastService: ForecastService
 ) : WeatherRepository {
 
     override fun dummyFunc() {
         Log.d("WeatherRepository dummy", "dummy!!")
-        val call = aa.getRepos("410020")
+        val call = forecastService.getForecastInfo("410020")
         call.enqueue(object : Callback<ForecastInfo> {
             override fun onResponse(call: Call<ForecastInfo>?, response: Response<ForecastInfo>?) {
-                try{
+                try {
                     Log.d("WeatherRepository dummy:ok ", response?.body().toString())
-                }catch (e: IOException){
+                } catch (e: IOException) {
                     Log.d("WeatherRepository dummy:e ", e.toString())
                 }
             }
@@ -37,5 +37,6 @@ internal class DataWeatherRepository @Inject constructor(
 @Module
 internal abstract class RepositoryModule {
 
-    @Binds abstract fun weatherRepository(impl: DataWeatherRepository): WeatherRepository
+    @Binds
+    abstract fun weatherRepository(impl: DataWeatherRepository): WeatherRepository
 }

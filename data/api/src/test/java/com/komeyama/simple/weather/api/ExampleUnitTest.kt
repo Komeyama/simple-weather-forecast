@@ -12,7 +12,7 @@ import java.io.IOException
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
-    /*
+
     @Test
     fun api_test() {
         val forecastInfo = fetchForecastInfo()
@@ -22,7 +22,9 @@ class ExampleUnitTest {
 
     private fun fetchForecastInfo(): ForecastInfo? {
 
-        val call = ForecastApi().service.getRepos("410020")
+        val apiModule = ApiModule()
+        val retrofit = apiModule.retrofit()
+        val call = apiModule.provideIGetForecastInfo(retrofit).getForecastInfo("410020")
         var forecastInfo: ForecastInfo? = null
         call.enqueue(object : Callback<ForecastInfo> {
             override fun onResponse(call: Call<ForecastInfo>?, response: Response<ForecastInfo>?) {
@@ -38,5 +40,4 @@ class ExampleUnitTest {
         Thread.sleep(1000)
         return forecastInfo
     }
-    */
 }

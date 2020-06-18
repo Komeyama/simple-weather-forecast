@@ -1,6 +1,6 @@
 package com.komeyama.simple.weather.forecast.di
 
-import com.komeyama.simple.weather.api.IGetForecastInfo
+import com.komeyama.simple.weather.api.ForecastService
 import com.komeyama.simple.weather.repository.RepositoryComponent
 import com.komeyama.simple.weather.repository.internal.WeatherRepository
 import dagger.Module
@@ -19,9 +19,9 @@ object RepositoryComponentModule {
 
     @Provides
     @Singleton
-    fun provideRepositoryComponent(iGetForecastInfo: IGetForecastInfo): RepositoryComponent {
+    fun provideRepositoryComponent(forecastService: ForecastService): RepositoryComponent {
         return RepositoryComponent.factory().create(
-                iGetForecastInfo = iGetForecastInfo
+                forecastService = forecastService
         )
     }
 }

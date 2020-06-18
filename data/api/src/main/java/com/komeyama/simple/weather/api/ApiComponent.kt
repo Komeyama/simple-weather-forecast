@@ -10,7 +10,7 @@ import javax.inject.Singleton
         ]
 )
 interface ApiComponent {
-    fun iGetForecastInfo(): IGetForecastInfo
+    fun forecastService(): ForecastService
 
     @Component.Factory
     interface Factory {

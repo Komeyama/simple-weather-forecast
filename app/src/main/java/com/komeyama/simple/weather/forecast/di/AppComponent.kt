@@ -1,10 +1,8 @@
 package com.komeyama.simple.weather.forecast.di
 
 import android.app.Application
-import com.komeyama.simple.weather.api.ApiModule
 import com.komeyama.simple.weather.forecast.MainActivityModule
 import com.komeyama.simple.weather.forecast.MainApplication
-import com.komeyama.simple.weather.repository.internal.WeatherRepository
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
