@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.api
 
+import com.komeyama.simple.weather.api.internal.ApiModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,7 +11,7 @@ import javax.inject.Singleton
         ]
 )
 interface ApiComponent {
-    fun forecastService(): ForecastService
+    fun forecastService(): ForecastApi
 
     @Component.Factory
     interface Factory {

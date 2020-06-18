@@ -1,6 +1,7 @@
-package com.komeyama.simple.weather.api
+package com.komeyama.simple.weather.api.internal
 
 import com.google.gson.GsonBuilder
+import com.komeyama.simple.weather.api.ForecastApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -8,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApiModule {
+internal class ApiModule {
 
     @Provides
     @Singleton
@@ -21,7 +22,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideIGetForecastInfo(retrofit: Retrofit): ForecastService {
-        return retrofit.create(ForecastService::class.java)
+    fun provideIGetForecastInfo(retrofit: Retrofit): ForecastApi {
+        return retrofit.create(ForecastApi::class.java)
     }
 }

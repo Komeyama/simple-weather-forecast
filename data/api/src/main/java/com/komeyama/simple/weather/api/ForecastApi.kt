@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ForecastService {
+interface ForecastApi {
     @GET("forecast/webservice/json/v1")
     suspend fun getForecastInfo(@Query("city") cityID: String): Response<ForecastInfo>
 }

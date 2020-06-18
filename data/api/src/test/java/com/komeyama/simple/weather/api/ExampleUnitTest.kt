@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.api
 
+import com.komeyama.simple.weather.api.internal.ApiModule
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
