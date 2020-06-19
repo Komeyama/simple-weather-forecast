@@ -11,14 +11,14 @@ class ApiComponentModule {
     @Provides
     @Singleton
     fun provideRepository(
-            apiComponent: ApiComponent
+        apiComponent: ApiComponent
     ): ForecastApi {
         return apiComponent.forecastService()
     }
 
     @Provides
     @Singleton
-    fun provideApiComponent():ApiComponent {
+    fun provideApiComponent(): ApiComponent {
         return ApiComponent.factory().create()
     }
 }

@@ -1,14 +1,15 @@
 package com.komeyama.simple.weather.api
 
 import com.komeyama.simple.weather.api.internal.ApiModule
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-        modules = [
-            ApiModule::class
-        ]
+    modules = [
+        ApiModule::class
+    ]
 )
 interface ApiComponent {
     fun forecastService(): ForecastApi

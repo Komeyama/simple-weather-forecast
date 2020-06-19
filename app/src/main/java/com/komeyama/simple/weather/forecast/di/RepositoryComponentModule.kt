@@ -12,7 +12,7 @@ object RepositoryComponentModule {
     @Provides
     @Singleton
     fun provideRepository(
-            repositoryComponent: RepositoryComponent
+        repositoryComponent: RepositoryComponent
     ): WeatherRepository {
         return repositoryComponent.weatherRepository()
     }
@@ -21,7 +21,7 @@ object RepositoryComponentModule {
     @Singleton
     fun provideRepositoryComponent(forecastApi: ForecastApi): RepositoryComponent {
         return RepositoryComponent.factory().create(
-                forecastApi = forecastApi
+            forecastApi = forecastApi
         )
     }
 }

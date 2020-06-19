@@ -8,9 +8,9 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-        modules = [
-            RepositoryModule::class
-        ]
+    modules = [
+        RepositoryModule::class
+    ]
 )
 interface RepositoryComponent {
     fun weatherRepository(): WeatherRepository
@@ -18,7 +18,7 @@ interface RepositoryComponent {
     @Component.Factory
     interface Factory {
         fun create(
-                @BindsInstance forecastApi: ForecastApi
+            @BindsInstance forecastApi: ForecastApi
         ): RepositoryComponent
     }
 

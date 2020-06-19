@@ -11,18 +11,26 @@ import javax.inject.Singleton
 @Module
 internal class ApiModule {
 
-    @Provides
-    @Singleton
-    fun retrofit(): Retrofit {
-        return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().serializeNulls().create()))
-                .baseUrl("http://weather.livedoor.com/")
-                .build()
+    companion object {
+        const val WEATHER_URL = "http://weather.livedoor.com/"
     }
 
     @Provides
     @Singleton
-    fun provideIGetForecastInfo(retrofit: Retrofit): ForecastApi {
+    fun retrofit(): Retrofit {
+        return Retrofit.Builder()
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().serializeNulls().create()
+                )
+            )
+            .baseUrl(WEATHER_URL)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastApi(retrofit: Retrofit): ForecastApi {
         return retrofit.create(ForecastApi::class.java)
     }
 }

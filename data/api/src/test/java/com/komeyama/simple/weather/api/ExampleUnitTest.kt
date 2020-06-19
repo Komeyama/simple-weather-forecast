@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.api
 
 import com.komeyama.simple.weather.api.internal.ApiModule
+import com.komeyama.simple.weather.api.internal.ApiModule.Companion.WEATHER_URL
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -27,7 +28,7 @@ class ExampleUnitTest {
         val apiModule = ApiModule()
         val retrofit = apiModule.retrofit()
         return runBlocking {
-            val response = apiModule.provideIGetForecastInfo(retrofit).getForecastInfo(cityId)
+            val response = apiModule.provideForecastApi(retrofit).getForecastInfo(cityId)
             response.body()
         }
     }
