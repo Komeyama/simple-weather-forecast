@@ -1,4 +1,4 @@
-package com.komeyama.simple.weather.model
+package com.komeyama.simple.weather.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
