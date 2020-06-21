@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.komeyama.simple.weather.db.entity.WeatherInfoEntityImpl
 
 @Dao
-internal abstract class WeatherInfoDao {
+abstract class WeatherInfoDao {
     @Query("SELECT * FROM weather_info")
     abstract fun weatherInfoLiveData(): LiveData<List<WeatherInfoEntityImpl>>
 

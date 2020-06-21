@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.repository.internal
 
 import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.api.ForecastApi
+import com.komeyama.simple.weather.db.dao.WeatherInfoDao
 import com.komeyama.simple.weather.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
@@ -10,7 +11,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
-        private val forecastApi: ForecastApi
+        private val forecastApi: ForecastApi,
+        private val weatherInfoDao: WeatherInfoDao
 ) : WeatherRepository {
 
     override fun dummyFunc() {
