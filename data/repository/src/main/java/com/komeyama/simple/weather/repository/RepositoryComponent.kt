@@ -1,7 +1,7 @@
 package com.komeyama.simple.weather.repository
 
 import com.komeyama.simple.weather.api.ForecastApi
-import com.komeyama.simple.weather.db.dao.WeatherInfoDao
+import com.komeyama.simple.weather.db.ForecastDatabase
 import com.komeyama.simple.weather.repository.internal.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
@@ -20,7 +20,7 @@ interface RepositoryComponent {
     interface Factory {
         fun create(
             @BindsInstance forecastApi: ForecastApi,
-            @BindsInstance weatherInfoDao: WeatherInfoDao
+            @BindsInstance forecastDatabase: ForecastDatabase
         ): RepositoryComponent
     }
 

@@ -1,7 +1,7 @@
 package com.komeyama.simple.weather.db
 
 import android.content.Context
-import com.komeyama.simple.weather.db.dao.WeatherInfoDao
+import com.komeyama.simple.weather.db.internal.DbModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -14,7 +14,8 @@ import kotlin.coroutines.CoroutineContext
     ]
 )
 interface DbComponent {
-    fun weatherInfoDao(): WeatherInfoDao
+    fun forecastDatabase(): ForecastDatabase
+    //fun weatherInfoDao(): WeatherInfoDao
 
     @Component.Factory
     interface Factory {
