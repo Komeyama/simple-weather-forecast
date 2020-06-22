@@ -2,10 +2,10 @@ package com.komeyama.simple.weather.db.internal
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.komeyama.simple.weather.db.internal.dao.WeatherInfoDao
-import com.komeyama.simple.weather.db.internal.entity.WeatherInfoEntityImpl
+import com.komeyama.simple.weather.db.internal.dao.ForecastInfoDao
+import com.komeyama.simple.weather.db.internal.entity.ForecastInfoEntityImpl
 
-@Database(entities = [WeatherInfoEntityImpl::class], version = 1)
+@Database(entities = [ForecastInfoEntityImpl::class], version = 1)
 internal abstract class CacheDatabase : RoomDatabase() {
-    abstract fun weatherInfoDao(): WeatherInfoDao
+    abstract fun weatherInfoDao(): ForecastInfoDao
 }

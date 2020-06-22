@@ -3,7 +3,7 @@ package com.komeyama.simple.weather.db.internal
 import android.content.Context
 import androidx.room.Room
 import com.komeyama.simple.weather.db.ForecastDatabase
-import com.komeyama.simple.weather.db.internal.dao.WeatherInfoDao
+import com.komeyama.simple.weather.db.internal.dao.ForecastInfoDao
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -30,7 +30,7 @@ internal abstract class DbModule {
         }
 
         @Provides
-        fun weatherInfoDao(database: CacheDatabase): WeatherInfoDao {
+        fun weatherInfoDao(database: CacheDatabase): ForecastInfoDao {
             return database.weatherInfoDao()
         }
     }

@@ -1,5 +1,5 @@
 package com.komeyama.simple.weather.db
 
 interface ForecastDatabase {
-    fun weatherInfoEntity(): List<WeatherInfoEntity>
+    fun weatherInfoEntity(): List<ForecastInfoEntity>
 }
