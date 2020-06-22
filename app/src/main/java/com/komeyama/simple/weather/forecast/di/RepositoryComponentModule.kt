@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.forecast.di
 
 import com.komeyama.simple.weather.api.ForecastApi
+import com.komeyama.simple.weather.db.DetailLocationDatabase
 import com.komeyama.simple.weather.db.ForecastDatabase
 import com.komeyama.simple.weather.repository.RepositoryComponent
 import com.komeyama.simple.weather.repository.WeatherRepository
@@ -20,10 +21,15 @@ object RepositoryComponentModule {
 
     @Provides
     @Singleton
-    fun provideRepositoryComponent(forecastApi: ForecastApi, forecastDatabase: ForecastDatabase): RepositoryComponent {
+    fun provideRepositoryComponent(
+        forecastApi: ForecastApi,
+        forecastDatabase: ForecastDatabase,
+        detailLocationDatabase: DetailLocationDatabase
+    ): RepositoryComponent {
         return RepositoryComponent.factory().create(
             forecastApi = forecastApi,
-            forecastDatabase = forecastDatabase
+            forecastDatabase = forecastDatabase,
+            detailLocationDatabase = detailLocationDatabase
         )
     }
 }

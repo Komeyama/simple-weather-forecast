@@ -2,7 +2,9 @@ package com.komeyama.simple.weather.db.internal
 
 import android.content.Context
 import androidx.room.Room
+import com.komeyama.simple.weather.db.DetailLocationDatabase
 import com.komeyama.simple.weather.db.ForecastDatabase
+import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastInfoDao
 import dagger.Binds
 import dagger.Module
@@ -13,6 +15,9 @@ import javax.inject.Singleton
 internal abstract class DbModule {
     @Binds
     abstract fun forecastDatabase(impl: RoomDatabase): ForecastDatabase
+
+    @Binds
+    abstract fun detailLocationDatabase(impl: RoomDatabase): DetailLocationDatabase
 
     @Module
     internal object Providers {
@@ -31,7 +36,12 @@ internal abstract class DbModule {
 
         @Provides
         fun weatherInfoDao(database: CacheDatabase): ForecastInfoDao {
-            return database.weatherInfoDao()
+            return database.forecastInfoDao()
+        }
+
+        @Provides
+        fun detailLocationDao(database: CacheDatabase): DetailLocationDao {
+            return database.detailLocation()
         }
     }
 

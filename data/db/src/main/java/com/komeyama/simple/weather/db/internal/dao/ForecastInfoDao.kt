@@ -9,13 +9,13 @@ import com.komeyama.simple.weather.db.internal.entity.ForecastInfoEntityImpl
 
 @Dao
 internal abstract class ForecastInfoDao {
-    @Query("SELECT * FROM weather_info")
-    abstract fun weatherInfoLiveData(): LiveData<List<ForecastInfoEntityImpl>>
+    @Query("SELECT * FROM forecast_info")
+    abstract fun forecastInfoLiveData(): LiveData<List<ForecastInfoEntityImpl>>
 
-    @Query("SELECT * FROM weather_info")
-    abstract fun weatherInfo(): List<ForecastInfoEntityImpl>
+    @Query("SELECT * FROM forecast_info")
+    abstract fun forecastInfo(): List<ForecastInfoEntityImpl>
 
-    @Query("DELETE FROM weather_info")
+    @Query("DELETE FROM forecast_info")
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

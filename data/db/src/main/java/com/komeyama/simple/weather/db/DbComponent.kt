@@ -15,6 +15,7 @@ import kotlin.coroutines.CoroutineContext
 )
 interface DbComponent {
     fun forecastDatabase(): ForecastDatabase
+    fun detailLocationDatabase(): DetailLocationDatabase
     //fun weatherInfoDao(): WeatherInfoDao
 
     @Component.Factory
