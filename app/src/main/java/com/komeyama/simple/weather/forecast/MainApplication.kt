@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.forecast
 
+import com.facebook.stetho.Stetho
 import com.komeyama.simple.weather.forecast.di.AppComponent
 import com.komeyama.simple.weather.forecast.di.createAppComponent
 import dagger.android.AndroidInjector
@@ -19,9 +20,21 @@ open class MainApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         setTimber()
+        setSteth()
     }
 
-    fun setTimber() {
+    private fun setTimber() {
         Timber.plant(Timber.DebugTree())
+    }
+
+    private fun setSteth() {
+        // Stetho
+        Stetho.initialize(
+            Stetho.newInitializerBuilder(this)
+                .enableDumpapp(
+                    Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(
+                    Stetho.defaultInspectorModulesProvider(this))
+                .build())
     }
 }

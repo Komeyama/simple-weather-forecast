@@ -3,6 +3,7 @@ package com.komeyama.simple.weather.repository.internal
 import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.db.ForecastDatabase
+import com.komeyama.simple.weather.db.Response
 import com.komeyama.simple.weather.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
@@ -21,6 +22,11 @@ internal class DataWeatherRepository @Inject constructor(
         }
         Timber.d("dummyFunc:api: %s\n :db  %s",  forecastInfo.toString(), forecastDatabase.toString())
     }
+
+    override suspend fun dummySave() {
+        forecastDatabase.save(Response("a","b", "c"))
+    }
+
 }
 
 @Module

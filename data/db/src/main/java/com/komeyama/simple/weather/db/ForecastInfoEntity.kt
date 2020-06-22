@@ -5,5 +5,9 @@ import com.komeyama.simple.weather.db.internal.entity.DetailLocationEntityImpl
 interface ForecastInfoEntity {
     var id: String
     var cityID: String
-    var detailLocation: DetailLocationEntityImpl
+
+    /**
+     * todo: string -> DetailLocationEntityImpl
+     */
+    var detailLocation: String
 }
