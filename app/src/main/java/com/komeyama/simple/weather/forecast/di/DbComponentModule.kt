@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class DbComponentModule {
     @Provides
     @Singleton
-    fun provideItemStore(
+    fun provideForecastStore(
         application: Application
     ): ForecastDatabase {
         return DbComponent.factory()
