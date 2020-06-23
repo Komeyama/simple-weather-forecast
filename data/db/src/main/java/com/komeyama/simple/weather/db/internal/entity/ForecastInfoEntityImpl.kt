@@ -7,8 +7,9 @@ import com.komeyama.simple.weather.db.ForecastInfoEntity
 
 @Entity(tableName = "forecast_info")
 data class ForecastInfoEntityImpl(
-    @PrimaryKey override var id: String,
-    override var cityID: String,
+    @PrimaryKey override var title: String,
+    override var link: String,
+    override var publicTime: String,
     @Embedded override var detailLocation: DetailLocationEntityImpl,
     @Embedded override var description: DetailDescriptionEntityImpl
 ) : ForecastInfoEntity

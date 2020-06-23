@@ -15,8 +15,9 @@ internal fun List<Response>.toForecastInfoEntities(): List<ForecastInfoEntityImp
 
 internal fun Response.toForecastInfoEntity(): ForecastInfoEntityImpl {
     return ForecastInfoEntityImpl(
-        id = id,
-        cityID = cityID,
+        title = title,
+        link = link,
+        publicTime = publicTime,
         description = detailDescriptionResponse.toDetailDescription(),
         detailLocation = detailLocationResponse.toDetailLocationEntity()
     )

@@ -34,6 +34,7 @@ internal class DataWeatherRepository @Inject constructor(
             Response(
                 "a1",
                 "b1",
+                "c1",
                 DetailDescriptionResponse("a2", "b2"),
                 DetailLocationResponse("a3", "b3", "b3")
             )

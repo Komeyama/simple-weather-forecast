@@ -1,8 +1,9 @@
 package com.komeyama.simple.weather.model
 
 data class Response(
-    var id: String,
-    var cityID: String,
+    var title: String,
+    var link: String,
+    var publicTime: String,
     var detailDescriptionResponse: DetailDescriptionResponse,
     var detailLocationResponse: DetailLocationResponse
 )
