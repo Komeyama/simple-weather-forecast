@@ -1,9 +1,11 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
-import com.komeyama.simple.weather.db.Response
-import com.komeyama.simple.weather.db.SubResponse
+import com.komeyama.simple.weather.db.internal.entity.DetailDescriptionEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.DetailLocationEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.ForecastInfoEntityImpl
+import com.komeyama.simple.weather.model.DetailDescriptionResponse
+import com.komeyama.simple.weather.model.DetailLocationResponse
+import com.komeyama.simple.weather.model.Response
 
 
 internal fun List<Response>.toForecastInfoEntities(): List<ForecastInfoEntityImpl> =
@@ -15,11 +17,19 @@ internal fun Response.toForecastInfoEntity(): ForecastInfoEntityImpl {
     return ForecastInfoEntityImpl(
         id = id,
         cityID = cityID,
-        detailLocation = dummy.toDetailLocationEntity()
+        description = detailDescriptionResponse.toDetailDescription(),
+        detailLocation = detailLocationResponse.toDetailLocationEntity()
     )
 }
 
-internal fun SubResponse.toDetailLocationEntity(): DetailLocationEntityImpl {
+internal fun DetailDescriptionResponse.toDetailDescription(): DetailDescriptionEntityImpl {
+    return DetailDescriptionEntityImpl(
+        text = text,
+        publicTime = publicTime
+    )
+}
+
+internal fun DetailLocationResponse.toDetailLocationEntity(): DetailLocationEntityImpl {
     return DetailLocationEntityImpl(
         area = area,
         prefecture = prefecture,

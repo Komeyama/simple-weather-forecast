@@ -28,7 +28,7 @@ class WeatherListFragment : DaggerFragment() {
             savedInstanceState: Bundle?
     ): View {
         sessionsViewModel.callWeatherRepositoryMethod()
-        sessionsViewModel.callWeatherRepositoryDbMethod()
+        //sessionsViewModel.callWeatherRepositoryDbMethod()
         return inflater.inflate(
                 R.layout.weather_list,
                 container,
