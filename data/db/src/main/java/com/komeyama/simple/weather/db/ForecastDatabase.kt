@@ -8,10 +8,7 @@ interface ForecastDatabase {
 data class Response (
     var id: String,
     var cityID: String,
-    /**
-     * String -> SubResponse
-     */
-    var dummy: String
+    var dummy: SubResponse
 )
 
 data class SubResponse(

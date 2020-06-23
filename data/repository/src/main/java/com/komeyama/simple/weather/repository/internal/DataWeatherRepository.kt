@@ -4,6 +4,7 @@ import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.db.ForecastDatabase
 import com.komeyama.simple.weather.db.Response
+import com.komeyama.simple.weather.db.SubResponse
 import com.komeyama.simple.weather.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
@@ -24,7 +25,7 @@ internal class DataWeatherRepository @Inject constructor(
     }
 
     override suspend fun dummySave() {
-        forecastDatabase.save(Response("a","b", "c"))
+        forecastDatabase.save(Response("a1","b1", SubResponse("a2","b2","c2")))
     }
 
 }

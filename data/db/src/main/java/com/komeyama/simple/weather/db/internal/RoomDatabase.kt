@@ -3,9 +3,7 @@ package com.komeyama.simple.weather.db.internal
 import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastInfoDao
-import com.komeyama.simple.weather.db.internal.entity.ForecastInfoEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.toForecastInfoEntities
-import com.komeyama.simple.weather.db.internal.entity.toForecastInfoEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastInfoEntities
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -30,5 +28,4 @@ internal class RoomDatabase @Inject constructor(
             forecastInfoDao.insert(list.toForecastInfoEntities())
         }
     }
-
 }
