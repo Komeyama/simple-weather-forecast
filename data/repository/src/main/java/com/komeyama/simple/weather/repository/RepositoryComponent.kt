@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.repository
 
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.db.DetailDescriptionDatabase
+import com.komeyama.simple.weather.db.DetailForecastDatabase
 import com.komeyama.simple.weather.db.DetailLocationDatabase
 import com.komeyama.simple.weather.db.ForecastDatabase
 import com.komeyama.simple.weather.repository.internal.RepositoryModule
@@ -24,6 +25,7 @@ interface RepositoryComponent {
             @BindsInstance forecastApi: ForecastApi,
             @BindsInstance forecastDatabase: ForecastDatabase,
             @BindsInstance detailDescriptionDatabase: DetailDescriptionDatabase,
+            @BindsInstance detailForecastDatabase: DetailForecastDatabase,
             @BindsInstance detailLocationDatabase: DetailLocationDatabase
         ): RepositoryComponent
     }

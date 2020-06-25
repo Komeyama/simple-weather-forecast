@@ -1,10 +1,7 @@
 package com.komeyama.simple.weather.forecast.di
 
 import android.app.Application
-import com.komeyama.simple.weather.db.DbComponent
-import com.komeyama.simple.weather.db.DetailDescriptionDatabase
-import com.komeyama.simple.weather.db.DetailLocationDatabase
-import com.komeyama.simple.weather.db.ForecastDatabase
+import com.komeyama.simple.weather.db.*
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +25,15 @@ class DbComponentModule {
     ): DetailDescriptionDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_description.db").detailDescriptionDatabase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailForecastStore(
+        application: Application
+    ): DetailForecastDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "detail_forecast.db").detailForecastDatabase()
     }
 
     @Provides

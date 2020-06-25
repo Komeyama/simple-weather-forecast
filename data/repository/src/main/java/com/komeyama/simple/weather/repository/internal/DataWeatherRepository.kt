@@ -1,11 +1,9 @@
 package com.komeyama.simple.weather.repository.internal
 
-import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.api.ForecastApi
+import com.komeyama.simple.weather.db.DetailForecastEntity
 import com.komeyama.simple.weather.db.ForecastDatabase
-import com.komeyama.simple.weather.model.DetailDescriptionResponse
-import com.komeyama.simple.weather.model.DetailLocationResponse
-import com.komeyama.simple.weather.model.Response
+import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
@@ -32,11 +30,12 @@ internal class DataWeatherRepository @Inject constructor(
     override suspend fun dummySave() {
         forecastDatabase.save(
             Response(
-                "a1",
-                "b1",
-                "c1",
-                DetailDescriptionResponse("a2", "b2"),
-                DetailLocationResponse("a3", "b3", "b3")
+                DetailForecastResponse("a1","b1","c1","d1","e1"),
+                "a2",
+                "b2",
+                "c2",
+                DetailDescriptionResponse("a3", "b3"),
+                DetailLocationResponse("a4", "b4", "b4")
             )
         )
     }

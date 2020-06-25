@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.db.internal
 
 import com.komeyama.simple.weather.db.*
+import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastInfoDao
 import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastInfoEntities
@@ -13,13 +14,20 @@ internal class RoomDatabase @Inject constructor(
     private val cacheDatabase: CacheDatabase,
     private val forecastInfoDao: ForecastInfoDao,
     private val detailLocationDao: DetailLocationDao
-) : ForecastDatabase, DetailDescriptionDatabase, DetailLocationDatabase {
+) : ForecastDatabase,
+    DetailDescriptionDatabase,
+    DetailForecastDatabase,
+    DetailLocationDatabase {
     override fun forecastInfoEntity(): List<ForecastInfoEntity> {
         return cacheDatabase.forecastInfoDao().forecastInfo()
     }
 
     override fun detailDescriptionEntity(): List<DetailDescriptionEntity> {
         return cacheDatabase.detailDescriptionDao().detailDescriptionInfo()
+    }
+
+    override fun detailForecastEntity(): List<DetailForecastEntity> {
+        return cacheDatabase.detailForecastDao().detailForecast()
     }
 
     override fun detailLocationEntity(): List<DetailLocationEntity> {
