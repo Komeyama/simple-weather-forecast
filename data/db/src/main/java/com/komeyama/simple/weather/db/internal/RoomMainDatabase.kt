@@ -29,8 +29,8 @@ internal class RoomMainDatabase @Inject constructor(
     PinpointLocationDatabase
 {
 
-    override fun forecastInfo(): List<ForecastInfoEntity> {
-        return cacheDatabase.forecastInfoDao().forecastInfo()
+    override suspend fun forecastInfo(): List<ForecastInfoEntity> = withContext(Dispatchers.IO) {
+        cacheDatabase.forecastInfoDao().forecastInfo()
     }
 
     override fun forecastMainInfoEntity(): List<ForecastMainInfoEntity> {

@@ -51,7 +51,7 @@ class DbComponentModule {
         application: Application
     ): ForecastInfoDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "top_dummy.db").forecastInfoDatabase()
+            .create(application, Dispatchers.IO, "forecast_info.db").forecastInfoDatabase()
     }
 
     @Provides
@@ -60,6 +60,6 @@ class DbComponentModule {
         application: Application
     ): PinpointLocationDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "top_dummy.db").pinpointLocationDatabase()
+            .create(application, Dispatchers.IO, "pinpoint_location.db").pinpointLocationDatabase()
     }
 }

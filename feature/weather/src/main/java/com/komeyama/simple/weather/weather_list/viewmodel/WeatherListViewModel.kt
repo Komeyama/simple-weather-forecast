@@ -23,4 +23,12 @@ class WeatherListViewModel @Inject constructor(
         }
     }
 
+    fun callWeatherRepositoryDbLoadMethod() {
+        viewModelScope.launch {
+            try {
+                weatherRepository.dummyLoad()
+            } catch (error: IOException) {}
+        }
+    }
+
 }
