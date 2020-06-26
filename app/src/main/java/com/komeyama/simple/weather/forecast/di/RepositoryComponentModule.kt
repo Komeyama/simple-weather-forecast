@@ -26,15 +26,17 @@ object RepositoryComponentModule {
         forecastMainDatabase: ForecastMainDatabase,
         detailDescriptionDatabase: DetailDescriptionDatabase,
         detailForecastDatabase: DetailForecastDatabase,
-        detailLocationDatabase: DetailLocationDatabase
+        detailLocationDatabase: DetailLocationDatabase,
+        pinpointLocationDatabase: PinpointLocationDatabase
     ): RepositoryComponent {
         return RepositoryComponent.factory().create(
             forecastApi = forecastApi,
             forecastInfoDatabase = forecastInfoDatabase,
+            detailForecastDatabase = detailForecastDatabase,
             forecastMainDatabase = forecastMainDatabase,
             detailDescriptionDatabase = detailDescriptionDatabase,
             detailLocationDatabase = detailLocationDatabase,
-            detailForecastDatabase = detailForecastDatabase
+            pinpointLocationDatabase = pinpointLocationDatabase
         )
     }
 }

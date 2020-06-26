@@ -1,13 +1,7 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
-import com.komeyama.simple.weather.db.internal.entity.DetailDescriptionEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.DetailForecastEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.DetailLocationEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.ForecastMainInfoEntityImpl
-import com.komeyama.simple.weather.model.DetailDescriptionResponse
-import com.komeyama.simple.weather.model.DetailForecastResponse
-import com.komeyama.simple.weather.model.DetailLocationResponse
-import com.komeyama.simple.weather.model.MainResponse
+import com.komeyama.simple.weather.db.internal.entity.*
+import com.komeyama.simple.weather.model.*
 
 
 internal fun List<MainResponse>.toForecastMainInfoEntities(): List<ForecastMainInfoEntityImpl> =
@@ -55,5 +49,19 @@ internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEnti
         telop = telop,
         image = image,
         temperature = temperature
+    )
+}
+
+internal fun List<PinpointLocationResponse>.toPinpointLocationEntities(): List<PinpointLocationEntityImpl> =
+    this.map {
+        it.toPinpointLocationEntity()
+    }
+
+internal fun PinpointLocationResponse.toPinpointLocationEntity(): PinpointLocationEntityImpl {
+    return PinpointLocationEntityImpl(
+        id = id,
+        parentId = parentId,
+        link = link,
+        name = name
     )
 }

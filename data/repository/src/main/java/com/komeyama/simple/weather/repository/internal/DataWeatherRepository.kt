@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
     private val forecastApi: ForecastApi,
-    private val forecastMainDatabase: ForecastMainDatabase,
-    private val detailForecastDatabase: DetailForecastDatabase
+    private val forecastMainDatabase: ForecastMainDatabase
 ) : WeatherRepository {
 
     override fun dummyFunc() {
@@ -41,11 +40,14 @@ internal class DataWeatherRepository @Inject constructor(
             ),
             listOf(
                 DetailForecastResponse(
-                    0,0, "aa1", "aa1", "aa1", "aa1", "aa1"
+                    0,0, "aa1", "aa2", "aa3", "aa4", "aa5"
                 ),
                 DetailForecastResponse(
-                    1,0, "aaa1", "aaa1", "aaa1", "aaa1", "aaa1"
+                    1,0, "aaa1", "aaa2", "aaa3", "aaa4", "aaa5"
                 )
+            ),
+            listOf(
+                PinpointLocationResponse(0,0,"bb1","bb2")
             )
         )
     }

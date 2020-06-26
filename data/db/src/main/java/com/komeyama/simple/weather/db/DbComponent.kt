@@ -19,6 +19,7 @@ interface DbComponent {
     fun detailForecastDatabase(): DetailForecastDatabase
     fun detailLocationDatabase(): DetailLocationDatabase
     fun forecastInfoDatabase(): ForecastInfoDatabase
+    fun pinpointLocationDatabase(): PinpointLocationDatabase
 
     @Component.Factory
     interface Factory {

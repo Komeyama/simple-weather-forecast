@@ -34,3 +34,10 @@ data class DetailForecastResponse(
     var image: String,
     var temperature: String
 )
+
+data class PinpointLocationResponse(
+    var id: Long,
+    var parentId: Long,
+    var link: String,
+    var name: String
+)

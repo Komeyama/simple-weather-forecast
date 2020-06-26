@@ -53,4 +53,13 @@ class DbComponentModule {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "top_dummy.db").forecastInfoDatabase()
     }
+
+    @Provides
+    @Singleton
+    fun providePinpointLocationStore(
+        application: Application
+    ): PinpointLocationDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "top_dummy.db").pinpointLocationDatabase()
+    }
 }
