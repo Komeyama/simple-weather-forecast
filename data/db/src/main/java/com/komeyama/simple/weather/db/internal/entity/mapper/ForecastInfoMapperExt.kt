@@ -3,26 +3,26 @@ package com.komeyama.simple.weather.db.internal.entity.mapper
 import com.komeyama.simple.weather.db.internal.entity.DetailDescriptionEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.DetailForecastEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.DetailLocationEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.ForecastInfoEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.ForecastMainInfoEntityImpl
 import com.komeyama.simple.weather.model.DetailDescriptionResponse
 import com.komeyama.simple.weather.model.DetailForecastResponse
 import com.komeyama.simple.weather.model.DetailLocationResponse
-import com.komeyama.simple.weather.model.Response
+import com.komeyama.simple.weather.model.MainResponse
 
 
-internal fun List<Response>.toForecastInfoEntities(): List<ForecastInfoEntityImpl> =
+internal fun List<MainResponse>.toForecastMainInfoEntities(): List<ForecastMainInfoEntityImpl> =
     this.map {
-        it.toForecastInfoEntity()
+        it.toForecastMainInfoEntity()
     }
 
-internal fun Response.toForecastInfoEntity(): ForecastInfoEntityImpl {
-    return ForecastInfoEntityImpl(
+internal fun MainResponse.toForecastMainInfoEntity(): ForecastMainInfoEntityImpl {
+    return ForecastMainInfoEntityImpl(
+        forecastId = id,
         title = title,
         link = link,
         publicTime = publicTime,
         description = detailDescriptionResponse.toDetailDescription(),
-        detailLocation = detailLocationResponse.toDetailLocationEntity(),
-        detailForecasts =  detailForecastResponse.toDetailForecastEntity()
+        detailLocation = detailLocationResponse.toDetailLocationEntity()
     )
 }
 
@@ -41,8 +41,15 @@ internal fun DetailLocationResponse.toDetailLocationEntity(): DetailLocationEnti
     )
 }
 
+internal fun List<DetailForecastResponse>.toDetailForecastEntities(): List<DetailForecastEntityImpl> =
+    this.map {
+        it.toDetailForecastEntity()
+    }
+
 internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEntityImpl {
     return DetailForecastEntityImpl(
+        id = id,
+        parentId = parentId,
         date = date,
         dateLabel = dateLabel,
         telop = telop,

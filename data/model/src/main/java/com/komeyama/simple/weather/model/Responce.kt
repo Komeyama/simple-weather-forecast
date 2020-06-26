@@ -1,7 +1,12 @@
 package com.komeyama.simple.weather.model
 
-data class Response(
-    var detailForecastResponse: DetailForecastResponse,
+data class Response2(
+    var forecastInfoEntityImpl: MainResponse,
+    var detailForecastEntityImpl: List<DetailForecastResponse>
+)
+
+data class MainResponse(
+    var id: Long,
     var title: String,
     var link: String,
     var publicTime: String,
@@ -21,6 +26,8 @@ data class DetailDescriptionResponse(
 )
 
 data class DetailForecastResponse(
+    var id: Long,
+    var parentId: Long,
     var date: String,
     var dateLabel: String,
     var telop: String,

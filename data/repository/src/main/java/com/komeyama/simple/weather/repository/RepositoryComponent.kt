@@ -1,10 +1,7 @@
 package com.komeyama.simple.weather.repository
 
 import com.komeyama.simple.weather.api.ForecastApi
-import com.komeyama.simple.weather.db.DetailDescriptionDatabase
-import com.komeyama.simple.weather.db.DetailForecastDatabase
-import com.komeyama.simple.weather.db.DetailLocationDatabase
-import com.komeyama.simple.weather.db.ForecastDatabase
+import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.repository.internal.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
@@ -23,10 +20,11 @@ interface RepositoryComponent {
     interface Factory {
         fun create(
             @BindsInstance forecastApi: ForecastApi,
-            @BindsInstance forecastDatabase: ForecastDatabase,
+            @BindsInstance forecastMainDatabase: ForecastMainDatabase,
             @BindsInstance detailDescriptionDatabase: DetailDescriptionDatabase,
             @BindsInstance detailForecastDatabase: DetailForecastDatabase,
-            @BindsInstance detailLocationDatabase: DetailLocationDatabase
+            @BindsInstance detailLocationDatabase: DetailLocationDatabase,
+            @BindsInstance forecastInfoDatabase: ForecastInfoDatabase
         ): RepositoryComponent
     }
 

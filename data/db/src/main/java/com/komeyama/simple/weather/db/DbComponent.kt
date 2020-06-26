@@ -14,10 +14,11 @@ import kotlin.coroutines.CoroutineContext
     ]
 )
 interface DbComponent {
-    fun forecastDatabase(): ForecastDatabase
+    fun forecastDatabase(): ForecastMainDatabase
     fun detailDescriptionDatabase(): DetailDescriptionDatabase
     fun detailForecastDatabase(): DetailForecastDatabase
     fun detailLocationDatabase(): DetailLocationDatabase
+    fun forecastInfoDatabase(): ForecastInfoDatabase
 
     @Component.Factory
     interface Factory {

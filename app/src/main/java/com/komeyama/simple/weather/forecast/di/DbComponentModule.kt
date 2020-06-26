@@ -13,7 +13,7 @@ class DbComponentModule {
     @Singleton
     fun provideForecastStore(
         application: Application
-    ): ForecastDatabase {
+    ): ForecastMainDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "forecast_info.db").forecastDatabase()
     }
@@ -43,5 +43,14 @@ class DbComponentModule {
     ): DetailLocationDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_location.db").detailLocationDatabase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastInfoStore(
+        application: Application
+    ): ForecastInfoDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "top_dummy.db").forecastInfoDatabase()
     }
 }

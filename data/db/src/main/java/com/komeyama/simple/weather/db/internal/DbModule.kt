@@ -2,13 +2,11 @@ package com.komeyama.simple.weather.db.internal
 
 import android.content.Context
 import androidx.room.Room
-import com.komeyama.simple.weather.db.DetailDescriptionDatabase
-import com.komeyama.simple.weather.db.DetailForecastDatabase
-import com.komeyama.simple.weather.db.DetailLocationDatabase
-import com.komeyama.simple.weather.db.ForecastDatabase
+import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.db.internal.dao.DetailDescriptionDao
 import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
+import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastInfoDao
 import dagger.Binds
 import dagger.Module
@@ -18,16 +16,19 @@ import javax.inject.Singleton
 @Module(includes = [DbModule.Providers::class])
 internal abstract class DbModule {
     @Binds
-    abstract fun forecastDatabase(impl: RoomDatabase): ForecastDatabase
+    abstract fun forecastInfoDatabase(impl: RoomMainDatabase): ForecastInfoDatabase
 
     @Binds
-    abstract fun detailDescriptionDatabase(impl: RoomDatabase): DetailDescriptionDatabase
+    abstract fun forecastDatabase(impl: RoomMainDatabase): ForecastMainDatabase
 
     @Binds
-    abstract fun detailForecastDatabase(impl: RoomDatabase): DetailForecastDatabase
+    abstract fun detailDescriptionDatabase(impl: RoomMainDatabase): DetailDescriptionDatabase
 
     @Binds
-    abstract fun detailLocationDatabase(impl: RoomDatabase): DetailLocationDatabase
+    abstract fun detailForecastDatabase(impl: RoomMainDatabase): DetailForecastDatabase
+
+    @Binds
+    abstract fun detailLocationDatabase(impl: RoomMainDatabase): DetailLocationDatabase
 
     @Module
     internal object Providers {
@@ -40,13 +41,18 @@ internal abstract class DbModule {
             return Room.databaseBuilder(
                 context,
                 CacheDatabase::class.java,
-                filename ?: "weather_info.db"
+                filename ?: "forecast_info.db"
             ).fallbackToDestructiveMigration().build()
         }
 
         @Provides
-        fun weatherInfoDao(database: CacheDatabase): ForecastInfoDao {
+        fun forecastInfoDao(database: CacheDatabase): ForecastInfoDao {
             return database.forecastInfoDao()
+        }
+
+        @Provides
+        fun forecastMainInfoDao(database: CacheDatabase): ForecastMainInfoDao {
+            return database.forecastMainInfoDao()
         }
 
         @Provides
