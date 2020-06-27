@@ -97,7 +97,7 @@ class ExampleInstrumentedTest {
                     0, 0,
                     "copyrightTitle",
                     "copyrightLink",
-                    DetailImageEntityImpl(
+                    DetailImageEntityImplOfCopyright(
                         "imageTitle",
                         "imageLink",
                         "imageUrl",

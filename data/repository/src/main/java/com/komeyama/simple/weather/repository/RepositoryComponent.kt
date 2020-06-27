@@ -26,6 +26,7 @@ interface RepositoryComponent {
             @BindsInstance detailDescriptionDatabase: DetailDescriptionDatabase,
             @BindsInstance detailForecastDatabase: DetailForecastDatabase,
             @BindsInstance detailImageDatabase: DetailImageDatabase,
+            @BindsInstance detailImageOfCopyrightDatabase: DetailImageOfCopyrightDatabase,
             @BindsInstance detailLocationDatabase: DetailLocationDatabase,
             @BindsInstance pinpointLocationDatabase: PinpointLocationDatabase
         ): RepositoryComponent

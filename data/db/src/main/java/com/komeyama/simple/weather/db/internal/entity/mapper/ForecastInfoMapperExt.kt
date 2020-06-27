@@ -82,8 +82,8 @@ internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightM
     )
 }
 
-internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImpl {
-    return DetailImageEntityImpl(
+internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImplOfCopyright {
+    return DetailImageEntityImplOfCopyright(
         title = title,
         link = link,
         url = url,

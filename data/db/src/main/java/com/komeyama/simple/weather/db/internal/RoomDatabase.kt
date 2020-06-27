@@ -30,6 +30,7 @@ internal class RoomDatabase @Inject constructor(
     DetailDescriptionDatabase,
     DetailForecastDatabase,
     DetailImageDatabase,
+    DetailImageOfCopyrightDatabase,
     DetailLocationDatabase,
     DetailCopyrightMainDatabase,
     PinpointLocationDatabase {
@@ -52,6 +53,10 @@ internal class RoomDatabase @Inject constructor(
 
     override fun detailImageEntity(): List<DetailImageEntity> {
         return cacheDatabase.detailImageDao().detailImageInfo()
+    }
+
+    override fun detailImageOfCopyrightEntity(): List<DetailImageEntity> {
+        return cacheDatabase.detailImageDao().detailImageOfCopyrightInfo()
     }
 
     override fun detailLocationEntity(): List<DetailLocationEntity> {

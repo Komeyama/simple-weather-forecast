@@ -66,6 +66,15 @@ class DbComponentModule {
 
     @Provides
     @Singleton
+    fun provideDetailImageOfCopyrightStore(
+        application: Application
+    ): DetailImageOfCopyrightDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "detail_image_copyright.db").detailImageOfCopyrightDatabase()
+    }
+
+    @Provides
+    @Singleton
     fun provideDetailLocationStore(
         application: Application
     ): DetailLocationDatabase {

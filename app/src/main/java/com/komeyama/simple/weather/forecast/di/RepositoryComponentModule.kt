@@ -28,6 +28,7 @@ object RepositoryComponentModule {
         detailDescriptionDatabase: DetailDescriptionDatabase,
         detailForecastDatabase: DetailForecastDatabase,
         detailImageDatabase: DetailImageDatabase,
+        detailImageOfCopyrightDatabase: DetailImageOfCopyrightDatabase,
         detailLocationDatabase: DetailLocationDatabase,
         pinpointLocationDatabase: PinpointLocationDatabase
     ): RepositoryComponent {
@@ -39,6 +40,7 @@ object RepositoryComponentModule {
             detailDescriptionDatabase = detailDescriptionDatabase,
             detailForecastDatabase = detailForecastDatabase,
             detailImageDatabase = detailImageDatabase,
+            detailImageOfCopyrightDatabase = detailImageOfCopyrightDatabase,
             detailLocationDatabase = detailLocationDatabase,
             pinpointLocationDatabase = pinpointLocationDatabase
         )

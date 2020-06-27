@@ -16,6 +16,7 @@ import com.komeyama.simple.weather.db.internal.entity.*
     DetailDescriptionEntityImpl::class,
     DetailForecastEntityImpl::class,
     DetailImageEntityImpl::class,
+    DetailImageEntityImplOfCopyright::class,
     DetailLocationEntityImpl::class,
     DetailCopyrightMainEntityImpl::class,
     PinpointLocationEntityImpl::class

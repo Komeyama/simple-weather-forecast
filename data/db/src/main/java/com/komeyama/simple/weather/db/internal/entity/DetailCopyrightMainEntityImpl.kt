@@ -27,5 +27,5 @@ class DetailCopyrightMainEntityImpl(
     @ColumnInfo(name = "link")
     override var link: String,
     @Embedded(prefix = "detail_image")
-    override var image: DetailImageEntityImpl
+    override var image: DetailImageEntityImplOfCopyright
 ) : DetailCopyrightMainEntity

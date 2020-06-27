@@ -20,6 +20,7 @@ interface DbComponent {
     fun detailDescriptionDatabase(): DetailDescriptionDatabase
     fun detailForecastDatabase(): DetailForecastDatabase
     fun detailImageDatabase(): DetailImageDatabase
+    fun detailImageOfCopyrightDatabase(): DetailImageOfCopyrightDatabase
     fun detailLocationDatabase(): DetailLocationDatabase
     fun pinpointLocationDatabase(): PinpointLocationDatabase
 

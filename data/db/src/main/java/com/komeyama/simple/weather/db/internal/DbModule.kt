@@ -33,6 +33,9 @@ internal abstract class DbModule {
     abstract fun detailImageDatabase(impl: RoomDatabase): DetailImageDatabase
 
     @Binds
+    abstract fun detailImageOfCopyrightDatabase(impl: RoomDatabase): DetailImageOfCopyrightDatabase
+
+    @Binds
     abstract fun detailLocationDatabase(impl: RoomDatabase): DetailLocationDatabase
 
     @Binds
