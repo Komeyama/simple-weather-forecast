@@ -6,8 +6,6 @@ import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
-import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailCopyrightEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastMainInfoEntities
@@ -72,7 +70,7 @@ internal class RoomDatabase @Inject constructor(
         mainResponse: MainResponse,
         detailForecastResponse: List<DetailForecastResponse>,
         pinpointLocationResponse: List<PinpointLocationResponse>,
-        detailCopyrightResponse: List<DetailCopyrightResponse>
+        copyright: List<DetailCopyrightResponse>
     ) {
         withContext(Dispatchers.IO) {
             val list: MutableList<MainResponse> = mutableListOf()
@@ -80,7 +78,7 @@ internal class RoomDatabase @Inject constructor(
             forecastMainInfoDao.insert(list.toForecastMainInfoEntities())
             detailForecastDao.insert(detailForecastResponse.toDetailForecastEntities())
             pinpointLocationDao.insert(pinpointLocationResponse.toPinpointLocationEntities())
-            detailCopyrightMainDao.insert(detailCopyrightResponse.toDetailCopyrightEntities())
+            detailCopyrightMainDao.insert(copyright.toDetailCopyrightEntities())
         }
     }
 
