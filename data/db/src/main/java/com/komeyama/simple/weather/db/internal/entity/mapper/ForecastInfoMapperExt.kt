@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
+import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
 import com.komeyama.simple.weather.db.internal.entity.*
 import com.komeyama.simple.weather.model.*
 
@@ -63,5 +64,30 @@ internal fun PinpointLocationResponse.toPinpointLocationEntity(): PinpointLocati
         parentId = parentId,
         link = link,
         name = name
+    )
+}
+
+internal fun List<DetailCopyrightResponse>.toDetailCopyrightEntities(): List<DetailCopyrightMainEntityImpl> =
+    this.map {
+        it.toDetailCopyrightEntity()
+    }
+
+internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightMainEntityImpl {
+    return DetailCopyrightMainEntityImpl(
+        copyrightID = copyrightID,
+        parentId = parentId,
+        title = title,
+        link = link,
+        image = image.toDetailImageEntity()
+    )
+}
+
+internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImpl {
+    return DetailImageEntityImpl(
+        title = title,
+        link = link,
+        url = url,
+        width = width,
+        height = height
     )
 }

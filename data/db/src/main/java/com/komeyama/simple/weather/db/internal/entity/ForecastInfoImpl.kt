@@ -15,5 +15,11 @@ data class ForecastInfoImpl(
         parentColumn = "forecast_id",
         entityColumn = "parent_id"
     )
-    override var pinpointLocationEntityImpl: List<PinpointLocationEntityImpl>
+    override var pinpointLocationEntityImpl: List<PinpointLocationEntityImpl>,
+    @Relation(
+        parentColumn = "forecast_id",
+        entityColumn = "parent_id"
+    )
+    override var copyright: DetailCopyrightMainEntityImpl
+
 ) : ForecastInfoEntity

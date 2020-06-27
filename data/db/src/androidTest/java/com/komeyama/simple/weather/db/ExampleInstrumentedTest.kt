@@ -7,8 +7,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.komeyama.simple.weather.db.internal.CacheDatabase
 import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightMainDao
 import com.komeyama.simple.weather.db.internal.dao.DetailImageDao
-import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
+import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
+import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
+import com.komeyama.simple.weather.db.internal.entity.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 
@@ -26,8 +27,10 @@ import java.io.IOException
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+    private lateinit var forecastMainInfoDao: ForecastMainInfoDao
     private lateinit var copyrightMainDao: DetailCopyrightMainDao
     private lateinit var imageDao: DetailImageDao
+    private lateinit var pinpointLocationDao: PinpointLocationDao
     private lateinit var cacheDatabase: CacheDatabase
 
     @Before
@@ -36,8 +39,10 @@ class ExampleInstrumentedTest {
         cacheDatabase = Room.inMemoryDatabaseBuilder(
             context, CacheDatabase::class.java
         ).build()
-        copyrightMainDao = cacheDatabase.detailCopyrightDao()
+        forecastMainInfoDao = cacheDatabase.forecastMainInfoDao()
+        copyrightMainDao = cacheDatabase.detailCopyrightMainDao()
         imageDao = cacheDatabase.detailImageDao()
+        pinpointLocationDao = cacheDatabase.pinpointLocationDao()
     }
 
     @After
@@ -48,11 +53,48 @@ class ExampleInstrumentedTest {
 
     @Test
     @Throws(Exception::class)
-    fun writeCopyrightAndReadInList() {
+    fun writeCopyrightMainAndReadInList() {
+        insertCopyrightMainData()
+        val detailCopyrightMainInfo = copyrightMainDao.detailCopyrightMainInfo()
+        assertThat(detailCopyrightMainInfo[0].title, equalTo("copyrightTitle"))
+        assertThat(detailCopyrightMainInfo[0].link, equalTo("copyrightLink"))
+        assertThat(detailCopyrightMainInfo[0].image.title, equalTo("imageTitle"))
+        assertThat(detailCopyrightMainInfo[0].image.link, equalTo("imageLink"))
+        assertThat(detailCopyrightMainInfo[0].image.url, equalTo("imageUrl"))
+        assertThat(detailCopyrightMainInfo[0].image.width, equalTo("imageWidth"))
+        assertThat(detailCopyrightMainInfo[0].image.height, equalTo("imageHeight"))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun writeImageAndReadInList() {
+        insertImageData()
+        val detailImageInfo = imageDao.detailImageInfo()
+        assertThat(detailImageInfo[0].title, equalTo("imageTitle"))
+        assertThat(detailImageInfo[0].link, equalTo("imageLink"))
+        assertThat(detailImageInfo[0].url, equalTo("imageUrl"))
+        assertThat(detailImageInfo[0].width, equalTo("imageWidth"))
+        assertThat(detailImageInfo[0].height, equalTo("imageHeight"))
+    }
+
+    private fun insertCopyrightMainData() {
+        forecastMainInfoDao.insert(
+            listOf(
+                ForecastMainInfoEntityImpl(
+                    0,
+                    "forecast title",
+                    "forecast link",
+                    "public time",
+                    DetailLocationEntityImpl("detail area", "detail prefecture", "detail city"),
+                    DetailDescriptionEntityImpl("detail text", "detail public time")
+                )
+            )
+        )
+
         copyrightMainDao.insert(
             listOf(
                 DetailCopyrightMainEntityImpl(
-                    0,
+                    0, 0,
                     "copyrightTitle",
                     "copyrightLink",
                     DetailImageEntityImpl(
@@ -65,19 +107,9 @@ class ExampleInstrumentedTest {
                 )
             )
         )
-        val detailCopyrightInfo = copyrightMainDao.detailCopyright()
-        assertThat(detailCopyrightInfo[0].title, equalTo("copyrightTitle"))
-        assertThat(detailCopyrightInfo[0].link, equalTo("copyrightLink"))
-        assertThat(detailCopyrightInfo[0].image.title, equalTo("imageTitle"))
-        assertThat(detailCopyrightInfo[0].image.link, equalTo("imageLink"))
-        assertThat(detailCopyrightInfo[0].image.url, equalTo("imageUrl"))
-        assertThat(detailCopyrightInfo[0].image.width, equalTo("imageWidth"))
-        assertThat(detailCopyrightInfo[0].image.height, equalTo("imageHeight"))
     }
 
-    @Test
-    @Throws(Exception::class)
-    fun writeImageAndReadInList() {
+    private fun insertImageData() {
         imageDao.insert(
             listOf(
                 DetailImageEntityImpl(
@@ -89,11 +121,6 @@ class ExampleInstrumentedTest {
                 )
             )
         )
-        val detailImageInfo = imageDao.detailImageInfo()
-        assertThat(detailImageInfo[0].title, equalTo("imageTitle"))
-        assertThat(detailImageInfo[0].link, equalTo("imageLink"))
-        assertThat(detailImageInfo[0].url, equalTo("imageUrl"))
-        assertThat(detailImageInfo[0].width, equalTo("imageWidth"))
-        assertThat(detailImageInfo[0].height, equalTo("imageHeight"))
     }
+
 }

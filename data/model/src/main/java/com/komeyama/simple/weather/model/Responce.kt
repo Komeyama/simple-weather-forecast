@@ -1,10 +1,5 @@
 package com.komeyama.simple.weather.model
 
-data class Response2(
-    var forecastInfoEntityImpl: MainResponse,
-    var detailForecastEntityImpl: List<DetailForecastResponse>
-)
-
 data class MainResponse(
     var id: Long,
     var title: String,
@@ -40,4 +35,20 @@ data class PinpointLocationResponse(
     var parentId: Long,
     var link: String,
     var name: String
+)
+
+data class DetailCopyrightResponse(
+    var copyrightID: Long,
+    var parentId: Long,
+    var title: String,
+    var link: String,
+    var image: DetailImageResponse
+)
+
+data class DetailImageResponse(
+    var title: String,
+    var link: String,
+    var url: String,
+    var width: String,
+    var height: String
 )

@@ -10,10 +10,10 @@ import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityI
 @Dao
 internal abstract class DetailCopyrightMainDao {
     @Query("SELECT * FROM detail_copyright")
-    abstract fun detailCopyrightLiveData(): LiveData<List<DetailCopyrightMainEntityImpl>>
+    abstract fun detailCopyrightMainLiveData(): LiveData<List<DetailCopyrightMainEntityImpl>>
 
     @Query("SELECT * FROM detail_copyright")
-    abstract fun detailCopyright(): List<DetailCopyrightMainEntityImpl>
+    abstract fun detailCopyrightMainInfo(): List<DetailCopyrightMainEntityImpl>
 
     @Query("DELETE FROM detail_copyright")
     abstract fun deleteAll()

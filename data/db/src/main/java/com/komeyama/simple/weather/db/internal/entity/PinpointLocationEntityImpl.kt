@@ -9,22 +9,12 @@ import com.komeyama.simple.weather.db.PinpointLocationEntity
 @Entity(
     tableName = "pinpoint_location",
     foreignKeys = [
-        (
-                ForeignKey(
-                    entity = ForecastMainInfoEntityImpl::class,
-                    parentColumns = arrayOf("forecast_id"),
-                    childColumns = arrayOf("parent_id"),
-                    onDelete = ForeignKey.CASCADE
-                )
-                ),
-        (
-                ForeignKey(
-                    entity = DetailCopyrightMainEntityImpl::class,
-                    parentColumns = arrayOf("copyright_id"),
-                    childColumns = arrayOf("parent_id"),
-                    onDelete = ForeignKey.CASCADE
-                )
-                )
+        ForeignKey(
+            entity = ForecastMainInfoEntityImpl::class,
+            parentColumns = arrayOf("forecast_id"),
+            childColumns = arrayOf("parent_id"),
+            onDelete = ForeignKey.CASCADE
+        )
     ]
 )
 data class PinpointLocationEntityImpl(

@@ -30,11 +30,11 @@ class DbComponentModule {
 
     @Provides
     @Singleton
-    fun provideDetailCopyrightStore(
+    fun provideDetailCopyrightMainStore(
         application: Application
     ): DetailCopyrightMainDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "detail_location.db").detailCopyrightDatabase()
+            .create(application, Dispatchers.IO, "detail_copyright.db").detailCopyrightMainDatabase()
     }
 
     @Provides
@@ -61,7 +61,7 @@ class DbComponentModule {
         application: Application
     ): DetailImageDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "detail_location.db").detailImageDatabase()
+            .create(application, Dispatchers.IO, "detail_image.db").detailImageDatabase()
     }
 
     @Provides

@@ -6,9 +6,13 @@ import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
+import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailCopyrightEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastMainInfoEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
+import com.komeyama.simple.weather.model.DetailCopyrightResponse
 import com.komeyama.simple.weather.model.DetailForecastResponse
 import com.komeyama.simple.weather.model.MainResponse
 import com.komeyama.simple.weather.model.PinpointLocationResponse
@@ -21,7 +25,7 @@ internal class RoomDatabase @Inject constructor(
     private val forecastMainInfoDao: ForecastMainInfoDao,
     private val detailLocationDao: DetailLocationDao,
     private val detailForecastDao: DetailForecastDao,
-    private val detailCopyrightEntityMainDao: DetailCopyrightMainDao,
+    private val detailCopyrightMainDao: DetailCopyrightMainDao,
     private val pinpointLocationDao: PinpointLocationDao
 ) : ForecastInfoDatabase,
     ForecastMainDatabase,
@@ -30,8 +34,7 @@ internal class RoomDatabase @Inject constructor(
     DetailImageDatabase,
     DetailLocationDatabase,
     DetailCopyrightMainDatabase,
-    PinpointLocationDatabase
-{
+    PinpointLocationDatabase {
 
     override suspend fun forecastInfo(): List<ForecastInfoEntity> = withContext(Dispatchers.IO) {
         cacheDatabase.forecastInfoDao().forecastInfo()
@@ -57,21 +60,27 @@ internal class RoomDatabase @Inject constructor(
         return cacheDatabase.detailLocationDao().detailLocationInfo()
     }
 
-    override fun detailCopyrightEntity(): List<DetailCopyrightMainEntity> {
-        return cacheDatabase.detailCopyrightDao().detailCopyright()
+    override fun detailCopyrightMainEntity(): List<DetailCopyrightMainEntity> {
+        return cacheDatabase.detailCopyrightMainDao().detailCopyrightMainInfo()
     }
 
     override fun pinpointLocationEntity(): List<PinpointLocationEntity> {
-        return cacheDatabase.pinpointLocation().pinpointLocations()
+        return cacheDatabase.pinpointLocationDao().pinpointLocations()
     }
 
-    override suspend fun save(mainResponse: MainResponse, detailForecastResponse: List<DetailForecastResponse>, pinpointLocationResponse: List<PinpointLocationResponse>) {
+    override suspend fun save(
+        mainResponse: MainResponse,
+        detailForecastResponse: List<DetailForecastResponse>,
+        pinpointLocationResponse: List<PinpointLocationResponse>,
+        detailCopyrightResponse: List<DetailCopyrightResponse>
+    ) {
         withContext(Dispatchers.IO) {
             val list: MutableList<MainResponse> = mutableListOf()
             list.add(mainResponse)
             forecastMainInfoDao.insert(list.toForecastMainInfoEntities())
             detailForecastDao.insert(detailForecastResponse.toDetailForecastEntities())
             pinpointLocationDao.insert(pinpointLocationResponse.toPinpointLocationEntities())
+            detailCopyrightMainDao.insert(detailCopyrightResponse.toDetailCopyrightEntities())
         }
     }
 

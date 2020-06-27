@@ -1,7 +1,6 @@
 package com.komeyama.simple.weather.db
 
 import com.komeyama.simple.weather.db.internal.entity.DetailDescriptionEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.DetailForecastEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.DetailLocationEntityImpl
 
 interface ForecastMainInfoEntity {

@@ -35,7 +35,16 @@ internal class DataWeatherRepository @Inject constructor(
         info.forEach { forecastInfo ->
             Timber.d("dummyFunc:load 00: %s\n", forecastInfo.forecastInfoEntityImpl)
             forecastInfo.detailForecastEntityImpl.forEach {
-                Timber.d("dummyFunc:load 01: %s %s %s %s %s %s %s\n", it.id, it.parentId, it. date, it.dateLabel, it. telop, it.image, it.temperature)
+                Timber.d(
+                    "dummyFunc:load 01: %s %s %s %s %s %s %s\n",
+                    it.id,
+                    it.parentId,
+                    it.date,
+                    it.dateLabel,
+                    it.telop,
+                    it.image,
+                    it.temperature
+                )
             }
             forecastInfo.pinpointLocationEntityImpl.forEach {
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
@@ -56,15 +65,21 @@ internal class DataWeatherRepository @Inject constructor(
             ),
             listOf(
                 DetailForecastResponse(
-                    0,0, "aa1", "aa2", "aa3", "aa4", "aa5"
+                    0, 0, "aa1", "aa2", "aa3", "aa4", "aa5"
                 ),
                 DetailForecastResponse(
-                    1,0, "aaa1", "aaa2", "aaa3", "aaa4", "aaa5"
+                    1, 0, "aaa1", "aaa2", "aaa3", "aaa4", "aaa5"
                 )
             ),
             listOf(
-                PinpointLocationResponse(0,0,"bb1","bb2"),
-                PinpointLocationResponse(1,0,"bbb1","bbb2")
+                PinpointLocationResponse(0, 0, "bb1", "bb2"),
+                PinpointLocationResponse(1, 0, "bbb1", "bbb2")
+            ),
+            listOf(
+                DetailCopyrightResponse(
+                    0, 0, "title", "http://aaa",
+                    DetailImageResponse("i1", "i1", "i1", "i1", "i1")
+                )
             )
         )
     }

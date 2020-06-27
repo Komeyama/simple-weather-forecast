@@ -27,6 +27,6 @@ internal abstract class CacheDatabase : RoomDatabase() {
     abstract fun detailForecastDao(): DetailForecastDao
     abstract fun detailImageDao(): DetailImageDao
     abstract fun detailLocationDao(): DetailLocationDao
-    abstract fun detailCopyrightDao(): DetailCopyrightMainDao
-    abstract fun pinpointLocation(): PinpointLocationDao
+    abstract fun detailCopyrightMainDao(): DetailCopyrightMainDao
+    abstract fun pinpointLocationDao(): PinpointLocationDao
 }
