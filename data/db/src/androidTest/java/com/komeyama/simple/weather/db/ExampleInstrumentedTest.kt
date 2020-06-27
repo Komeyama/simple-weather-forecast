@@ -54,14 +54,24 @@ class ExampleInstrumentedTest {
                 DetailCopyrightEntityImpl(
                     "copyrightTitle",
                     "copyrightLink",
-                    "copyrightImage"
+                    DetailImageEntityImpl(
+                        "imageTitle",
+                        "imageLink",
+                        "imageUrl",
+                        "imageWidth",
+                        "imageHeight"
+                    )
                 )
             )
         )
         val detailCopyrightInfo = copyrightDao.detailCopyright()
         assertThat(detailCopyrightInfo[0].title, equalTo("copyrightTitle"))
         assertThat(detailCopyrightInfo[0].link, equalTo("copyrightLink"))
-        assertThat(detailCopyrightInfo[0].image, equalTo("copyrightImage"))
+        assertThat(detailCopyrightInfo[0].image.title, equalTo("imageTitle"))
+        assertThat(detailCopyrightInfo[0].image.link, equalTo("imageLink"))
+        assertThat(detailCopyrightInfo[0].image.url, equalTo("imageUrl"))
+        assertThat(detailCopyrightInfo[0].image.width, equalTo("imageWidth"))
+        assertThat(detailCopyrightInfo[0].image.height, equalTo("imageHeight"))
     }
 
     @Test

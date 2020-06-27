@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.db.internal.entity
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.DetailCopyrightEntity
@@ -11,6 +12,6 @@ class DetailCopyrightEntityImpl(
     override var title: String,
     @ColumnInfo(name = "link")
     override var link: String,
-    @ColumnInfo(name = "detail_image")
-    override var image: String
+    @Embedded(prefix = "detail_image")
+    override var image: DetailImageEntityImpl
 ) : DetailCopyrightEntity
