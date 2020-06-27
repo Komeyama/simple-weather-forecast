@@ -9,5 +9,5 @@ interface ForecastInfoEntity {
     var forecastInfoEntityImpl: ForecastMainInfoEntityImpl
     var detailForecastEntityImpl: List<DetailForecastEntityImpl>
     var pinpointLocationEntityImpl: List<PinpointLocationEntityImpl>
-    var copyright: DetailCopyrightMainEntityImpl
+    var copyright: DetailCopyrightMainEntityImpl?
 }

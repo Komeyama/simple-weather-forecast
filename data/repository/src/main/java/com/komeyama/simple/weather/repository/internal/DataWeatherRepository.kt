@@ -32,7 +32,18 @@ internal class DataWeatherRepository @Inject constructor(
     override suspend fun dummyLoad() {
         var info: List<ForecastInfoEntity> = forecastInfoDatabase.forecastInfo()
         info.forEach { forecastInfo ->
-            Timber.d("dummyFunc:load 00: %s\n", forecastInfo.forecastInfoEntityImpl)
+            Timber.d(
+                "dummyFunc:load 00:\n forecastId:%s\n title:%s\n link:%s\n publicTime:%s\n description:%s %s\n detailLocation:%s %s %s\n",
+                forecastInfo.forecastInfoEntityImpl.forecastId,
+                forecastInfo.forecastInfoEntityImpl.title,
+                forecastInfo.forecastInfoEntityImpl.link,
+                forecastInfo.forecastInfoEntityImpl.publicTime,
+                forecastInfo.forecastInfoEntityImpl.description.text,
+                forecastInfo.forecastInfoEntityImpl.description.publicTime,
+                forecastInfo.forecastInfoEntityImpl.detailLocation.area,
+                forecastInfo.forecastInfoEntityImpl.detailLocation.city,
+                forecastInfo.forecastInfoEntityImpl.detailLocation.prefecture
+            )
             forecastInfo.detailForecastEntityImpl.forEach { detailForecast ->
                 Timber.d(
                     "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s %s\n temperature:%s\n",
@@ -52,6 +63,14 @@ internal class DataWeatherRepository @Inject constructor(
             forecastInfo.pinpointLocationEntityImpl.forEach {
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
             }
+            Timber.d(
+                "dummyFunc:lad 03: %s %s %s %s %s\n",
+                forecastInfo.copyright?.copyrightID,
+                forecastInfo.copyright?.parentId,
+                forecastInfo.copyright?.title,
+                forecastInfo.copyright?.link,
+                forecastInfo.copyright?.image
+            )
         }
     }
 
