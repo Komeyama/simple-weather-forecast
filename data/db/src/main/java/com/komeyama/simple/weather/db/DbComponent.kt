@@ -16,7 +16,7 @@ import kotlin.coroutines.CoroutineContext
 interface DbComponent {
     fun forecastInfoDatabase(): ForecastInfoDatabase
     fun forecastMainDatabase(): ForecastMainDatabase
-    fun detailCopyrightDatabase(): DetailCopyrightDatabase
+    fun detailCopyrightDatabase(): DetailCopyrightMainDatabase
     fun detailDescriptionDatabase(): DetailDescriptionDatabase
     fun detailForecastDatabase(): DetailForecastDatabase
     fun detailImageDatabase(): DetailImageDatabase

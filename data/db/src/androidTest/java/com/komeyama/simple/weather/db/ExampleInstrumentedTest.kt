@@ -5,9 +5,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.komeyama.simple.weather.db.internal.CacheDatabase
-import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightDao
+import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightMainDao
 import com.komeyama.simple.weather.db.internal.dao.DetailImageDao
-import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
@@ -26,7 +26,7 @@ import java.io.IOException
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    private lateinit var copyrightDao: DetailCopyrightDao
+    private lateinit var copyrightMainDao: DetailCopyrightMainDao
     private lateinit var imageDao: DetailImageDao
     private lateinit var cacheDatabase: CacheDatabase
 
@@ -36,7 +36,7 @@ class ExampleInstrumentedTest {
         cacheDatabase = Room.inMemoryDatabaseBuilder(
             context, CacheDatabase::class.java
         ).build()
-        copyrightDao = cacheDatabase.detailCopyrightDao()
+        copyrightMainDao = cacheDatabase.detailCopyrightDao()
         imageDao = cacheDatabase.detailImageDao()
     }
 
@@ -49,9 +49,10 @@ class ExampleInstrumentedTest {
     @Test
     @Throws(Exception::class)
     fun writeCopyrightAndReadInList() {
-        copyrightDao.insert(
+        copyrightMainDao.insert(
             listOf(
-                DetailCopyrightEntityImpl(
+                DetailCopyrightMainEntityImpl(
+                    0,
                     "copyrightTitle",
                     "copyrightLink",
                     DetailImageEntityImpl(
@@ -64,7 +65,7 @@ class ExampleInstrumentedTest {
                 )
             )
         )
-        val detailCopyrightInfo = copyrightDao.detailCopyright()
+        val detailCopyrightInfo = copyrightMainDao.detailCopyright()
         assertThat(detailCopyrightInfo[0].title, equalTo("copyrightTitle"))
         assertThat(detailCopyrightInfo[0].link, equalTo("copyrightLink"))
         assertThat(detailCopyrightInfo[0].image.title, equalTo("imageTitle"))

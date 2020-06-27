@@ -8,14 +8,26 @@ import com.komeyama.simple.weather.db.PinpointLocationEntity
 
 @Entity(
     tableName = "pinpoint_location",
-    foreignKeys = [ForeignKey(
-        entity = ForecastMainInfoEntityImpl::class,
-        parentColumns = arrayOf("forecast_id"),
-        childColumns = arrayOf("parent_id"),
-        onDelete = ForeignKey.CASCADE
-    )]
+    foreignKeys = [
+        (
+                ForeignKey(
+                    entity = ForecastMainInfoEntityImpl::class,
+                    parentColumns = arrayOf("forecast_id"),
+                    childColumns = arrayOf("parent_id"),
+                    onDelete = ForeignKey.CASCADE
+                )
+                ),
+        (
+                ForeignKey(
+                    entity = DetailCopyrightMainEntityImpl::class,
+                    parentColumns = arrayOf("copyright_id"),
+                    childColumns = arrayOf("parent_id"),
+                    onDelete = ForeignKey.CASCADE
+                )
+                )
+    ]
 )
-data class PinpointLocationEntityImpl (
+data class PinpointLocationEntityImpl(
     @PrimaryKey(autoGenerate = false)
     override var id: Long,
     @ColumnInfo(name = "parent_id")
@@ -24,4 +36,4 @@ data class PinpointLocationEntityImpl (
     override var link: String,
     @ColumnInfo(name = "name")
     override var name: String
-): PinpointLocationEntity
+) : PinpointLocationEntity

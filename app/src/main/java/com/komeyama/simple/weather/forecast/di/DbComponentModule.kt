@@ -32,7 +32,7 @@ class DbComponentModule {
     @Singleton
     fun provideDetailCopyrightStore(
         application: Application
-    ): DetailCopyrightDatabase {
+    ): DetailCopyrightMainDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_location.db").detailCopyrightDatabase()
     }

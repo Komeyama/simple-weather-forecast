@@ -5,19 +5,19 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
 
 @Dao
-internal abstract class DetailCopyrightDao {
+internal abstract class DetailCopyrightMainDao {
     @Query("SELECT * FROM detail_copyright")
-    abstract fun detailCopyrightLiveData(): LiveData<List<DetailCopyrightEntityImpl>>
+    abstract fun detailCopyrightLiveData(): LiveData<List<DetailCopyrightMainEntityImpl>>
 
     @Query("SELECT * FROM detail_copyright")
-    abstract fun detailCopyright(): List<DetailCopyrightEntityImpl>
+    abstract fun detailCopyright(): List<DetailCopyrightMainEntityImpl>
 
     @Query("DELETE FROM detail_copyright")
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(detailCopyrightEntities: List<DetailCopyrightEntityImpl>)
+    abstract fun insert(detailCopyrightMainEntities: List<DetailCopyrightMainEntityImpl>)
 }

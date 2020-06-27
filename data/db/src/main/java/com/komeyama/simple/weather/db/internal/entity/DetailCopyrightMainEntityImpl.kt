@@ -4,14 +4,16 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.komeyama.simple.weather.db.DetailCopyrightEntity
+import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
 
 @Entity(tableName = "detail_copyright")
-class DetailCopyrightEntityImpl(
-    @PrimaryKey @ColumnInfo(name = "title")
+class DetailCopyrightMainEntityImpl(
+    @PrimaryKey @ColumnInfo(name = "copyright_id")
+    override var copyrightID: Long,
+    @ColumnInfo(name = "title")
     override var title: String,
     @ColumnInfo(name = "link")
     override var link: String,
     @Embedded(prefix = "detail_image")
     override var image: DetailImageEntityImpl
-) : DetailCopyrightEntity
+) : DetailCopyrightMainEntity
