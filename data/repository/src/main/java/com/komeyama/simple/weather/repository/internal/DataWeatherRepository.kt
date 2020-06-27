@@ -1,7 +1,6 @@
 package com.komeyama.simple.weather.repository.internal
 
 import com.komeyama.simple.weather.api.ForecastApi
-import com.komeyama.simple.weather.db.DetailForecastDatabase
 import com.komeyama.simple.weather.db.ForecastInfoDatabase
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 import com.komeyama.simple.weather.db.ForecastMainDatabase
@@ -34,16 +33,20 @@ internal class DataWeatherRepository @Inject constructor(
         var info: List<ForecastInfoEntity> = forecastInfoDatabase.forecastInfo()
         info.forEach { forecastInfo ->
             Timber.d("dummyFunc:load 00: %s\n", forecastInfo.forecastInfoEntityImpl)
-            forecastInfo.detailForecastEntityImpl.forEach {
+            forecastInfo.detailForecastEntityImpl.forEach { detailForecast ->
                 Timber.d(
-                    "dummyFunc:load 01: %s %s %s %s %s %s %s\n",
-                    it.id,
-                    it.parentId,
-                    it.date,
-                    it.dateLabel,
-                    it.telop,
-                    it.image,
-                    it.temperature
+                    "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s %s\n temperature:%s\n",
+                    detailForecast.id,
+                    detailForecast.parentId,
+                    detailForecast.date,
+                    detailForecast.dateLabel,
+                    detailForecast.telop,
+                    detailForecast.image.title,
+                    detailForecast.image.link,
+                    detailForecast.image.url,
+                    detailForecast.image.width,
+                    detailForecast.image.height,
+                    detailForecast.temperature
                 )
             }
             forecastInfo.pinpointLocationEntityImpl.forEach {
@@ -65,10 +68,22 @@ internal class DataWeatherRepository @Inject constructor(
             ),
             listOf(
                 DetailForecastResponse(
-                    0, 0, "aa1", "aa2", "aa3", "aa4", "aa5"
+                    0,
+                    0,
+                    "aa1",
+                    "aa2",
+                    "aa3",
+                    DetailImageResponse("aai1", "aai1", "aai1", "aai1", "aai1"),
+                    "aa5"
                 ),
                 DetailForecastResponse(
-                    1, 0, "aaa1", "aaa2", "aaa3", "aaa4", "aaa5"
+                    1,
+                    0,
+                    "aaa1",
+                    "aaa2",
+                    "aaa3",
+                    DetailImageResponse("aaai1", "aaai1", "aaai1", "aaai1", "aaai1"),
+                    "aaa5"
                 )
             ),
             listOf(

@@ -1,9 +1,6 @@
 package com.komeyama.simple.weather.db.internal.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.komeyama.simple.weather.db.DetailForecastEntity
 
 @Entity(
@@ -26,8 +23,8 @@ class DetailForecastEntityImpl(
     override var dateLabel: String,
     @ColumnInfo(name = "telop")
     override var telop: String,
-    @ColumnInfo(name = "image")
-    override var image: String,
+    @Embedded(prefix = "image")
+    override var image: DetailImageEntityImpl,
     @ColumnInfo(name = "temperature")
     override var temperature: String
 ) : DetailForecastEntity

@@ -48,7 +48,7 @@ internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEnti
         date = date,
         dateLabel = dateLabel,
         telop = telop,
-        image = image,
+        image = image.toDetailImageEntity(),
         temperature = temperature
     )
 }
@@ -78,11 +78,21 @@ internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightM
         parentId = parentId,
         title = title,
         link = link,
-        image = image.toDetailImageEntity()
+        image = image.toDetailImageOfCompanyEntity()
     )
 }
 
-internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImplOfCopyright {
+internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImpl {
+    return DetailImageEntityImpl(
+        title = title,
+        link = link,
+        url = url,
+        width = width,
+        height = height
+    )
+}
+
+internal fun DetailImageResponse.toDetailImageOfCompanyEntity(): DetailImageEntityImplOfCopyright {
     return DetailImageEntityImplOfCopyright(
         title = title,
         link = link,

@@ -26,7 +26,7 @@ data class DetailForecastResponse(
     var date: String,
     var dateLabel: String,
     var telop: String,
-    var image: String,
+    var image: DetailImageResponse,
     var temperature: String
 )
 
