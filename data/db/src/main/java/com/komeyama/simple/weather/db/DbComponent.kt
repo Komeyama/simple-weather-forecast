@@ -16,10 +16,11 @@ import kotlin.coroutines.CoroutineContext
 interface DbComponent {
     fun forecastInfoDatabase(): ForecastInfoDatabase
     fun forecastMainDatabase(): ForecastMainDatabase
+    fun detailCopyrightDatabase(): DetailCopyrightDatabase
     fun detailDescriptionDatabase(): DetailDescriptionDatabase
     fun detailForecastDatabase(): DetailForecastDatabase
+    fun detailImageDatabase(): DetailImageDatabase
     fun detailLocationDatabase(): DetailLocationDatabase
-    fun detailCopyrightDatabase(): DetailCopyrightDatabase
     fun pinpointLocationDatabase(): PinpointLocationDatabase
 
     @Component.Factory

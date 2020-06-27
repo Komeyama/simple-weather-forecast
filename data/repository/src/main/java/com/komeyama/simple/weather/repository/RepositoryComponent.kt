@@ -22,10 +22,11 @@ interface RepositoryComponent {
             @BindsInstance forecastApi: ForecastApi,
             @BindsInstance forecastInfoDatabase: ForecastInfoDatabase,
             @BindsInstance forecastMainDatabase: ForecastMainDatabase,
+            @BindsInstance detailCopyrightDatabase: DetailCopyrightDatabase,
             @BindsInstance detailDescriptionDatabase: DetailDescriptionDatabase,
             @BindsInstance detailForecastDatabase: DetailForecastDatabase,
+            @BindsInstance detailImageDatabase: DetailImageDatabase,
             @BindsInstance detailLocationDatabase: DetailLocationDatabase,
-            @BindsInstance detailCopyrightDatabase: DetailCopyrightDatabase,
             @BindsInstance pinpointLocationDatabase: PinpointLocationDatabase
         ): RepositoryComponent
     }

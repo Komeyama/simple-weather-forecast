@@ -6,7 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.komeyama.simple.weather.db.internal.CacheDatabase
 import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightDao
+import com.komeyama.simple.weather.db.internal.dao.DetailImageDao
 import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 
@@ -25,20 +27,22 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     private lateinit var copyrightDao: DetailCopyrightDao
+    private lateinit var imageDao: DetailImageDao
     private lateinit var cacheDatabase: CacheDatabase
 
     @Before
-    fun createCopyrightDb() {
+    fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         cacheDatabase = Room.inMemoryDatabaseBuilder(
             context, CacheDatabase::class.java
         ).build()
         copyrightDao = cacheDatabase.detailCopyrightDao()
+        imageDao = cacheDatabase.detailImageDao()
     }
 
     @After
     @Throws(IOException::class)
-    fun closeCopyrightDb() {
+    fun closeDb() {
         cacheDatabase.close()
     }
 
@@ -58,5 +62,27 @@ class ExampleInstrumentedTest {
         assertThat(detailCopyrightInfo[0].title, equalTo("copyrightTitle"))
         assertThat(detailCopyrightInfo[0].link, equalTo("copyrightLink"))
         assertThat(detailCopyrightInfo[0].image, equalTo("copyrightImage"))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun writeImageAndReadInList() {
+        imageDao.insert(
+            listOf(
+                DetailImageEntityImpl(
+                    "imageTitle",
+                    "imageLink",
+                    "imageUrl",
+                    "imageWidth",
+                    "imageHeight"
+                )
+            )
+        )
+        val detailImageInfo = imageDao.detailImageInfo()
+        assertThat(detailImageInfo[0].title, equalTo("imageTitle"))
+        assertThat(detailImageInfo[0].link, equalTo("imageLink"))
+        assertThat(detailImageInfo[0].url, equalTo("imageUrl"))
+        assertThat(detailImageInfo[0].width, equalTo("imageWidth"))
+        assertThat(detailImageInfo[0].height, equalTo("imageHeight"))
     }
 }

@@ -9,6 +9,16 @@ import javax.inject.Singleton
 
 @Module
 class DbComponentModule {
+
+    @Provides
+    @Singleton
+    fun provideForecastInfoStore(
+        application: Application
+    ): ForecastInfoDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "forecast_info.db").forecastInfoDatabase()
+    }
+
     @Provides
     @Singleton
     fun provideForecastStore(
@@ -16,6 +26,15 @@ class DbComponentModule {
     ): ForecastMainDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "forecast_info.db").forecastMainDatabase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailCopyrightStore(
+        application: Application
+    ): DetailCopyrightDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "detail_location.db").detailCopyrightDatabase()
     }
 
     @Provides
@@ -38,29 +57,20 @@ class DbComponentModule {
 
     @Provides
     @Singleton
+    fun provideDetailImageStore(
+        application: Application
+    ): DetailImageDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "detail_location.db").detailImageDatabase()
+    }
+
+    @Provides
+    @Singleton
     fun provideDetailLocationStore(
         application: Application
     ): DetailLocationDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_location.db").detailLocationDatabase()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDetailCopyrightStore(
-        application: Application
-    ): DetailCopyrightDatabase {
-        return DbComponent.factory()
-            .create(application, Dispatchers.IO, "detail_location.db").detailCopyrightDatabase()
-    }
-
-    @Provides
-    @Singleton
-    fun provideForecastInfoStore(
-        application: Application
-    ): ForecastInfoDatabase {
-        return DbComponent.factory()
-            .create(application, Dispatchers.IO, "forecast_info.db").forecastInfoDatabase()
     }
 
     @Provides

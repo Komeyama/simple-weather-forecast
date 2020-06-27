@@ -30,6 +30,9 @@ internal abstract class DbModule {
     abstract fun detailForecastDatabase(impl: RoomDatabase): DetailForecastDatabase
 
     @Binds
+    abstract fun detailImageDatabase(impl: RoomDatabase): DetailImageDatabase
+
+    @Binds
     abstract fun detailLocationDatabase(impl: RoomDatabase): DetailLocationDatabase
 
     @Binds
@@ -71,6 +74,11 @@ internal abstract class DbModule {
         @Provides
         fun detailForecastDao(database: CacheDatabase): DetailForecastDao {
             return database.detailForecastDao()
+        }
+
+        @Provides
+        fun detailImageDao(database: CacheDatabase): DetailImageDao {
+            return database.detailImageDao()
         }
 
         @Provides
