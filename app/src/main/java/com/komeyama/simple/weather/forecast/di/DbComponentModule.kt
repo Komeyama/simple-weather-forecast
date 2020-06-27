@@ -15,7 +15,7 @@ class DbComponentModule {
         application: Application
     ): ForecastMainDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "forecast_info.db").forecastDatabase()
+            .create(application, Dispatchers.IO, "forecast_info.db").forecastMainDatabase()
     }
 
     @Provides
@@ -43,6 +43,15 @@ class DbComponentModule {
     ): DetailLocationDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_location.db").detailLocationDatabase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailCopyrightStore(
+        application: Application
+    ): DetailCopyrightDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "detail_location.db").detailCopyrightDatabase()
     }
 
     @Provides

@@ -27,6 +27,7 @@ object RepositoryComponentModule {
         detailDescriptionDatabase: DetailDescriptionDatabase,
         detailForecastDatabase: DetailForecastDatabase,
         detailLocationDatabase: DetailLocationDatabase,
+        detailCopyrightDatabase: DetailCopyrightDatabase,
         pinpointLocationDatabase: PinpointLocationDatabase
     ): RepositoryComponent {
         return RepositoryComponent.factory().create(
@@ -36,6 +37,7 @@ object RepositoryComponentModule {
             forecastMainDatabase = forecastMainDatabase,
             detailDescriptionDatabase = detailDescriptionDatabase,
             detailLocationDatabase = detailLocationDatabase,
+            detailCopyrightDatabase = detailCopyrightDatabase,
             pinpointLocationDatabase = pinpointLocationDatabase
         )
     }

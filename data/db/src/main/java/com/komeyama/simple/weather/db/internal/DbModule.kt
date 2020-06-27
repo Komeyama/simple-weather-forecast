@@ -33,6 +33,9 @@ internal abstract class DbModule {
     abstract fun detailLocationDatabase(impl: RoomMainDatabase): DetailLocationDatabase
 
     @Binds
+    abstract fun detailCopyrightDatabase(impl: RoomMainDatabase): DetailCopyrightDatabase
+
+    @Binds
     abstract fun pinpointLocationDatabase(impl: RoomMainDatabase): PinpointLocationDatabase
 
     @Module
@@ -73,6 +76,11 @@ internal abstract class DbModule {
         @Provides
         fun detailLocationDao(database: CacheDatabase): DetailLocationDao {
             return database.detailLocationDao()
+        }
+
+        @Provides
+        fun detailCopyrightEntityDao(database: CacheDatabase): DetailCopyrightDao {
+            return database.detailCopyrightDao()
         }
 
         @Provides

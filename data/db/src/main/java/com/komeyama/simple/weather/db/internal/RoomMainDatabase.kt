@@ -1,6 +1,8 @@
 package com.komeyama.simple.weather.db.internal
 
 import com.komeyama.simple.weather.db.*
+import com.komeyama.simple.weather.db.internal.dao.*
+import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightDao
 import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
@@ -20,12 +22,14 @@ internal class RoomMainDatabase @Inject constructor(
     private val forecastMainInfoDao: ForecastMainInfoDao,
     private val detailLocationDao: DetailLocationDao,
     private val detailForecastDao: DetailForecastDao,
+    private val detailCopyrightEntityDao: DetailCopyrightDao,
     private val pinpointLocationDao: PinpointLocationDao
 ) : ForecastInfoDatabase,
     ForecastMainDatabase,
     DetailDescriptionDatabase,
     DetailForecastDatabase,
     DetailLocationDatabase,
+    DetailCopyrightDatabase,
     PinpointLocationDatabase
 {
 
@@ -47,6 +51,10 @@ internal class RoomMainDatabase @Inject constructor(
 
     override fun detailLocationEntity(): List<DetailLocationEntity> {
         return cacheDatabase.detailLocationDao().detailLocationInfo()
+    }
+
+    override fun detailCopyrightEntity(): List<DetailCopyrightEntity> {
+        return cacheDatabase.detailCopyrightDao().detailCopyright()
     }
 
     override fun pinpointLocationEntity(): List<PinpointLocationEntity> {
