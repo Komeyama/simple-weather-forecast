@@ -18,25 +18,25 @@ import javax.inject.Singleton
 @Module(includes = [DbModule.Providers::class])
 internal abstract class DbModule {
     @Binds
-    abstract fun forecastInfoDatabase(impl: RoomMainDatabase): ForecastInfoDatabase
+    abstract fun forecastInfoDatabase(impl: RoomDatabase): ForecastInfoDatabase
 
     @Binds
-    abstract fun forecastDatabase(impl: RoomMainDatabase): ForecastMainDatabase
+    abstract fun forecastDatabase(impl: RoomDatabase): ForecastMainDatabase
 
     @Binds
-    abstract fun detailDescriptionDatabase(impl: RoomMainDatabase): DetailDescriptionDatabase
+    abstract fun detailDescriptionDatabase(impl: RoomDatabase): DetailDescriptionDatabase
 
     @Binds
-    abstract fun detailForecastDatabase(impl: RoomMainDatabase): DetailForecastDatabase
+    abstract fun detailForecastDatabase(impl: RoomDatabase): DetailForecastDatabase
 
     @Binds
-    abstract fun detailLocationDatabase(impl: RoomMainDatabase): DetailLocationDatabase
+    abstract fun detailLocationDatabase(impl: RoomDatabase): DetailLocationDatabase
 
     @Binds
-    abstract fun detailCopyrightDatabase(impl: RoomMainDatabase): DetailCopyrightDatabase
+    abstract fun detailCopyrightDatabase(impl: RoomDatabase): DetailCopyrightDatabase
 
     @Binds
-    abstract fun pinpointLocationDatabase(impl: RoomMainDatabase): PinpointLocationDatabase
+    abstract fun pinpointLocationDatabase(impl: RoomDatabase): PinpointLocationDatabase
 
     @Module
     internal object Providers {

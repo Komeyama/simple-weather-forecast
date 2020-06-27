@@ -17,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class RoomMainDatabase @Inject constructor(
+internal class RoomDatabase @Inject constructor(
     private val cacheDatabase: CacheDatabase,
     private val forecastMainInfoDao: ForecastMainInfoDao,
     private val detailLocationDao: DetailLocationDao,
