@@ -30,7 +30,7 @@ internal class DataWeatherRepository @Inject constructor(
     }
 
     override suspend fun dummyLoad() {
-        var info: List<ForecastInfoEntity> = forecastInfoDatabase.forecastInfo()
+        val info: List<ForecastInfoEntity> = forecastInfoDatabase.forecastInfo()
         info.forEach { forecastInfo ->
             Timber.d(
                 "dummyFunc:load 00:\n forecastId:%s\n title:%s\n link:%s\n publicTime:%s\n description:%s %s\n detailLocation:%s %s %s\n",

@@ -1,5 +1,12 @@
 package com.komeyama.simple.weather.model
 
+data class Response(
+    val mainResponse: MainResponse,
+    val detailForecastResponse: List<DetailForecastResponse>,
+    val pinpointLocationResponse: List<PinpointLocationResponse>,
+    val copyright: List<DetailCopyrightResponse>
+)
+
 data class MainResponse(
     var id: Long,
     var title: String,
