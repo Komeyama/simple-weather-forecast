@@ -14,7 +14,7 @@ import javax.inject.Singleton
     ]
 )
 interface RepositoryComponent {
-    fun weatherRepository(): WeatherRepository
+    fun forecastRepository(): ForecastRepository
 
     @Component.Factory
     interface Factory {

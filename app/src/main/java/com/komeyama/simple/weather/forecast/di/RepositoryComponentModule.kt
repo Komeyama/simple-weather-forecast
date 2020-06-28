@@ -3,7 +3,7 @@ package com.komeyama.simple.weather.forecast.di
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.repository.RepositoryComponent
-import com.komeyama.simple.weather.repository.WeatherRepository
+import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -14,8 +14,8 @@ object RepositoryComponentModule {
     @Singleton
     fun provideRepository(
         repositoryComponent: RepositoryComponent
-    ): WeatherRepository {
-        return repositoryComponent.weatherRepository()
+    ): ForecastRepository {
+        return repositoryComponent.forecastRepository()
     }
 
     @Provides

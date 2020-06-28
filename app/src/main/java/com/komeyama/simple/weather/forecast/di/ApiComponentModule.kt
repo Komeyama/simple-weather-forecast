@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class ApiComponentModule {
     @Provides
     @Singleton
-    fun provideRepository(
+    fun provideForecastService(
         apiComponent: ApiComponent
     ): ForecastApi {
         return apiComponent.forecastService()

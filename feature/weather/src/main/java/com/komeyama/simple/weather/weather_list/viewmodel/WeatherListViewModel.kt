@@ -2,13 +2,13 @@ package com.komeyama.simple.weather.weather_list.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.komeyama.simple.weather.repository.WeatherRepository
+import com.komeyama.simple.weather.repository.ForecastRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
 class WeatherListViewModel @Inject constructor(
-        private val weatherRepository: WeatherRepository
+        private val weatherRepository: ForecastRepository
 ) : ViewModel() {
 
     fun callWeatherRepositoryMethod() {

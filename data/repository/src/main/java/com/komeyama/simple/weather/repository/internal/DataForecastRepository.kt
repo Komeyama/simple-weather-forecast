@@ -5,7 +5,7 @@ import com.komeyama.simple.weather.db.ForecastInfoDatabase
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 import com.komeyama.simple.weather.db.ForecastMainDatabase
 import com.komeyama.simple.weather.model.*
-import com.komeyama.simple.weather.repository.WeatherRepository
+import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
 import dagger.Module
 import kotlinx.coroutines.runBlocking
@@ -16,7 +16,7 @@ internal class DataWeatherRepository @Inject constructor(
     private val forecastApi: ForecastApi,
     private val forecastInfoDatabase: ForecastInfoDatabase,
     private val forecastMainInfoDatabase: ForecastMainDatabase
-) : WeatherRepository {
+) : ForecastRepository {
 
     override fun dummyFunc() {
         val forecastInfo: ForecastInfo? = runBlocking {
@@ -124,5 +124,5 @@ internal class DataWeatherRepository @Inject constructor(
 internal abstract class RepositoryModule {
 
     @Binds
-    abstract fun weatherRepository(impl: DataWeatherRepository): WeatherRepository
+    abstract fun forecastRepository(impl: DataWeatherRepository): ForecastRepository
 }

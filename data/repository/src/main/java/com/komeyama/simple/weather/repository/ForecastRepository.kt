@@ -1,6 +1,6 @@
 package com.komeyama.simple.weather.repository
 
-interface WeatherRepository {
+interface ForecastRepository {
     fun dummyFunc()
     suspend fun dummySave()
     suspend fun dummyLoad()
