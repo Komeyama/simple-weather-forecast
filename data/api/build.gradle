@@ -43,6 +43,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
+    // ktor
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
+    implementation("io.ktor:ktor-client-android:1.3.0")
+    implementation("io.ktor:ktor-client-serialization-jvm:1.3.0")
+
     // coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4"
