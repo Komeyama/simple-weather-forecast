@@ -34,18 +34,23 @@ internal class ApiModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideForecastApi(retrofit: Retrofit): ForecastApi {
-        return retrofit.create(ForecastApi::class.java)
-    }
 
     @Provides
     fun provideHttpClient(): HttpClient {
         return HttpClient(OkHttp) {
             install(JsonFeature) {
-                serializer = KotlinxSerializer()
+                serializer = KotlinxSerializer(
+                    Json(
+                        JsonConfiguration.Stable.copy()
+                    )
+                )
             }
         }
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastApi(httpClient: HttpClient): ForecastApi {
+        return ForecastApiImpl(httpClient)
     }
 }

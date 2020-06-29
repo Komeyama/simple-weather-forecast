@@ -1,5 +1,8 @@
 package com.komeyama.simple.weather.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Response(
     val mainResponse: MainResponse,
     val detailForecastResponse: List<DetailForecastResponse>,
@@ -7,6 +10,7 @@ data class Response(
     val copyright: List<DetailCopyrightResponse>
 )
 
+@Serializable
 data class MainResponse(
     var id: Long,
     var title: String,
@@ -16,17 +20,20 @@ data class MainResponse(
     var detailLocationResponse: DetailLocationResponse
 )
 
+@Serializable
 data class DetailLocationResponse(
     var area: String,
     var prefecture: String,
     var city: String
 )
 
+@Serializable
 data class DetailDescriptionResponse(
     var text: String,
     var publicTime: String
 )
 
+@Serializable
 data class DetailForecastResponse(
     var id: Long,
     var parentId: Long,
@@ -37,6 +44,7 @@ data class DetailForecastResponse(
     var temperature: String
 )
 
+@Serializable
 data class PinpointLocationResponse(
     var id: Long,
     var parentId: Long,
@@ -44,6 +52,7 @@ data class PinpointLocationResponse(
     var name: String
 )
 
+@Serializable
 data class DetailCopyrightResponse(
     var copyrightID: Long,
     var parentId: Long,
@@ -52,6 +61,7 @@ data class DetailCopyrightResponse(
     var image: DetailImageResponse
 )
 
+@Serializable
 data class DetailImageResponse(
     var title: String,
     var link: String,
