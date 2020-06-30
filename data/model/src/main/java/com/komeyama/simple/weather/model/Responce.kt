@@ -41,7 +41,7 @@ data class DetailForecastResponse(
     var dateLabel: String,
     var telop: String,
     var image: DetailImageResponse,
-    var temperature: String
+    var temperature: TemperatureResponse
 )
 
 @Serializable
@@ -68,4 +68,16 @@ data class DetailImageResponse(
     var url: String,
     var width: String,
     var height: String
+)
+
+@Serializable
+data class TemperatureResponse(
+    var min: DetailTemperatureResponse?,
+    var max: DetailTemperatureResponse?
+)
+
+@Serializable
+data class DetailTemperatureResponse(
+    var celsius: String,
+    var fahrenheit: String
 )

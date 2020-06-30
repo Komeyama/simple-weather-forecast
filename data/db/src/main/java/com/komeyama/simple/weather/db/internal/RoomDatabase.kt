@@ -27,13 +27,15 @@ internal class RoomDatabase @Inject constructor(
     private val pinpointLocationDao: PinpointLocationDao
 ) : ForecastInfoDatabase,
     ForecastMainDatabase,
+    DetailCopyrightMainDatabase,
     DetailDescriptionDatabase,
     DetailForecastDatabase,
     DetailImageDatabase,
     DetailImageOfCopyrightDatabase,
     DetailLocationDatabase,
-    DetailCopyrightMainDatabase,
-    PinpointLocationDatabase {
+    DetailTemperatureDatabase,
+    PinpointLocationDatabase,
+    TemperatureDatabase {
 
     override suspend fun forecastInfo(): List<ForecastInfoEntity> = withContext(Dispatchers.IO) {
         cacheDatabase.forecastInfoDao().forecastInfo()
@@ -41,6 +43,10 @@ internal class RoomDatabase @Inject constructor(
 
     override fun forecastMainInfoEntity(): List<ForecastMainInfoEntity> {
         return cacheDatabase.forecastMainInfoDao().forecastMainInfo()
+    }
+
+    override fun detailCopyrightMainEntity(): List<DetailCopyrightMainEntity> {
+        return cacheDatabase.detailCopyrightMainDao().detailCopyrightMainInfo()
     }
 
     override fun detailDescriptionEntity(): List<DetailDescriptionEntity> {
@@ -63,12 +69,16 @@ internal class RoomDatabase @Inject constructor(
         return cacheDatabase.detailLocationDao().detailLocationInfo()
     }
 
-    override fun detailCopyrightMainEntity(): List<DetailCopyrightMainEntity> {
-        return cacheDatabase.detailCopyrightMainDao().detailCopyrightMainInfo()
+    override fun detailTemperatureEntity(): List<DetailTemperatureEntity> {
+        return cacheDatabase.detailTemperatureDao().detailTemperatureInfo()
     }
 
     override fun pinpointLocationEntity(): List<PinpointLocationEntity> {
         return cacheDatabase.pinpointLocationDao().pinpointLocations()
+    }
+
+    override fun temperatureEntity(): List<TemperatureEntity> {
+        return cacheDatabase.temperatureDao().temperatureInfo()
     }
 
     override suspend fun save(

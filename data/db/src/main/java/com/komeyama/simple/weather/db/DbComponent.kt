@@ -22,7 +22,9 @@ interface DbComponent {
     fun detailImageDatabase(): DetailImageDatabase
     fun detailImageOfCopyrightDatabase(): DetailImageOfCopyrightDatabase
     fun detailLocationDatabase(): DetailLocationDatabase
+    fun detailTemperatureDatabase(): DetailTemperatureDatabase
     fun pinpointLocationDatabase(): PinpointLocationDatabase
+    fun temperatureDatabase(): TemperatureDatabase
 
     @Component.Factory
     interface Factory {

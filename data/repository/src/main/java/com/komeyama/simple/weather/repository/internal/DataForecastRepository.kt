@@ -95,7 +95,10 @@ internal class DataWeatherRepository @Inject constructor(
                     "aa2",
                     "aa3",
                     DetailImageResponse("aai1", "aai1", "aai1", "aai1", "aai1"),
-                    "aa5"
+                    TemperatureResponse(
+                        DetailTemperatureResponse("celsius1", "fahrenheit1"),
+                        DetailTemperatureResponse("celsius2", "fahrenheit2")
+                    )
                 ),
                 DetailForecastResponse(
                     1,
@@ -104,7 +107,10 @@ internal class DataWeatherRepository @Inject constructor(
                     "aaa2",
                     "aaa3",
                     DetailImageResponse("aaai1", "aaai1", "aaai1", "aaai1", "aaai1"),
-                    "aaa5"
+                    TemperatureResponse(
+                        DetailTemperatureResponse("celsius1", "fahrenheit1"),
+                        DetailTemperatureResponse("celsius2", "fahrenheit2")
+                    )
                 )
             ),
             listOf(

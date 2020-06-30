@@ -24,6 +24,9 @@ internal abstract class DbModule {
     abstract fun forecastDatabase(impl: RoomDatabase): ForecastMainDatabase
 
     @Binds
+    abstract fun detailCopyrightMainDatabase(impl: RoomDatabase): DetailCopyrightMainDatabase
+
+    @Binds
     abstract fun detailDescriptionDatabase(impl: RoomDatabase): DetailDescriptionDatabase
 
     @Binds
@@ -39,10 +42,13 @@ internal abstract class DbModule {
     abstract fun detailLocationDatabase(impl: RoomDatabase): DetailLocationDatabase
 
     @Binds
-    abstract fun detailCopyrightMainDatabase(impl: RoomDatabase): DetailCopyrightMainDatabase
+    abstract fun detailTemperatureDatabase(impl: RoomDatabase): DetailTemperatureDatabase
 
     @Binds
     abstract fun pinpointLocationDatabase(impl: RoomDatabase): PinpointLocationDatabase
+
+    @Binds
+    abstract fun temperatureDatabase(impl: RoomDatabase): TemperatureDatabase
 
     @Module
     internal object Providers {
@@ -70,6 +76,11 @@ internal abstract class DbModule {
         }
 
         @Provides
+        fun detailCopyrightEntityDao(database: CacheDatabase): DetailCopyrightMainDao {
+            return database.detailCopyrightMainDao()
+        }
+
+        @Provides
         fun detailDescriptionDao(database: CacheDatabase): DetailDescriptionDao {
             return database.detailDescriptionDao()
         }
@@ -90,13 +101,18 @@ internal abstract class DbModule {
         }
 
         @Provides
-        fun detailCopyrightEntityDao(database: CacheDatabase): DetailCopyrightMainDao {
-            return database.detailCopyrightMainDao()
+        fun detailTemperatureDao(database: CacheDatabase): DetailTemperatureDao {
+            return database.detailTemperatureDao()
         }
 
         @Provides
         fun pinpointLocationDao(database: CacheDatabase): PinpointLocationDao {
              return database.pinpointLocationDao()
+        }
+
+        @Provides
+        fun temperatureDao(database: CacheDatabase): TemperatureDao {
+            return database.temperatureDao()
         }
     }
 

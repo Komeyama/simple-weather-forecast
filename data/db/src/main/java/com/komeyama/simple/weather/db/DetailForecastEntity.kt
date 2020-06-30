@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.db
 
 import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.TemperatureEntityImpl
 
 interface DetailForecastEntity {
     var id: Long
@@ -9,5 +10,5 @@ interface DetailForecastEntity {
     var dateLabel: String
     var telop: String
     var image: DetailImageEntityImpl
-    var temperature: String
+    var temperature: TemperatureEntityImpl
 }

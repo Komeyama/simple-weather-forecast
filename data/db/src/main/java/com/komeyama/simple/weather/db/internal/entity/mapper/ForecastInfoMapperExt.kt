@@ -1,9 +1,7 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
-import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
 import com.komeyama.simple.weather.db.internal.entity.*
 import com.komeyama.simple.weather.model.*
-
 
 internal fun List<MainResponse>.toForecastMainInfoEntities(): List<ForecastMainInfoEntityImpl> =
     this.map {
@@ -49,7 +47,21 @@ internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEnti
         dateLabel = dateLabel,
         telop = telop,
         image = image.toDetailImageEntity(),
-        temperature = temperature
+        temperature = temperature.toTemperatureEntity()
+    )
+}
+
+internal fun TemperatureResponse.toTemperatureEntity(): TemperatureEntityImpl {
+    return TemperatureEntityImpl(
+        min = min?.toDetailTemperatureEntity(),
+        max = max?.toDetailTemperatureEntity()
+    )
+}
+
+internal fun DetailTemperatureResponse.toDetailTemperatureEntity(): DetailTemperatureEntityImpl? {
+    return DetailTemperatureEntityImpl(
+        celsius = celsius,
+        fahrenheit = fahrenheit
     )
 }
 
