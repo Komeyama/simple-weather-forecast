@@ -21,6 +21,7 @@ import com.komeyama.simple.weather.db.internal.entity.*
     DetailLocationEntityImpl::class,
     DetailTemperatureEntityImpl::class,
     PinpointLocationEntityImpl::class,
+    PinpointLocationOfCopyEntityImpl::class,
     TemperatureEntityImpl::class
 ], version = 1)
 internal abstract class CacheDatabase : RoomDatabase() {
@@ -33,5 +34,6 @@ internal abstract class CacheDatabase : RoomDatabase() {
     abstract fun detailLocationDao(): DetailLocationDao
     abstract fun detailTemperatureDao(): DetailTemperatureDao
     abstract fun pinpointLocationDao(): PinpointLocationDao
+    abstract fun pinpointLocationOfCopyDao(): PinpointLocationOfCopyDao
     abstract fun temperatureDao(): TemperatureDao
 }
