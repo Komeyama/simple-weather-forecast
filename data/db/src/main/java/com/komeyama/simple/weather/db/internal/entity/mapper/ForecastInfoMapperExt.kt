@@ -40,7 +40,7 @@ internal fun List<DetailForecastResponse>.toDetailForecastEntities(): List<Detai
 
 internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEntityImpl {
     return DetailForecastEntityImpl(
-        parentId = parentId,
+        parentId = 0,
         date = date,
         dateLabel = dateLabel,
         telop = telop,
@@ -70,30 +70,45 @@ internal fun List<PinpointLocationResponse>.toPinpointLocationEntities(): List<P
 
 internal fun PinpointLocationResponse.toPinpointLocationEntity(): PinpointLocationEntityImpl {
     return PinpointLocationEntityImpl(
-        parentId = parentId,
+        parentId = 0,
         link = link,
         name = name
     )
 }
 
-internal fun List<DetailCopyrightResponse>.toDetailCopyrightEntities(): List<DetailCopyrightMainEntityImpl> =
+internal fun List<DetailCopyrightResponse>.toDetailCopyrightEntities(): List<DetailCopyrightEntityImpl> =
     this.map {
         it.toDetailCopyrightEntity()
     }
 
-internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightMainEntityImpl {
-    return DetailCopyrightMainEntityImpl(
-        parentId = parentId,
-        title = title,
+internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightEntityImpl {
+    return DetailCopyrightEntityImpl(
+        detailCopyrightMainEntity = DetailCopyrightMainEntityImpl(
+            parentId = 0,
+            title = title,
+            link = link,
+            image = image?.toDetailImageOfCompanyEntity()
+        ),
+        pinpointLocationOfCopyEntityImpl = provider.toPinpointLocationOfCopyEntities()
+    )
+}
+
+internal fun List<PinpointLocationResponse?>.toPinpointLocationOfCopyEntities(): List<PinpointLocationOfCopyEntityImpl?> =
+    this.map {
+        it?.toPinpointLocationOfCopyEntity()
+    }
+
+internal fun PinpointLocationResponse.toPinpointLocationOfCopyEntity(): PinpointLocationOfCopyEntityImpl {
+    return PinpointLocationOfCopyEntityImpl(
+        parentId = 0,
         link = link,
-        image = image.toDetailImageOfCompanyEntity()
+        name = name
     )
 }
 
 internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImpl {
     return DetailImageEntityImpl(
         title = title,
-        link = link,
         url = url,
         width = width,
         height = height
@@ -103,7 +118,6 @@ internal fun DetailImageResponse.toDetailImageEntity(): DetailImageEntityImpl {
 internal fun DetailImageResponse.toDetailImageOfCompanyEntity(): DetailImageEntityImplOfCopyright {
     return DetailImageEntityImplOfCopyright(
         title = title,
-        link = link,
         url = url,
         width = width,
         height = height

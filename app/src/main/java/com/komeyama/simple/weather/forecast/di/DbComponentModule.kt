@@ -30,6 +30,15 @@ class DbComponentModule {
 
     @Provides
     @Singleton
+    fun provideDetailCopyrightStore(
+        application: Application
+    ): DetailCopyrightDatabase {
+        return DbComponent.factory()
+            .create(application, Dispatchers.IO, "detail_copyright.db").detailCopyrightDatabase()
+    }
+
+    @Provides
+    @Singleton
     fun provideDetailCopyrightMainStore(
         application: Application
     ): DetailCopyrightMainDatabase {

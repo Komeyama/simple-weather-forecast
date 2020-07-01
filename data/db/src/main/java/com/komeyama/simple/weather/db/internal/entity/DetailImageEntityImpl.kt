@@ -9,8 +9,6 @@ import com.komeyama.simple.weather.db.DetailImageEntity
 class DetailImageEntityImpl (
     @PrimaryKey @ColumnInfo(name = "title")
     override var title: String,
-    @ColumnInfo(name = "link")
-    override var link: String,
     @ColumnInfo(name = "url")
     override var url: String,
     @ColumnInfo(name = "width")

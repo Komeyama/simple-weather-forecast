@@ -1,31 +1,28 @@
 package com.komeyama.simple.weather.db.internal.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
 
 @Entity(
     tableName = "detail_copyright",
     foreignKeys = [
-        androidx.room.ForeignKey(
+        ForeignKey(
             entity = ForecastMainInfoEntityImpl::class,
             parentColumns = arrayOf("forecast_id"),
             childColumns = arrayOf("parent_id"),
-            onDelete = androidx.room.ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class DetailCopyrightMainEntityImpl(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "detail_copyright_main_id")
+    override var id: Int = 0,
     @ColumnInfo(name = "parent_id")
-    override var parentId: Long,
+    override var parentId: Int,
     @ColumnInfo(name = "title")
-    override var title: String,
+    override var title: String?,
     @ColumnInfo(name = "link")
-    override var link: String,
+    override var link: String?,
     @Embedded(prefix = "detail_image")
-    override var image: DetailImageEntityImplOfCopyright
+    override var image: DetailImageEntityImplOfCopyright?
 ) : DetailCopyrightMainEntity

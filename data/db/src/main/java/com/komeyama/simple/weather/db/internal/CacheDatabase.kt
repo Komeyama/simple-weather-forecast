@@ -27,6 +27,7 @@ import com.komeyama.simple.weather.db.internal.entity.*
 internal abstract class CacheDatabase : RoomDatabase() {
     abstract fun forecastInfoDao(): ForecastInfoDao
     abstract fun forecastMainInfoDao(): ForecastMainInfoDao
+    abstract fun detailCopyrightDao(): DetailCopyrightDao
     abstract fun detailCopyrightMainDao(): DetailCopyrightMainDao
     abstract fun detailDescriptionDao(): DetailDescriptionDao
     abstract fun detailForecastDao(): DetailForecastDao
@@ -34,6 +35,5 @@ internal abstract class CacheDatabase : RoomDatabase() {
     abstract fun detailLocationDao(): DetailLocationDao
     abstract fun detailTemperatureDao(): DetailTemperatureDao
     abstract fun pinpointLocationDao(): PinpointLocationDao
-    abstract fun pinpointLocationOfCopyDao(): PinpointLocationOfCopyDao
     abstract fun temperatureDao(): TemperatureDao
 }

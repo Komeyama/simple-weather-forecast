@@ -11,6 +11,6 @@ interface ForecastInfoDatabase {
         mainResponse: MainResponse,
         detailForecastResponse: List<DetailForecastResponse>,
         pinpointLocationResponse: List<PinpointLocationResponse>,
-        copyright: List<DetailCopyrightResponse>
+        copyright: DetailCopyrightResponse
     )
 }

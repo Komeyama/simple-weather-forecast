@@ -10,7 +10,7 @@ data class ForecastInfo(
         var publicTime: String?,
         var description: DetailDescription?,
         var forecasts: List<DetailForecasts>,
-        var pinpointLocations: List<PinpointLocation??>,
+        var pinpointLocations: List<PinpointLocation?>,
         var copyright: DetailCopyright?
 )
 

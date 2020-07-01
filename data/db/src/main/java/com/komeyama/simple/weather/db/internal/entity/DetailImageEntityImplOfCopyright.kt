@@ -11,8 +11,6 @@ data class DetailImageEntityImplOfCopyright(
     var id: Int = 0,
     @ColumnInfo(name = "title")
     override var title: String,
-    @ColumnInfo(name = "link")
-    override var link: String,
     @ColumnInfo(name = "url")
     override var url: String,
     @ColumnInfo(name = "width")

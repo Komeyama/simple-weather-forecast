@@ -19,5 +19,5 @@ internal abstract class DetailCopyrightMainDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(detailCopyrightMainEntities: List<DetailCopyrightMainEntityImpl>)
+    abstract fun insert(detailCopyrightMainEntities: DetailCopyrightMainEntityImpl)
 }

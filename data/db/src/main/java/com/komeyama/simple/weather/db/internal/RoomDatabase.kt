@@ -6,14 +6,14 @@ import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
-import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailCopyrightEntities
+import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImplOfCopyright
+import com.komeyama.simple.weather.db.internal.entity.PinpointLocationEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.PinpointLocationOfCopyEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastMainInfoEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
-import com.komeyama.simple.weather.model.DetailCopyrightResponse
-import com.komeyama.simple.weather.model.DetailForecastResponse
-import com.komeyama.simple.weather.model.MainResponse
-import com.komeyama.simple.weather.model.PinpointLocationResponse
+import com.komeyama.simple.weather.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -24,9 +24,11 @@ internal class RoomDatabase @Inject constructor(
     private val detailLocationDao: DetailLocationDao,
     private val detailForecastDao: DetailForecastDao,
     private val detailCopyrightMainDao: DetailCopyrightMainDao,
-    private val pinpointLocationDao: PinpointLocationDao
+    private val pinpointLocationDao: PinpointLocationDao,
+    private val pinpointLocationOfCopyDao: PinpointLocationDao
 ) : ForecastInfoDatabase,
     ForecastMainDatabase,
+    DetailCopyrightDatabase,
     DetailCopyrightMainDatabase,
     DetailDescriptionDatabase,
     DetailForecastDatabase,
@@ -35,6 +37,7 @@ internal class RoomDatabase @Inject constructor(
     DetailLocationDatabase,
     DetailTemperatureDatabase,
     PinpointLocationDatabase,
+    PinpointLocationOfCopyDatabase,
     TemperatureDatabase {
 
     override suspend fun forecastInfo(): List<ForecastInfoEntity> = withContext(Dispatchers.IO) {
@@ -43,6 +46,10 @@ internal class RoomDatabase @Inject constructor(
 
     override fun forecastMainInfoEntity(): List<ForecastMainInfoEntity> {
         return cacheDatabase.forecastMainInfoDao().forecastMainInfo()
+    }
+
+    override fun detailCopyrightEntity(): List<DetailCopyrightEntity> {
+        return cacheDatabase.detailCopyrightDao().detailCopyLightInfo()
     }
 
     override fun detailCopyrightMainEntity(): List<DetailCopyrightMainEntity> {
@@ -77,6 +84,10 @@ internal class RoomDatabase @Inject constructor(
         return cacheDatabase.pinpointLocationDao().pinpointLocations()
     }
 
+    override fun pinpointLocationOfCopyEntity(): List<PinpointLocationEntity> {
+        return cacheDatabase.pinpointLocationDao().pinpointLocationsOfCopy()
+    }
+
     override fun temperatureEntity(): List<TemperatureEntity> {
         return cacheDatabase.temperatureDao().temperatureInfo()
     }
@@ -85,7 +96,7 @@ internal class RoomDatabase @Inject constructor(
         mainResponse: MainResponse,
         detailForecastResponse: List<DetailForecastResponse>,
         pinpointLocationResponse: List<PinpointLocationResponse>,
-        copyright: List<DetailCopyrightResponse>
+        copyright: DetailCopyrightResponse
     ) {
         withContext(Dispatchers.IO) {
             val list: MutableList<MainResponse> = mutableListOf()
@@ -93,8 +104,20 @@ internal class RoomDatabase @Inject constructor(
             forecastMainInfoDao.insert(list.toForecastMainInfoEntities())
             detailForecastDao.insert(detailForecastResponse.toDetailForecastEntities())
             pinpointLocationDao.insert(pinpointLocationResponse.toPinpointLocationEntities())
-            detailCopyrightMainDao.insert(copyright.toDetailCopyrightEntities())
+            /**
+             * todo:
+             */
+            detailCopyrightMainDao.insert(
+                DetailCopyrightMainEntityImpl(
+                    0,
+                    0, "copy_title01", "copy_link01", DetailImageEntityImplOfCopyright(0, "copy_title02", "copy_url02", "copy_width02", "copy_height02")
+                )
+            )
+            pinpointLocationOfCopyDao.insertOfCopy(
+                listOf(
+                    PinpointLocationOfCopyEntityImpl(0,0,"copy_pin_link","copy_pin_name")
+                )
+            )
         }
     }
-
 }

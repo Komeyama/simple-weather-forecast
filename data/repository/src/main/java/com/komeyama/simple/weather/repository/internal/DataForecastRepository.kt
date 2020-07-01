@@ -47,38 +47,36 @@ internal class DataWeatherRepository @Inject constructor(
                 forecastInfo.forecastInfoEntityImpl.detailLocation.prefecture
             )
             forecastInfo.detailForecastEntityImpl.forEach { detailForecast ->
-                Timber.d(
-                    "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s %s\n temperature:%s\n",
-                    detailForecast.id,
-                    detailForecast.parentId,
-                    detailForecast.date,
-                    detailForecast.dateLabel,
-                    detailForecast.telop,
-                    detailForecast.image.title,
-                    detailForecast.image.link,
-                    detailForecast.image.url,
-                    detailForecast.image.width,
-                    detailForecast.image.height,
-                    detailForecast.temperature
-                )
+//                Timber.d(
+//                    "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s %s\n temperature:%s\n",
+//                    detailForecast.id,
+//                    detailForecast.parentId,
+//                    detailForecast.date,
+//                    detailForecast.dateLabel,
+//                    detailForecast.telop,
+//                    detailForecast.image.title,
+//                    detailForecast.image.url,
+//                    detailForecast.image.width,
+//                    detailForecast.image.height,
+//                    detailForecast.temperature
+//                )
             }
             forecastInfo.pinpointLocationEntityImpl.forEach {
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
             }
-            Timber.d(
-                "dummyFunc:lad 03:%s %s %s %s\n",
-                forecastInfo.copyright?.parentId,
-                forecastInfo.copyright?.title,
-                forecastInfo.copyright?.link,
-                forecastInfo.copyright?.image
-            )
+//            Timber.d(
+//                "dummyFunc:lad 03:%s %s %s %s\n",
+//                forecastInfo.copyright?.parentId,
+//                forecastInfo.copyright?.title,
+//                forecastInfo.copyright?.link,
+//                forecastInfo.copyright?.image
+//            )
         }
     }
 
     override suspend fun dummySave() {
         forecastInfoDatabase.save(
             MainResponse(
-                //DetailForecastResponse("a1","b1","c1","d1","e1"),
                 0,
                 "a1",
                 "b2",
@@ -88,24 +86,20 @@ internal class DataWeatherRepository @Inject constructor(
             ),
             listOf(
                 DetailForecastResponse(
-                    0,
-                    0,
                     "aa1",
                     "aa2",
                     "aa3",
-                    DetailImageResponse("aai1", "aai1", "aai1", "aai1", "aai1"),
+                    DetailImageResponse("aai1", "aai1", "aai1", "aai1"),
                     TemperatureResponse(
                         DetailTemperatureResponse("celsius1", "fahrenheit1"),
                         DetailTemperatureResponse("celsius2", "fahrenheit2")
                     )
                 ),
                 DetailForecastResponse(
-                    1,
-                    0,
                     "aaa1",
                     "aaa2",
                     "aaa3",
-                    DetailImageResponse("aaai1", "aaai1", "aaai1", "aaai1", "aaai1"),
+                    DetailImageResponse("aaai1", "aaai1", "aaai1", "aaai1"),
                     TemperatureResponse(
                         DetailTemperatureResponse("celsius1", "fahrenheit1"),
                         DetailTemperatureResponse("celsius2", "fahrenheit2")
@@ -113,14 +107,14 @@ internal class DataWeatherRepository @Inject constructor(
                 )
             ),
             listOf(
-                PinpointLocationResponse(0, 0, "bb1", "bb2"),
-                PinpointLocationResponse(1, 0, "bbb1", "bbb2")
+                PinpointLocationResponse("bb1", "bb2"),
+                PinpointLocationResponse("bbb1", "bbb2")
             ),
-            listOf(
-                DetailCopyrightResponse(
-                    0, 0, "title", "http://aaa",
-                    DetailImageResponse("i1", "i1", "i1", "i1", "i1")
-                )
+            DetailCopyrightResponse(
+                "i1",
+                "i1",
+                DetailImageResponse("aaaai1", "aaaai1", "aaaai1", "aaaai1"),
+                listOf(PinpointLocationResponse("ccc1", "ccc2"))
             )
         )
     }

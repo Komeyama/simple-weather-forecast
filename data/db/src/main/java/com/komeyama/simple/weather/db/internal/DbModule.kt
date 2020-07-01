@@ -24,6 +24,9 @@ internal abstract class DbModule {
     abstract fun forecastDatabase(impl: RoomDatabase): ForecastMainDatabase
 
     @Binds
+    abstract fun detailCopyrightDatabase(impl: RoomDatabase): DetailCopyrightDatabase
+
+    @Binds
     abstract fun detailCopyrightMainDatabase(impl: RoomDatabase): DetailCopyrightMainDatabase
 
     @Binds
@@ -46,6 +49,9 @@ internal abstract class DbModule {
 
     @Binds
     abstract fun pinpointLocationDatabase(impl: RoomDatabase): PinpointLocationDatabase
+
+    @Binds
+    abstract fun pinpointLocationOfCopyDatabase(impl: RoomDatabase): PinpointLocationOfCopyDatabase
 
     @Binds
     abstract fun temperatureDatabase(impl: RoomDatabase): TemperatureDatabase
@@ -76,7 +82,12 @@ internal abstract class DbModule {
         }
 
         @Provides
-        fun detailCopyrightEntityDao(database: CacheDatabase): DetailCopyrightMainDao {
+        fun detailCopyrightEntityDao(database: CacheDatabase): DetailCopyrightDao {
+            return database.detailCopyrightDao()
+        }
+
+        @Provides
+        fun detailCopyrightMainEntityDao(database: CacheDatabase): DetailCopyrightMainDao {
             return database.detailCopyrightMainDao()
         }
 

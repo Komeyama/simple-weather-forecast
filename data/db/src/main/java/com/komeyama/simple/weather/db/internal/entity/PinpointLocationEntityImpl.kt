@@ -18,12 +18,12 @@ import com.komeyama.simple.weather.db.PinpointLocationEntity
     ]
 )
 data class PinpointLocationEntityImpl(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "pinpoint_location_id")
     var id: Int = 0,
     @ColumnInfo(name = "parent_id")
-    override var parentId: Long,
+    override var parentId: Int,
     @ColumnInfo(name = "link")
-    override var link: String,
+    override var link: String?,
     @ColumnInfo(name = "name")
-    override var name: String
+    override var name: String?
 ) : PinpointLocationEntity

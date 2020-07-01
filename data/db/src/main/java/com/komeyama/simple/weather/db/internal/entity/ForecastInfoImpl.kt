@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.db.internal.entity
 
 import androidx.room.*
+import com.komeyama.simple.weather.db.DetailCopyrightEntity
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 
 data class ForecastInfoImpl(
@@ -18,8 +19,8 @@ data class ForecastInfoImpl(
     override var pinpointLocationEntityImpl: List<PinpointLocationEntityImpl>,
     @Relation(
         parentColumn = "forecast_id",
-        entityColumn = "parent_id"
+        entityColumn = "parent_id",
+        entity = DetailCopyrightMainEntityImpl::class
     )
-    override var copyright: DetailCopyrightMainEntityImpl?
-
+    var detailCopyrightEntity: DetailCopyrightEntityImpl
 ) : ForecastInfoEntity

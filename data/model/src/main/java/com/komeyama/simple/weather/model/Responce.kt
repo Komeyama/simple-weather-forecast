@@ -7,7 +7,7 @@ data class Response(
     val mainResponse: MainResponse,
     val detailForecastResponse: List<DetailForecastResponse>,
     val pinpointLocationResponse: List<PinpointLocationResponse>,
-    val copyright: List<DetailCopyrightResponse>
+    val copyright: DetailCopyrightResponse
 )
 
 @Serializable
@@ -35,8 +35,6 @@ data class DetailDescriptionResponse(
 
 @Serializable
 data class DetailForecastResponse(
-    var id: Long,
-    var parentId: Long,
     var date: String,
     var dateLabel: String,
     var telop: String,
@@ -46,25 +44,21 @@ data class DetailForecastResponse(
 
 @Serializable
 data class PinpointLocationResponse(
-    var id: Long,
-    var parentId: Long,
     var link: String,
     var name: String
 )
 
 @Serializable
 data class DetailCopyrightResponse(
-    var copyrightID: Long,
-    var parentId: Long,
-    var title: String,
-    var link: String,
-    var image: DetailImageResponse
+    var title: String?,
+    var link: String?,
+    var image: DetailImageResponse?,
+    var provider: List<PinpointLocationResponse?>
 )
 
 @Serializable
 data class DetailImageResponse(
     var title: String,
-    var link: String,
     var url: String,
     var width: String,
     var height: String
