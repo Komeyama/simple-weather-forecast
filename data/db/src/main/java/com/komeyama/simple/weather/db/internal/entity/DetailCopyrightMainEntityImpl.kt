@@ -17,9 +17,9 @@ import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
         )
     ]
 )
-class DetailCopyrightMainEntityImpl(
-    @PrimaryKey @ColumnInfo(name = "copyright_id")
-    override var copyrightID: Long,
+data class DetailCopyrightMainEntityImpl(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     @ColumnInfo(name = "parent_id")
     override var parentId: Long,
     @ColumnInfo(name = "title")

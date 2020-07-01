@@ -6,8 +6,10 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.DetailLocationEntity
 
 @Entity(tableName = "detail_location")
-class DetailLocationEntityImpl(
-    @PrimaryKey @ColumnInfo(name = "area")
+data class DetailLocationEntityImpl(
+    @PrimaryKey @ColumnInfo(name = "detail_location_id")
+    var id: Int = 0,
+    @ColumnInfo(name = "area")
     override var area: String,
     @ColumnInfo(name = "prefecture")
     override var prefecture: String,

@@ -12,7 +12,7 @@ data class Response(
 
 @Serializable
 data class MainResponse(
-    var id: Long,
+    var id: Int,
     var title: String,
     var link: String,
     var publicTime: String,

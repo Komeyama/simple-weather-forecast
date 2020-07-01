@@ -66,8 +66,7 @@ internal class DataWeatherRepository @Inject constructor(
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
             }
             Timber.d(
-                "dummyFunc:lad 03: %s %s %s %s %s\n",
-                forecastInfo.copyright?.copyrightID,
+                "dummyFunc:lad 03:%s %s %s %s\n",
                 forecastInfo.copyright?.parentId,
                 forecastInfo.copyright?.title,
                 forecastInfo.copyright?.link,

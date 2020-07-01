@@ -4,8 +4,7 @@ import com.komeyama.simple.weather.db.internal.entity.DetailDescriptionEntityImp
 import com.komeyama.simple.weather.db.internal.entity.DetailLocationEntityImpl
 
 interface ForecastMainInfoEntity {
-    //var detailForecasts: DetailForecastEntityImpl
-    var forecastId: Long
+    var forecastId: Int
     var title: String
     var link: String
     var publicTime: String

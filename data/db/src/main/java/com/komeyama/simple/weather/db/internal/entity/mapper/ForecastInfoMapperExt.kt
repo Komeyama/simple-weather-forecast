@@ -10,7 +10,6 @@ internal fun List<MainResponse>.toForecastMainInfoEntities(): List<ForecastMainI
 
 internal fun MainResponse.toForecastMainInfoEntity(): ForecastMainInfoEntityImpl {
     return ForecastMainInfoEntityImpl(
-        forecastId = id,
         title = title,
         link = link,
         publicTime = publicTime,
@@ -41,7 +40,6 @@ internal fun List<DetailForecastResponse>.toDetailForecastEntities(): List<Detai
 
 internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEntityImpl {
     return DetailForecastEntityImpl(
-        id = id,
         parentId = parentId,
         date = date,
         dateLabel = dateLabel,
@@ -72,7 +70,6 @@ internal fun List<PinpointLocationResponse>.toPinpointLocationEntities(): List<P
 
 internal fun PinpointLocationResponse.toPinpointLocationEntity(): PinpointLocationEntityImpl {
     return PinpointLocationEntityImpl(
-        id = id,
         parentId = parentId,
         link = link,
         name = name
@@ -86,7 +83,6 @@ internal fun List<DetailCopyrightResponse>.toDetailCopyrightEntities(): List<Det
 
 internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightMainEntityImpl {
     return DetailCopyrightMainEntityImpl(
-        copyrightID = copyrightID,
         parentId = parentId,
         title = title,
         link = link,

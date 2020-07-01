@@ -8,8 +8,8 @@ import com.komeyama.simple.weather.db.ForecastMainInfoEntity
 
 @Entity(tableName = "forecast_info")
 data class ForecastMainInfoEntityImpl(
-    @PrimaryKey @ColumnInfo(name = "forecast_id")
-    override var forecastId: Long,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "forecast_id")
+    override var forecastId: Int = 0,
     override var title: String,
     override var link: String,
     override var publicTime: String,

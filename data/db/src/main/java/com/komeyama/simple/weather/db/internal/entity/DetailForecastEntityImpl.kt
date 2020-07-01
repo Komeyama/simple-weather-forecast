@@ -13,9 +13,9 @@ import com.komeyama.simple.weather.db.TemperatureEntity
         onDelete = ForeignKey.CASCADE
     )]
 )
-class DetailForecastEntityImpl(
-    @PrimaryKey(autoGenerate = false)
-    override var id: Long,
+data class DetailForecastEntityImpl(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     @ColumnInfo(name = "parent_id")
     override var parentId: Long,
     @ColumnInfo(name = "date")

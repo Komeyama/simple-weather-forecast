@@ -4,7 +4,6 @@ import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.TemperatureEntityImpl
 
 interface DetailForecastEntity {
-    var id: Long
     var parentId: Long
     var date: String
     var dateLabel: String
