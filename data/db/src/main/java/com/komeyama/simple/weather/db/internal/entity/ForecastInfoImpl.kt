@@ -1,7 +1,6 @@
 package com.komeyama.simple.weather.db.internal.entity
 
 import androidx.room.*
-import com.komeyama.simple.weather.db.DetailCopyrightEntity
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 
 data class ForecastInfoImpl(

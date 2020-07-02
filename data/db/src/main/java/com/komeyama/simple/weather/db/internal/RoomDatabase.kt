@@ -6,10 +6,6 @@ import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
-import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImplOfCopyright
-import com.komeyama.simple.weather.db.internal.entity.PinpointLocationEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.PinpointLocationOfCopyEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.mapper.*
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastMainInfoEntities
