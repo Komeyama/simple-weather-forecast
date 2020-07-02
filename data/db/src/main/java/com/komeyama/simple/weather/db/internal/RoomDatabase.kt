@@ -90,17 +90,17 @@ internal class RoomDatabase @Inject constructor(
     }
 
     override suspend fun save(
+        id: Int,
         forecastInfo: ForecastInfo?
     ) {
         withContext(Dispatchers.IO) {
             val list: MutableList<ForecastInfo?> = mutableListOf()
-
             list.add(forecastInfo)
-            forecastMainInfoDao.insert(list.toForecastMainInfoEntities())
-            detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities())
-            pinpointLocationDao.insert(forecastInfo?.pinpointLocations?.toPinpointLocationEntities())
-            detailCopyrightMainDao.insert(forecastInfo?.copyright?.toDetailCopyrightMainEntity())
-            pinpointLocationOfCopyDao.insertOfCopy(forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities())
+            forecastMainInfoDao.insert(list.toForecastMainInfoEntities(id))
+            detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
+            pinpointLocationDao.insert(forecastInfo?.pinpointLocations?.toPinpointLocationEntities(id))
+            detailCopyrightMainDao.insert(forecastInfo?.copyright?.toDetailCopyrightMainEntity(id))
+            pinpointLocationOfCopyDao.insertOfCopy(forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(id))
         }
     }
 }

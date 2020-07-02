@@ -3,19 +3,19 @@ package com.komeyama.simple.weather.db.internal.entity.mapper
 import com.komeyama.simple.weather.db.internal.entity.*
 import com.komeyama.simple.weather.model.*
 
-internal fun List<ForecastInfo?>.toForecastMainInfoEntities(): List<ForecastMainInfoEntityImpl?>? =
+internal fun List<ForecastInfo?>.toForecastMainInfoEntities(id: Int): List<ForecastMainInfoEntityImpl?>? =
     this.map {
-        it?.toForecastMainInfoEntity()
+        it?.toForecastMainInfoEntity(id)
     }
 
-internal fun ForecastInfo.toForecastMainInfoEntity(): ForecastMainInfoEntityImpl {
+internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEntityImpl {
     return ForecastMainInfoEntityImpl(
-        0,
+        id,
         title,
         link,
         publicTime,
         detailLocation = DetailLocationEntityImpl(
-            0,
+            id,
             location?.area,
             location?.prefecture,
             location?.city
@@ -27,9 +27,13 @@ internal fun ForecastInfo.toForecastMainInfoEntity(): ForecastMainInfoEntityImpl
     )
 }
 
-internal fun DetailCopyright.toDetailCopyrightMainEntity(): DetailCopyrightMainEntityImpl {
+internal fun DetailCopyright.toDetailCopyrightMainEntity(id: Int): DetailCopyrightMainEntityImpl {
     return DetailCopyrightMainEntityImpl(
-        parentId = 0, title = title, link = link, image = DetailImageEntityImplOfCopyright(
+        id = id,
+        parentId = id,
+        title = title,
+        link = link,
+        image = DetailImageEntityImplOfCopyright(
             title = image?.title ?: "",
             url = image?.url,
             width = image?.width,
@@ -38,41 +42,40 @@ internal fun DetailCopyright.toDetailCopyrightMainEntity(): DetailCopyrightMainE
     )
 }
 
-internal fun List<PinpointLocation?>.toPinpointLocationOfCopyEntities(): List<PinpointLocationOfCopyEntityImpl?> =
+internal fun List<PinpointLocation?>.toPinpointLocationOfCopyEntities(id: Int): List<PinpointLocationOfCopyEntityImpl?> =
     this.map {
-        it.toPinpointLocationOfCopyEntity()
+        it.toPinpointLocationOfCopyEntity(id)
     }
 
-internal fun PinpointLocation?.toPinpointLocationOfCopyEntity(): PinpointLocationOfCopyEntityImpl {
+internal fun PinpointLocation?.toPinpointLocationOfCopyEntity(id: Int): PinpointLocationOfCopyEntityImpl {
     return PinpointLocationOfCopyEntityImpl(
-        parentId = 0,
+        parentId = id,
         link = this?.link,
         name = this?.name
     )
 }
 
-internal fun List<PinpointLocation?>.toPinpointLocationEntities(): List<PinpointLocationEntityImpl?> =
+internal fun List<PinpointLocation?>.toPinpointLocationEntities(id: Int): List<PinpointLocationEntityImpl?> =
     this.map {
-        it?.toPinpointLocationEntity()
+        it?.toPinpointLocationEntity(id)
     }
 
-internal fun PinpointLocation.toPinpointLocationEntity(): PinpointLocationEntityImpl? {
+internal fun PinpointLocation.toPinpointLocationEntity(id: Int): PinpointLocationEntityImpl? {
     return PinpointLocationEntityImpl(
-        parentId = 0,
+        parentId = id,
         link = link,
         name = name
     )
 }
 
-internal fun List<DetailForecasts>.toDetailForecastEntities(): List<DetailForecastEntityImpl> =
+internal fun List<DetailForecasts>.toDetailForecastEntities(id: Int): List<DetailForecastEntityImpl> =
     this.map {
-        it.toDetailForecastEntity()
+        it.toDetailForecastEntity(id)
     }
 
-internal fun DetailForecasts.toDetailForecastEntity(): DetailForecastEntityImpl {
+internal fun DetailForecasts.toDetailForecastEntity(id: Int): DetailForecastEntityImpl {
     return DetailForecastEntityImpl(
-        0,
-        parentId = 0,
+        parentId = id,
         date = date,
         dateLabel = dateLabel,
         telop = telop,

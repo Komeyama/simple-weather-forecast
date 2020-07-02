@@ -3,7 +3,6 @@ package com.komeyama.simple.weather.repository.internal
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.db.ForecastInfoDatabase
 import com.komeyama.simple.weather.db.ForecastInfoEntity
-import com.komeyama.simple.weather.db.PinpointLocationEntity
 import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
@@ -18,20 +17,15 @@ internal class DataWeatherRepository @Inject constructor(
 ) : ForecastRepository {
 
     override fun dummyFunc() {
-//        val forecastInfo: ForecastInfo? = runBlocking {
-//            forecastApi.getForecastInfo("410020").body()
-//        }
-//        Timber.d(
-//            "dummyFunc:api: %s\n :db  %s",
-//            forecastInfo.toString(),
-//            forecastInfoDatabase.toString()
-//        )
         val forecastInfo: ForecastInfo? = runBlocking {
             forecastApi.getAllForecastLists()
         }
         Timber.d("dummyFunc:api: %s\n", forecastInfo.toString())
         runBlocking {
-            forecastInfoDatabase.save(forecastInfo)
+            forecastInfoDatabase.save(0, forecastInfo)
+        }
+        runBlocking {
+            forecastInfoDatabase.save(1, forecastInfo)
         }
     }
 
@@ -84,6 +78,7 @@ internal class DataWeatherRepository @Inject constructor(
 
     override suspend fun dummySave() {
         forecastInfoDatabase.save(
+            0,
             forecastInfo = ForecastInfo(
                 location = DetailLocation(
                     area = "area01",

@@ -16,7 +16,7 @@ data class DetailForecastEntityImpl(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @ColumnInfo(name = "parent_id")
-    override var parentId: Long,
+    override var parentId: Int,
     @ColumnInfo(name = "date")
     override var date: String?,
     @ColumnInfo(name = "date_label")
