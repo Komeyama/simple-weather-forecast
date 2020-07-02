@@ -10,9 +10,9 @@ import com.komeyama.simple.weather.db.ForecastMainInfoEntity
 data class ForecastMainInfoEntityImpl(
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "forecast_id")
     override var forecastId: Int = 0,
-    override var title: String,
-    override var link: String,
-    override var publicTime: String,
-    @Embedded override var detailLocation: DetailLocationEntityImpl,
-    @Embedded override var description: DetailDescriptionEntityImpl
+    override var title: String?,
+    override var link: String?,
+    override var publicTime: String?,
+    @Embedded override var detailLocation: DetailLocationEntityImpl?,
+    @Embedded override var description: DetailDescriptionEntityImpl?
 ) : ForecastMainInfoEntity

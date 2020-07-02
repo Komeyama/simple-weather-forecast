@@ -10,6 +10,7 @@ import com.komeyama.simple.weather.db.internal.entity.DetailCopyrightMainEntityI
 import com.komeyama.simple.weather.db.internal.entity.DetailImageEntityImplOfCopyright
 import com.komeyama.simple.weather.db.internal.entity.PinpointLocationEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.PinpointLocationOfCopyEntityImpl
+import com.komeyama.simple.weather.db.internal.entity.mapper.*
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastMainInfoEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
@@ -93,31 +94,17 @@ internal class RoomDatabase @Inject constructor(
     }
 
     override suspend fun save(
-        mainResponse: MainResponse,
-        detailForecastResponse: List<DetailForecastResponse>,
-        pinpointLocationResponse: List<PinpointLocationResponse>,
-        copyright: DetailCopyrightResponse
+        forecastInfo: ForecastInfo?
     ) {
         withContext(Dispatchers.IO) {
-            val list: MutableList<MainResponse> = mutableListOf()
-            list.add(mainResponse)
+            val list: MutableList<ForecastInfo?> = mutableListOf()
+
+            list.add(forecastInfo)
             forecastMainInfoDao.insert(list.toForecastMainInfoEntities())
-            detailForecastDao.insert(detailForecastResponse.toDetailForecastEntities())
-            pinpointLocationDao.insert(pinpointLocationResponse.toPinpointLocationEntities())
-            /**
-             * todo:
-             */
-            detailCopyrightMainDao.insert(
-                DetailCopyrightMainEntityImpl(
-                    0,
-                    0, "copy_title01", "copy_link01", DetailImageEntityImplOfCopyright(0, "copy_title02", "copy_url02", "copy_width02", "copy_height02")
-                )
-            )
-            pinpointLocationOfCopyDao.insertOfCopy(
-                listOf(
-                    PinpointLocationOfCopyEntityImpl(0,0,"copy_pin_link","copy_pin_name")
-                )
-            )
+            detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities())
+            pinpointLocationDao.insert(forecastInfo?.pinpointLocations?.toPinpointLocationEntities())
+            detailCopyrightMainDao.insert(forecastInfo?.copyright?.toDetailCopyrightMainEntity())
+            pinpointLocationOfCopyDao.insertOfCopy(forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities())
         }
     }
 }

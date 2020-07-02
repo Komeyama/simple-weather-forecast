@@ -1,8 +1,114 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
+import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
 import com.komeyama.simple.weather.db.internal.entity.*
 import com.komeyama.simple.weather.model.*
 
+internal fun List<ForecastInfo?>.toForecastMainInfoEntities(): List<ForecastMainInfoEntityImpl?>? =
+    this.map {
+        it?.toForecastMainInfoEntity()
+    }
+
+internal fun ForecastInfo.toForecastMainInfoEntity(): ForecastMainInfoEntityImpl {
+    return ForecastMainInfoEntityImpl(
+        0,
+        title,
+        link,
+        publicTime,
+        detailLocation = DetailLocationEntityImpl(
+            0,
+            location?.area,
+            location?.prefecture,
+            location?.city
+        ),
+        description = DetailDescriptionEntityImpl(
+            text = description?.text,
+            publicTime = description?.publicTime
+        )
+    )
+}
+
+internal fun DetailCopyright.toDetailCopyrightEntity(): DetailCopyrightEntityImpl {
+    return DetailCopyrightEntityImpl(
+        detailCopyrightMainEntity = this.toDetailCopyrightMainEntity(),
+        pinpointLocationOfCopyEntityImpl = provider.toPinpointLocationOfCopyEntities()
+    )
+}
+
+internal fun DetailCopyright.toDetailCopyrightMainEntity(): DetailCopyrightMainEntityImpl {
+    return DetailCopyrightMainEntityImpl(
+        parentId = 0, title = title, link = link, image = DetailImageEntityImplOfCopyright(
+            title = image?.title ?: "",
+            url = image?.url,
+            width = image?.width,
+            height = image?.height
+        )
+    )
+}
+
+internal fun List<PinpointLocation?>.toPinpointLocationOfCopyEntities(): List<PinpointLocationOfCopyEntityImpl?> =
+    this.map {
+        it.toPinpointLocationOfCopyEntity()
+    }
+
+internal fun PinpointLocation?.toPinpointLocationOfCopyEntity(): PinpointLocationOfCopyEntityImpl {
+    return PinpointLocationOfCopyEntityImpl(
+        parentId = 0,
+        link = this?.link,
+        name = this?.name
+    )
+}
+
+internal fun List<PinpointLocation?>.toPinpointLocationEntities(): List<PinpointLocationEntityImpl?> =
+    this.map {
+        it?.toPinpointLocationEntity()
+    }
+
+internal fun PinpointLocation.toPinpointLocationEntity(): PinpointLocationEntityImpl? {
+    return PinpointLocationEntityImpl(
+        parentId = 0,
+        link = link,
+        name = name
+    )
+}
+
+internal fun List<DetailForecasts>.toDetailForecastEntities(): List<DetailForecastEntityImpl> =
+    this.map {
+        it.toDetailForecastEntity()
+    }
+
+internal fun DetailForecasts.toDetailForecastEntity(): DetailForecastEntityImpl {
+    return DetailForecastEntityImpl(
+        0,
+        parentId = 0,
+        date = date,
+        dateLabel = dateLabel,
+        telop = telop,
+        image = DetailImageEntityImpl(
+            title = image?.title ?: "",
+            url = image?.url,
+            width = image?.width,
+            height = image?.height
+        ),
+        temperature = temperature?.toTemperatureEntity()
+    )
+}
+
+internal fun Temperature.toTemperatureEntity(): TemperatureEntityImpl {
+    return TemperatureEntityImpl(
+        min = min?.toDetailTemperatureEntity(),
+        max = max?.toDetailTemperatureEntity()
+    )
+}
+
+internal fun DetailTemperature.toDetailTemperatureEntity(): DetailTemperatureEntityImpl {
+    return DetailTemperatureEntityImpl(
+        celsius = celsius,
+        fahrenheit = fahrenheit
+    )
+}
+
+/*
 internal fun List<MainResponse>.toForecastMainInfoEntities(): List<ForecastMainInfoEntityImpl> =
     this.map {
         it.toForecastMainInfoEntity()
@@ -33,10 +139,10 @@ internal fun DetailLocationResponse.toDetailLocationEntity(): DetailLocationEnti
     )
 }
 
-internal fun List<DetailForecastResponse>.toDetailForecastEntities(): List<DetailForecastEntityImpl> =
-    this.map {
-        it.toDetailForecastEntity()
-    }
+//internal fun List<DetailForecastResponse>.toDetailForecastEntities(): List<DetailForecastEntityImpl> =
+//    this.map {
+//        it.toDetailForecastEntity()
+//    }
 
 internal fun DetailForecastResponse.toDetailForecastEntity(): DetailForecastEntityImpl {
     return DetailForecastEntityImpl(
@@ -63,10 +169,10 @@ internal fun DetailTemperatureResponse.toDetailTemperatureEntity(): DetailTemper
     )
 }
 
-internal fun List<PinpointLocationResponse>.toPinpointLocationEntities(): List<PinpointLocationEntityImpl> =
-    this.map {
-        it.toPinpointLocationEntity()
-    }
+//internal fun List<PinpointLocationResponse>.toPinpointLocationEntities(): List<PinpointLocationEntityImpl> =
+//    this.map {
+//        it.toPinpointLocationEntity()
+//    }
 
 internal fun PinpointLocationResponse.toPinpointLocationEntity(): PinpointLocationEntityImpl {
     return PinpointLocationEntityImpl(
@@ -76,27 +182,27 @@ internal fun PinpointLocationResponse.toPinpointLocationEntity(): PinpointLocati
     )
 }
 
-internal fun List<DetailCopyrightResponse>.toDetailCopyrightEntities(): List<DetailCopyrightEntityImpl> =
-    this.map {
-        it.toDetailCopyrightEntity()
-    }
+//internal fun List<DetailCopyrightResponse>.toDetailCopyrightEntities(): List<DetailCopyrightEntityImpl> =
+//    this.map {
+//        it.toDetailCopyrightEntity()
+//    }
 
-internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightEntityImpl {
-    return DetailCopyrightEntityImpl(
-        detailCopyrightMainEntity = DetailCopyrightMainEntityImpl(
-            parentId = 0,
-            title = title,
-            link = link,
-            image = image?.toDetailImageOfCompanyEntity()
-        ),
-        pinpointLocationOfCopyEntityImpl = provider.toPinpointLocationOfCopyEntities()
-    )
-}
+//internal fun DetailCopyrightResponse.toDetailCopyrightEntity(): DetailCopyrightEntityImpl {
+//    return DetailCopyrightEntityImpl(
+//        detailCopyrightMainEntity = DetailCopyrightMainEntityImpl(
+//            parentId = 0,
+//            title = title,
+//            link = link,
+//            image = image?.toDetailImageOfCompanyEntity()
+//        ),
+//        pinpointLocationOfCopyEntityImpl = provider.toPinpointLocationOfCopyEntities()
+//    )
+//}
 
-internal fun List<PinpointLocationResponse?>.toPinpointLocationOfCopyEntities(): List<PinpointLocationOfCopyEntityImpl?> =
-    this.map {
-        it?.toPinpointLocationOfCopyEntity()
-    }
+//internal fun List<PinpointLocationResponse?>.toPinpointLocationOfCopyEntities(): List<PinpointLocationOfCopyEntityImpl?> =
+//    this.map {
+//        it?.toPinpointLocationOfCopyEntity()
+//    }
 
 internal fun PinpointLocationResponse.toPinpointLocationOfCopyEntity(): PinpointLocationOfCopyEntityImpl {
     return PinpointLocationOfCopyEntityImpl(
@@ -123,3 +229,4 @@ internal fun DetailImageResponse.toDetailImageOfCompanyEntity(): DetailImageEnti
         height = height
     )
 }
+*/

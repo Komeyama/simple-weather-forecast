@@ -3,6 +3,7 @@ package com.komeyama.simple.weather.repository.internal
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.db.ForecastInfoDatabase
 import com.komeyama.simple.weather.db.ForecastInfoEntity
+import com.komeyama.simple.weather.db.PinpointLocationEntity
 import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
@@ -29,9 +30,13 @@ internal class DataWeatherRepository @Inject constructor(
             forecastApi.getAllForecastLists()
         }
         Timber.d("dummyFunc:api: %s\n", forecastInfo.toString())
+        runBlocking {
+            forecastInfoDatabase.save(forecastInfo)
+        }
     }
 
     override suspend fun dummyLoad() {
+
         val info: List<ForecastInfoEntity> = forecastInfoDatabase.forecastInfo()
         info.forEach { forecastInfo ->
             Timber.d(
@@ -40,85 +45,106 @@ internal class DataWeatherRepository @Inject constructor(
                 forecastInfo.forecastInfoEntityImpl.title,
                 forecastInfo.forecastInfoEntityImpl.link,
                 forecastInfo.forecastInfoEntityImpl.publicTime,
-                forecastInfo.forecastInfoEntityImpl.description.text,
-                forecastInfo.forecastInfoEntityImpl.description.publicTime,
-                forecastInfo.forecastInfoEntityImpl.detailLocation.area,
-                forecastInfo.forecastInfoEntityImpl.detailLocation.city,
-                forecastInfo.forecastInfoEntityImpl.detailLocation.prefecture
+                forecastInfo.forecastInfoEntityImpl.description?.text,
+                forecastInfo.forecastInfoEntityImpl.description?.publicTime,
+                forecastInfo.forecastInfoEntityImpl.detailLocation?.area,
+                forecastInfo.forecastInfoEntityImpl.detailLocation?.city,
+                forecastInfo.forecastInfoEntityImpl.detailLocation?.prefecture
             )
             forecastInfo.detailForecastEntityImpl.forEach { detailForecast ->
-//                Timber.d(
-//                    "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s %s\n temperature:%s\n",
-//                    detailForecast.id,
-//                    detailForecast.parentId,
-//                    detailForecast.date,
-//                    detailForecast.dateLabel,
-//                    detailForecast.telop,
-//                    detailForecast.image.title,
-//                    detailForecast.image.url,
-//                    detailForecast.image.width,
-//                    detailForecast.image.height,
-//                    detailForecast.temperature
-//                )
+                Timber.d(
+                    "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s\n temperature:%s\n",
+                    detailForecast.id,
+                    detailForecast.parentId,
+                    detailForecast.date,
+                    detailForecast.dateLabel,
+                    detailForecast.telop,
+                    detailForecast.image?.title,
+                    detailForecast.image?.url,
+                    detailForecast.image?.width,
+                    detailForecast.image?.height,
+                    detailForecast.temperature
+                )
             }
             forecastInfo.pinpointLocationEntityImpl.forEach {
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
             }
-//            Timber.d(
-//                "dummyFunc:lad 03:%s %s %s %s\n",
-//                forecastInfo.copyright?.parentId,
-//                forecastInfo.copyright?.title,
-//                forecastInfo.copyright?.link,
-//                forecastInfo.copyright?.image
-//            )
+            Timber.d(
+                "dummyFunc:lad 03:%s\n %s\n %s\n %s\n %s\n %s\n",
+                forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.id,
+                forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.parentId,
+                forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.title,
+                forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.link,
+                forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.image,
+                forecastInfo.detailCopyrightEntity.pinpointLocationOfCopyEntityImpl
+            )
         }
+
     }
 
     override suspend fun dummySave() {
         forecastInfoDatabase.save(
-            MainResponse(
-                0,
-                "a1",
-                "b2",
-                "c2",
-                DetailDescriptionResponse("a3", "b3"),
-                DetailLocationResponse("a4", "b4", "b4")
-            ),
-            listOf(
-                DetailForecastResponse(
-                    "aa1",
-                    "aa2",
-                    "aa3",
-                    DetailImageResponse("aai1", "aai1", "aai1", "aai1"),
-                    TemperatureResponse(
-                        DetailTemperatureResponse("celsius1", "fahrenheit1"),
-                        DetailTemperatureResponse("celsius2", "fahrenheit2")
+            forecastInfo = ForecastInfo(
+                location = DetailLocation(
+                    area = "area01",
+                    prefecture = "prefecture01",
+                    city = "city01"
+                ),
+                title = "title01",
+                link = "link01",
+                publicTime = "publicTime01",
+                description = DetailDescription(
+                    text = "desc_text01",
+                    publicTime = "desc_publicTime01"
+                ),
+                forecasts = listOf(
+                    DetailForecasts(
+                        date = "forecasts_data01",
+                        dateLabel = "forecasts_data_label01",
+                        telop = "forecasts_data_telop",
+                        image = DetailImage(
+                            title = "image_title01",
+                            url = "image_url01",
+                            width = "image_widt01",
+                            height = "image_height01"
+                        ),
+                        temperature = Temperature(
+                            min = DetailTemperature(
+                                celsius = "celsius",
+                                fahrenheit = "fahrenheit"
+                            ),
+                            max = DetailTemperature(
+                                celsius = "celsius",
+                                fahrenheit = "fahrenheit"
+                            )
+                        )
                     )
                 ),
-                DetailForecastResponse(
-                    "aaa1",
-                    "aaa2",
-                    "aaa3",
-                    DetailImageResponse("aaai1", "aaai1", "aaai1", "aaai1"),
-                    TemperatureResponse(
-                        DetailTemperatureResponse("celsius1", "fahrenheit1"),
-                        DetailTemperatureResponse("celsius2", "fahrenheit2")
+                pinpointLocations = listOf(
+                    PinpointLocation(
+                        link = "pinpoint_link01",
+                        name = "pinpoint_name01"
+                    )
+                ),
+                copyright = DetailCopyright(
+                    title = "detail_copyright_title",
+                    link = "detail_copyright_link",
+                    image = DetailImage(
+                        title = "image_cp_title01",
+                        url = "image_cp_url01",
+                        width = "image_cp_width01",
+                        height = "image_cp_height01"
+                    ),
+                    provider = listOf(
+                        PinpointLocation(
+                            link = "pinpoint_cp_link01",
+                            name = "pinpoint_cp_name01"
+                        )
                     )
                 )
-            ),
-            listOf(
-                PinpointLocationResponse("bb1", "bb2"),
-                PinpointLocationResponse("bbb1", "bbb2")
-            ),
-            DetailCopyrightResponse(
-                "i1",
-                "i1",
-                DetailImageResponse("aaaai1", "aaaai1", "aaaai1", "aaaai1"),
-                listOf(PinpointLocationResponse("ccc1", "ccc2"))
             )
         )
     }
-
 }
 
 @Module

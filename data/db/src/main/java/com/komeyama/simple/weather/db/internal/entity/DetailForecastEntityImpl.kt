@@ -19,13 +19,13 @@ data class DetailForecastEntityImpl(
     @ColumnInfo(name = "parent_id")
     override var parentId: Long,
     @ColumnInfo(name = "date")
-    override var date: String,
+    override var date: String?,
     @ColumnInfo(name = "date_label")
-    override var dateLabel: String,
+    override var dateLabel: String?,
     @ColumnInfo(name = "telop")
-    override var telop: String,
+    override var telop: String?,
     @Embedded(prefix = "image")
-    override var image: DetailImageEntityImpl,
+    override var image: DetailImageEntityImpl?,
     @Embedded(prefix = "temperature")
-    override var temperature: TemperatureEntityImpl
+    override var temperature: TemperatureEntityImpl?
 ) : DetailForecastEntity

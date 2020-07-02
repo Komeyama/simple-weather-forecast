@@ -19,5 +19,5 @@ internal abstract class DetailForecastDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<DetailForecastEntityImpl>)
+    abstract fun insert(sessions: List<DetailForecastEntityImpl?>?)
 }

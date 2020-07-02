@@ -20,7 +20,7 @@ internal abstract class PinpointLocationDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<PinpointLocationEntityImpl>)
+    abstract fun insert(sessions: List<PinpointLocationEntityImpl?>?)
 
     @Query("SELECT * FROM pinpoint_location_copy")
     abstract fun pinpointLocationOfCopyLiveData(): LiveData<List<PinpointLocationOfCopyEntityImpl>>
@@ -32,5 +32,5 @@ internal abstract class PinpointLocationDao {
     abstract fun deleteAllOfCopy()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOfCopy(sessions: List<PinpointLocationOfCopyEntityImpl>)
+    abstract fun insertOfCopy(sessions: List<PinpointLocationOfCopyEntityImpl?>?)
 }

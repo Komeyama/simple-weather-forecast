@@ -10,7 +10,7 @@ data class DetailTemperatureEntityImpl (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @ColumnInfo(name = "celsius")
-    override var celsius: String,
+    override var celsius: String?,
     @ColumnInfo(name = "fahrenheit")
-    override var fahrenheit: String
+    override var fahrenheit: String?
 ): DetailTemperatureEntity

@@ -23,17 +23,17 @@ class WeatherListFragment : DaggerFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         sessionsViewModel.callWeatherRepositoryMethod()
-        sessionsViewModel.callWeatherRepositoryDbMethod()
-        //sessionsViewModel.callWeatherRepositoryDbLoadMethod()
+        //sessionsViewModel.callWeatherRepositoryDbMethod()
+        sessionsViewModel.callWeatherRepositoryDbLoadMethod()
         return inflater.inflate(
-                R.layout.weather_list,
-                container,
-                false
+            R.layout.weather_list,
+            container,
+            false
         )
     }
 }
@@ -46,7 +46,7 @@ abstract class WeatherListFragmentModule {
         @JvmStatic
         @Provides
         fun providesLifecycleOwnerLiveData(
-                weatherListFragment: WeatherListFragment
+            weatherListFragment: WeatherListFragment
         ): LiveData<LifecycleOwner> {
             return weatherListFragment.viewLifecycleOwnerLiveData
         }

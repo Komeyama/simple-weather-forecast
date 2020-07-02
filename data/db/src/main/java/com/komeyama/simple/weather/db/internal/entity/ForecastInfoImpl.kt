@@ -22,5 +22,5 @@ data class ForecastInfoImpl(
         entityColumn = "parent_id",
         entity = DetailCopyrightMainEntityImpl::class
     )
-    var detailCopyrightEntity: DetailCopyrightEntityImpl
+    override var detailCopyrightEntity: DetailCopyrightEntityImpl
 ) : ForecastInfoEntity
