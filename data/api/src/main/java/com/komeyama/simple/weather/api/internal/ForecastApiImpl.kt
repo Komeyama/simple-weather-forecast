@@ -15,14 +15,17 @@ import javax.inject.Inject
 
 internal class ForecastApiImpl @Inject constructor(
     private val httpClient: HttpClient
-): ForecastApi {
+) : ForecastApi {
+
     /**
      * Options list: https://github.com/Kotlin/kotlinx.serialization/blob/ffe216f0293231b09eea24a10aa4bc26ff6d5b90/runtime/commonMain/src/kotlinx/serialization/json/JsonConfiguration.kt#L15-L44
      */
-    private val json = Json(JsonConfiguration.Stable.copy(
-        isLenient = true,
-        ignoreUnknownKeys = true
-    ))
+    private val json = Json(
+        JsonConfiguration.Stable.copy(
+            isLenient = true,
+            ignoreUnknownKeys = true
+        )
+    )
 
     /**
      * use it in the exception handling

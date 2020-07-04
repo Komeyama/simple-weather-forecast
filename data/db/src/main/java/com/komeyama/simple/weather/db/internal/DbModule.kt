@@ -118,7 +118,7 @@ internal abstract class DbModule {
 
         @Provides
         fun pinpointLocationDao(database: CacheDatabase): PinpointLocationDao {
-             return database.pinpointLocationDao()
+            return database.pinpointLocationDao()
         }
 
         @Provides

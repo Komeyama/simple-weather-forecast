@@ -17,7 +17,7 @@ abstract class WeatherDetailFragmentModule {
         @JvmStatic
         @Provides
         fun providesLifecycleOwnerLiveData(
-                weatherDetailFragment: WeatherDetailFragment
+            weatherDetailFragment: WeatherDetailFragment
         ): LiveData<LifecycleOwner> {
             return weatherDetailFragment.viewLifecycleOwnerLiveData
         }

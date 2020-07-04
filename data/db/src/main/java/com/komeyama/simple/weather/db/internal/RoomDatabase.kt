@@ -101,11 +101,24 @@ internal class RoomDatabase @Inject constructor(
                 forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
                 detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
 
-                pinpointLocationDao.insert(forecastInfo?.pinpointLocations?.toPinpointLocationEntities(id, previousForecastInfoSize))
+                pinpointLocationDao.insert(
+                    forecastInfo?.pinpointLocations?.toPinpointLocationEntities(
+                        id,
+                        previousForecastInfoSize
+                    )
+                )
                 previousForecastInfoSize += forecastInfo?.pinpointLocations?.size ?: 0
 
-                detailCopyrightMainDao.insert(forecastInfo?.copyright?.toDetailCopyrightMainEntity(id))
-                pinpointLocationOfCopyDao.insertOfCopy(forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(id))
+                detailCopyrightMainDao.insert(
+                    forecastInfo?.copyright?.toDetailCopyrightMainEntity(
+                        id
+                    )
+                )
+                pinpointLocationOfCopyDao.insertOfCopy(
+                    forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(
+                        id
+                    )
+                )
             }
         }
     }
