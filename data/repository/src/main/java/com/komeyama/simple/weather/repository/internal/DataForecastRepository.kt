@@ -17,15 +17,11 @@ internal class DataWeatherRepository @Inject constructor(
 ) : ForecastRepository {
 
     override fun dummyFunc() {
-        val forecastInfo: ForecastInfo? = runBlocking {
-            forecastApi.getAllForecastLists()
-        }
-        Timber.d("dummyFunc:api: %s\n", forecastInfo.toString())
-        runBlocking {
-            forecastInfoDatabase.save(0, forecastInfo)
-        }
-        runBlocking {
-            forecastInfoDatabase.save(1, forecastInfo)
+        PrefectureIds.values().forEachIndexed { index, prefectureIds ->
+            runBlocking {
+                val forecastInfo = forecastApi.getForecastList(prefectureIds.id)
+                forecastInfoDatabase.save(index, forecastInfo)
+            }
         }
     }
 
