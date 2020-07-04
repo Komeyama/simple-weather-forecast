@@ -7,7 +7,6 @@ import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
 import dagger.Module
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,12 +15,10 @@ internal class DataWeatherRepository @Inject constructor(
     private val forecastInfoDatabase: ForecastInfoDatabase
 ) : ForecastRepository {
 
-    override fun dummyFunc() {
+    override suspend fun refresh() {
         PrefectureIds.values().forEachIndexed { index, prefectureIds ->
-            runBlocking {
-                val forecastInfo = forecastApi.getForecastList(prefectureIds.id)
-                forecastInfoDatabase.save(index, forecastInfo)
-            }
+            val forecastInfo = forecastApi.getForecastList(prefectureIds.id)
+            forecastInfoDatabase.save(index, forecastInfo)
         }
     }
 

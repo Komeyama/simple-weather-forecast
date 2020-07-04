@@ -5,21 +5,28 @@ import androidx.lifecycle.viewModelScope
 import com.komeyama.simple.weather.repository.ForecastRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.lang.Exception
 import javax.inject.Inject
 
 class WeatherListViewModel @Inject constructor(
-        private val weatherRepository: ForecastRepository
+    private val weatherRepository: ForecastRepository
 ) : ViewModel() {
 
     fun callWeatherRepositoryMethod() {
-        weatherRepository.dummyFunc()
+        viewModelScope.launch {
+            try {
+                weatherRepository.refresh()
+            } catch (e: Exception) {
+            }
+        }
     }
 
     fun callWeatherRepositoryDbMethod() {
         viewModelScope.launch {
             try {
                 weatherRepository.dummySave()
-            } catch (error: IOException) {}
+            } catch (e: IOException) {
+            }
         }
     }
 
@@ -27,7 +34,8 @@ class WeatherListViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 weatherRepository.dummyLoad()
-            } catch (error: IOException) {}
+            } catch (e: IOException) {
+            }
         }
     }
 
