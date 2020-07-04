@@ -13,7 +13,7 @@ import com.komeyama.simple.weather.db.DetailForecastEntity
     )]
 )
 data class DetailForecastEntityImpl(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     @ColumnInfo(name = "parent_id")
     override var parentId: Int,

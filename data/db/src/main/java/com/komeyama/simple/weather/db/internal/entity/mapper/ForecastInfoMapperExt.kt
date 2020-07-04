@@ -10,15 +10,15 @@ internal fun List<ForecastInfo?>.toForecastMainInfoEntities(id: Int): List<Forec
 
 internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEntityImpl {
     return ForecastMainInfoEntityImpl(
-        id,
-        title,
-        link,
-        publicTime,
+        forecastId = id,
+        title = title,
+        link = link,
+        publicTime = publicTime,
         detailLocation = DetailLocationEntityImpl(
-            id,
-            location?.area,
-            location?.prefecture,
-            location?.city
+            id = id,
+            area = location?.area,
+            prefecture = location?.prefecture,
+            city = location?.city
         ),
         description = DetailDescriptionEntityImpl(
             text = description?.text,
@@ -55,27 +55,38 @@ internal fun PinpointLocation?.toPinpointLocationOfCopyEntity(id: Int): Pinpoint
     )
 }
 
-internal fun List<PinpointLocation?>.toPinpointLocationEntities(id: Int): List<PinpointLocationEntityImpl?> =
-    this.map {
-        it?.toPinpointLocationEntity(id)
+internal fun List<PinpointLocation?>.toPinpointLocationEntities(
+    parentId: Int,
+    previousCount: Int
+): List<PinpointLocationEntityImpl?> =
+    this.mapIndexed { localIndex, pinpointLocation ->
+        pinpointLocation?.toPinpointLocationEntity(localIndex + previousCount, parentId)
     }
 
-internal fun PinpointLocation.toPinpointLocationEntity(id: Int): PinpointLocationEntityImpl? {
+internal fun PinpointLocation.toPinpointLocationEntity(
+    localIndex: Int,
+    parentId: Int
+): PinpointLocationEntityImpl? {
     return PinpointLocationEntityImpl(
-        parentId = id,
+        id = localIndex,
+        parentId = parentId,
         link = link,
         name = name
     )
 }
 
-internal fun List<DetailForecasts>.toDetailForecastEntities(id: Int): List<DetailForecastEntityImpl> =
-    this.map {
-        it.toDetailForecastEntity(id)
+internal fun List<DetailForecasts>.toDetailForecastEntities(parentId: Int): List<DetailForecastEntityImpl> =
+    this.mapIndexed { localIndex, detailForecasts ->
+        detailForecasts.toDetailForecastEntity(localIndex + (parentId * this.size), parentId)
     }
 
-internal fun DetailForecasts.toDetailForecastEntity(id: Int): DetailForecastEntityImpl {
+internal fun DetailForecasts.toDetailForecastEntity(
+    localIndex: Int,
+    parentId: Int
+): DetailForecastEntityImpl {
     return DetailForecastEntityImpl(
-        parentId = id,
+        id = localIndex,
+        parentId = parentId,
         date = date,
         dateLabel = dateLabel,
         telop = telop,

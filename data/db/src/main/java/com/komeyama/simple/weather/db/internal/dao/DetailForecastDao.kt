@@ -1,10 +1,7 @@
 package com.komeyama.simple.weather.db.internal.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.komeyama.simple.weather.db.internal.entity.DetailForecastEntityImpl
 
 @Dao
@@ -19,5 +16,5 @@ internal abstract class DetailForecastDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<DetailForecastEntityImpl?>?)
+    abstract fun insert(detailForecasts: List<DetailForecastEntityImpl?>?)
 }

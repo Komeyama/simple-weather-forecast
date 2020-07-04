@@ -7,7 +7,7 @@ import com.komeyama.simple.weather.db.DetailImageEntity
 
 @Entity(tableName = "detail_image_copyright")
 data class DetailImageEntityImplOfCopyright(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     @ColumnInfo(name = "title")
     override var title: String,

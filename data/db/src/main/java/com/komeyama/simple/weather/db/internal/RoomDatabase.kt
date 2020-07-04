@@ -1,14 +1,13 @@
 package com.komeyama.simple.weather.db.internal
 
+import androidx.room.withTransaction
 import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightMainDao
 import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
-import com.komeyama.simple.weather.db.internal.dao.DetailLocationDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
 import com.komeyama.simple.weather.db.internal.entity.mapper.*
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
-import com.komeyama.simple.weather.db.internal.entity.mapper.toForecastMainInfoEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
 import com.komeyama.simple.weather.model.*
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +17,6 @@ import javax.inject.Inject
 internal class RoomDatabase @Inject constructor(
     private val cacheDatabase: CacheDatabase,
     private val forecastMainInfoDao: ForecastMainInfoDao,
-    private val detailLocationDao: DetailLocationDao,
     private val detailForecastDao: DetailForecastDao,
     private val detailCopyrightMainDao: DetailCopyrightMainDao,
     private val pinpointLocationDao: PinpointLocationDao,
@@ -90,17 +88,25 @@ internal class RoomDatabase @Inject constructor(
     }
 
     override suspend fun save(
-        id: Int,
-        forecastInfo: ForecastInfo?
+        forecastInfoList: List<ForecastInfo?>
     ) {
-        withContext(Dispatchers.IO) {
-            val list: MutableList<ForecastInfo?> = mutableListOf()
-            list.add(forecastInfo)
-            forecastMainInfoDao.insert(list.toForecastMainInfoEntities(id))
-            detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
-            pinpointLocationDao.insert(forecastInfo?.pinpointLocations?.toPinpointLocationEntities(id))
-            detailCopyrightMainDao.insert(forecastInfo?.copyright?.toDetailCopyrightMainEntity(id))
-            pinpointLocationOfCopyDao.insertOfCopy(forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(id))
+        cacheDatabase.withTransaction {
+            detailForecastDao.deleteAll()
+            pinpointLocationDao.deleteAll()
+            detailCopyrightMainDao.deleteAll()
+            pinpointLocationOfCopyDao.deleteAll()
+
+            var previousForecastInfoSize = 0
+            forecastInfoList.forEachIndexed { id, forecastInfo ->
+                forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
+                detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
+
+                pinpointLocationDao.insert(forecastInfo?.pinpointLocations?.toPinpointLocationEntities(id, previousForecastInfoSize))
+                previousForecastInfoSize += forecastInfo?.pinpointLocations?.size ?: 0
+
+                detailCopyrightMainDao.insert(forecastInfo?.copyright?.toDetailCopyrightMainEntity(id))
+                pinpointLocationOfCopyDao.insertOfCopy(forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(id))
+            }
         }
     }
 }

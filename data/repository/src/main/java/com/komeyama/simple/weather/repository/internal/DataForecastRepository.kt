@@ -16,10 +16,8 @@ internal class DataWeatherRepository @Inject constructor(
 ) : ForecastRepository {
 
     override suspend fun refresh() {
-        PrefectureIds.values().forEachIndexed { index, prefectureIds ->
-            val forecastInfo = forecastApi.getForecastList(prefectureIds.id)
-            forecastInfoDatabase.save(index, forecastInfo)
-        }
+        val forecastInfoList = forecastApi.getAllPrefectureForecastList()
+        forecastInfoDatabase.save(forecastInfoList)
     }
 
     override suspend fun dummyLoad() {
@@ -71,62 +69,63 @@ internal class DataWeatherRepository @Inject constructor(
 
     override suspend fun dummySave() {
         forecastInfoDatabase.save(
-            0,
-            forecastInfo = ForecastInfo(
-                location = DetailLocation(
-                    area = "area01",
-                    prefecture = "prefecture01",
-                    city = "city01"
-                ),
-                title = "title01",
-                link = "link01",
-                publicTime = "publicTime01",
-                description = DetailDescription(
-                    text = "desc_text01",
-                    publicTime = "desc_publicTime01"
-                ),
-                forecasts = listOf(
-                    DetailForecasts(
-                        date = "forecasts_data01",
-                        dateLabel = "forecasts_data_label01",
-                        telop = "forecasts_data_telop",
-                        image = DetailImage(
-                            title = "image_title01",
-                            url = "image_url01",
-                            width = "image_widt01",
-                            height = "image_height01"
-                        ),
-                        temperature = Temperature(
-                            min = DetailTemperature(
-                                celsius = "celsius",
-                                fahrenheit = "fahrenheit"
+            listOf(
+                ForecastInfo(
+                    location = DetailLocation(
+                        area = "area01",
+                        prefecture = "prefecture01",
+                        city = "city01"
+                    ),
+                    title = "title01",
+                    link = "link01",
+                    publicTime = "publicTime01",
+                    description = DetailDescription(
+                        text = "desc_text01",
+                        publicTime = "desc_publicTime01"
+                    ),
+                    forecasts = listOf(
+                        DetailForecasts(
+                            date = "forecasts_data01",
+                            dateLabel = "forecasts_data_label01",
+                            telop = "forecasts_data_telop",
+                            image = DetailImage(
+                                title = "image_title01",
+                                url = "image_url01",
+                                width = "image_widt01",
+                                height = "image_height01"
                             ),
-                            max = DetailTemperature(
-                                celsius = "celsius",
-                                fahrenheit = "fahrenheit"
+                            temperature = Temperature(
+                                min = DetailTemperature(
+                                    celsius = "celsius",
+                                    fahrenheit = "fahrenheit"
+                                ),
+                                max = DetailTemperature(
+                                    celsius = "celsius",
+                                    fahrenheit = "fahrenheit"
+                                )
                             )
                         )
-                    )
-                ),
-                pinpointLocations = listOf(
-                    PinpointLocation(
-                        link = "pinpoint_link01",
-                        name = "pinpoint_name01"
-                    )
-                ),
-                copyright = DetailCopyright(
-                    title = "detail_copyright_title",
-                    link = "detail_copyright_link",
-                    image = DetailImage(
-                        title = "image_cp_title01",
-                        url = "image_cp_url01",
-                        width = "image_cp_width01",
-                        height = "image_cp_height01"
                     ),
-                    provider = listOf(
+                    pinpointLocations = listOf(
                         PinpointLocation(
-                            link = "pinpoint_cp_link01",
-                            name = "pinpoint_cp_name01"
+                            link = "pinpoint_link01",
+                            name = "pinpoint_name01"
+                        )
+                    ),
+                    copyright = DetailCopyright(
+                        title = "detail_copyright_title",
+                        link = "detail_copyright_link",
+                        image = DetailImage(
+                            title = "image_cp_title01",
+                            url = "image_cp_url01",
+                            width = "image_cp_width01",
+                            height = "image_cp_height01"
+                        ),
+                        provider = listOf(
+                            PinpointLocation(
+                                link = "pinpoint_cp_link01",
+                                name = "pinpoint_cp_name01"
+                            )
                         )
                     )
                 )
