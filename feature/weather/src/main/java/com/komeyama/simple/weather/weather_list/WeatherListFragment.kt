@@ -7,10 +7,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
+import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.BindableItem
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.weather_list.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -27,14 +32,40 @@ class WeatherListFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        sessionsViewModel.callWeatherRepositoryDbLoadMethod()
-        sessionsViewModel.callWeatherRepositoryMethod()
+        //sessionsViewModel.callWeatherRepositoryDbLoadMethod()
+        //sessionsViewModel.callWeatherRepositoryMethod()
         //sessionsViewModel.callWeatherRepositoryDbMethod()
         return inflater.inflate(
             R.layout.weather_list,
             container,
             false
         )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        forecast_list_recycler_view.adapter = groupAdapter
+        val items = listOf(
+            ForecastContentItem(),
+            ForecastContentItem(),
+            ForecastContentItem(),
+            ForecastContentItem(),
+            ForecastContentItem(),
+            ForecastContentItem()
+        )
+        groupAdapter.update(items)
+
+    }
+
+    /**
+     * todo
+     */
+    internal class ForecastContentItem() : BindableItem<ItemForecastContentBinding>() {
+        override fun getLayout() = R.layout.item_forecast_content
+
+        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {}
     }
 }
 

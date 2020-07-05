@@ -33,6 +33,8 @@ android {
         exclude 'META-INF/*.version'
         exclude 'META-INF/proguard/*.pro'
     }
+
+    dataBinding.enabled=true
 }
 
 dependencies {
