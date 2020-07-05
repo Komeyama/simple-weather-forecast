@@ -11,6 +11,7 @@ import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEnt
 import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
 import com.komeyama.simple.weather.model.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -37,6 +38,10 @@ internal class RoomDatabase @Inject constructor(
 
     override suspend fun forecastInfo(): List<ForecastInfoEntity> = withContext(Dispatchers.IO) {
         cacheDatabase.forecastInfoDao().forecastInfo()
+    }
+
+    override suspend fun forecastInfoFlow(): Flow<List<ForecastInfoEntity>> {
+        return cacheDatabase.forecastInfoDao().forecastInfoFlow()
     }
 
     override fun forecastMainInfoEntity(): List<ForecastMainInfoEntity> {
@@ -88,7 +93,7 @@ internal class RoomDatabase @Inject constructor(
     }
 
     override suspend fun save(
-        forecastInfoList: List<ForecastInfo?>
+        forecastInfo: List<ForecastInfo?>
     ) {
         cacheDatabase.withTransaction {
             detailForecastDao.deleteAll()
@@ -97,7 +102,7 @@ internal class RoomDatabase @Inject constructor(
             pinpointLocationOfCopyDao.deleteAll()
 
             var previousForecastInfoSize = 0
-            forecastInfoList.forEachIndexed { id, forecastInfo ->
+            forecastInfo.forEachIndexed { id, forecastInfo ->
                 forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
                 detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
 

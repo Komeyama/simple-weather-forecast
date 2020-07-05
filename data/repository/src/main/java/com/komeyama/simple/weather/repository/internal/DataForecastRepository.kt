@@ -7,6 +7,8 @@ import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
 import dagger.Module
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,6 +20,12 @@ internal class DataWeatherRepository @Inject constructor(
     override suspend fun refresh() {
         val forecastInfoList = forecastApi.getAllPrefectureForecastList()
         forecastInfoDatabase.save(forecastInfoList)
+    }
+
+    override suspend fun forecastContents(): Flow<List<ForecastInfo>> {
+        return forecastInfoDatabase.forecastInfoFlow().map { forecastInfoList ->
+            forecastInfoList.toForecastInfoList()
+        }
     }
 
     override suspend fun dummyLoad() {
