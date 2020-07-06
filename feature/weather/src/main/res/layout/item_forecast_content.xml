@@ -27,20 +27,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:textSize="24sp"
                 android:text="@string/top_card_prefecture_name"
-                app:layout_constraintBottom_toTopOf="@+id/top_card_today_date_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/top_card_today_date_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/top_card_today_date"
                 app:layout_constraintBottom_toTopOf="@+id/top_card_today_weather"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_card_prefecture_text" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/top_card_today_weather"
@@ -50,13 +41,13 @@
                 app:layout_constraintBottom_toTopOf="@+id/top_card_today_temperature"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_card_today_date_text">
+                app:layout_constraintTop_toBottomOf="@+id/top_card_prefecture_text">
 
                 <ImageView
                     android:id="@+id/top_card_today_weather_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@color/colorWhite"
                     android:contentDescription="@string/top_card_today_weather_image"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/top_card_today_weather_text"
@@ -68,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:textSize="24sp"
                     android:text="@string/top_card_today_weather_name"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -134,6 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/top_card_today_max_temperature"
