@@ -1,12 +1,9 @@
 package com.komeyama.simple.weather.weather_list.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.repository.ForecastRepository
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
@@ -14,6 +11,12 @@ import javax.inject.Inject
 class WeatherListViewModel @Inject constructor(
     private val weatherRepository: ForecastRepository
 ) : ViewModel() {
+
+    val ForecastInfoLiveData: LiveData<List<ForecastInfo>> = liveData {
+        emitSource(
+            weatherRepository.forecastContents().asLiveData()
+        )
+    }
 
     fun callWeatherRepositoryMethod() {
         viewModelScope.launch {
@@ -32,15 +35,4 @@ class WeatherListViewModel @Inject constructor(
             }
         }
     }
-
-    fun callWeatherRepositoryDbLoadMethod() {
-        viewModelScope.launch {
-            weatherRepository.forecastContents().conflate().collect() {
-                it.forEach { value ->
-                    Timber.d("dummyload flow:%s ", value.title)
-                }
-            }
-        }
-    }
-
 }

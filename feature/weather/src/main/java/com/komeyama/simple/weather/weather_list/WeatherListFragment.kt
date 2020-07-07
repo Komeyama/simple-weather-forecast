@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
@@ -34,7 +35,6 @@ class WeatherListFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //sessionsViewModel.callWeatherRepositoryDbLoadMethod()
         //sessionsViewModel.callWeatherRepositoryMethod()
         //sessionsViewModel.callWeatherRepositoryDbMethod()
         return inflater.inflate(
@@ -49,26 +49,32 @@ class WeatherListFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_list_recycler_view.adapter = groupAdapter
-        val items = listOf(
-            ForecastContentItem(requireContext()),
-            ForecastContentItem(requireContext()),
-            ForecastContentItem(requireContext()),
-            ForecastContentItem(requireContext()),
-            ForecastContentItem(requireContext()),
-            ForecastContentItem(requireContext())
-        )
-        groupAdapter.update(items)
+
+        val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
+        sessionsViewModel.ForecastInfoLiveData.observe(viewLifecycleOwner, Observer { forecastInfoList ->
+            forecastInfoList.forEach {
+                items.add(ForecastContentItem(requireContext()))
+            }
+            groupAdapter.update(items)
+        })
+
 
     }
 
     /**
      * todo
      */
-    internal class ForecastContentItem(var context: Context) : BindableItem<ItemForecastContentBinding>() {
+    internal class ForecastContentItem(var context: Context) :
+        BindableItem<ItemForecastContentBinding>() {
         override fun getLayout() = R.layout.item_forecast_content
 
         override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
-            viewBinding.topCardFavoritePlace.setColorFilter(ContextCompat.getColor(context, R.color.colorLight_d3))
+            viewBinding.topCardFavoritePlace.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.colorLight_d3
+                )
+            )
         }
     }
 }
