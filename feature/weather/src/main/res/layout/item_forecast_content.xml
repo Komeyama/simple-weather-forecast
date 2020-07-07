@@ -15,9 +15,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardElevation="4dp"
         app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,8 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:textSize="24sp"
                 android:text="@string/top_card_prefecture_name"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/top_card_today_weather"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,8 +48,8 @@
                     android:id="@+id/top_card_today_weather_image"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:src="@color/colorWhite"
                     android:contentDescription="@string/top_card_today_weather_image"
+                    android:src="@color/colorWhite"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/top_card_today_weather_text"
                     app:layout_constraintStart_toStartOf="parent"
@@ -60,8 +60,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textSize="24sp"
                     android:text="@string/top_card_today_weather_name"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/top_card_today_weather_image"
@@ -169,6 +169,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <ImageView
+                android:id="@+id/top_card_favorite_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:contentDescription="@string/top_card_favorite"
+                android:src="@drawable/ic_baseline_check_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

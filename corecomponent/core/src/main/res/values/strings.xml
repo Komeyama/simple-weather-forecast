@@ -9,4 +9,5 @@
     <string name="top_card_min_temperature_mark">最低</string>
     <string name="top_card_temperature_name">---</string>
     <string name="top_card_celsius">℃</string>
+    <string name="top_card_favorite">favorite_image</string>
 </resources>

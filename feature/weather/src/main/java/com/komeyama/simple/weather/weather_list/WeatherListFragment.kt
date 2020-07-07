@@ -1,9 +1,11 @@
 package com.komeyama.simple.weather.weather_list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
@@ -48,12 +50,12 @@ class WeatherListFragment : DaggerFragment() {
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_list_recycler_view.adapter = groupAdapter
         val items = listOf(
-            ForecastContentItem(),
-            ForecastContentItem(),
-            ForecastContentItem(),
-            ForecastContentItem(),
-            ForecastContentItem(),
-            ForecastContentItem()
+            ForecastContentItem(requireContext()),
+            ForecastContentItem(requireContext()),
+            ForecastContentItem(requireContext()),
+            ForecastContentItem(requireContext()),
+            ForecastContentItem(requireContext()),
+            ForecastContentItem(requireContext())
         )
         groupAdapter.update(items)
 
@@ -62,10 +64,12 @@ class WeatherListFragment : DaggerFragment() {
     /**
      * todo
      */
-    internal class ForecastContentItem() : BindableItem<ItemForecastContentBinding>() {
+    internal class ForecastContentItem(var context: Context) : BindableItem<ItemForecastContentBinding>() {
         override fun getLayout() = R.layout.item_forecast_content
 
-        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {}
+        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
+            viewBinding.topCardFavoritePlace.setColorFilter(ContextCompat.getColor(context, R.color.colorLight_d3))
+        }
     }
 }
 
