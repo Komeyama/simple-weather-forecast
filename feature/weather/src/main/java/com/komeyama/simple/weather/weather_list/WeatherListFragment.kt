@@ -19,6 +19,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_list.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -51,24 +52,49 @@ class WeatherListFragment : DaggerFragment() {
         forecast_list_recycler_view.adapter = groupAdapter
 
         val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
-        sessionsViewModel.ForecastInfoLiveData.observe(viewLifecycleOwner, Observer { forecastInfoList ->
-            forecastInfoList.forEach {
-                items.add(ForecastContentItem(requireContext()))
-            }
-            groupAdapter.update(items)
-        })
+        sessionsViewModel.forecastInfoLiveData.observe(
+            viewLifecycleOwner,
+            Observer { forecastInfoList ->
+                forecastInfoList.forEach {
+                    Timber.d("mydebug: %s %s", it.prefectureName, it.imgUrl)
+                    items.add(
+                        ForecastContentItem(
+                            requireContext(),
+                            it.prefectureName,
+                            it.telop,
+                            it.imgUrl,
+                            it.maxTemperature,
+                            it.minTemperature
+                        )
+                    )
+                }
+                Timber.d("mydebug: %s", forecastInfoList)
+                groupAdapter.update(items)
+            })
 
 
     }
 
     /**
      * todo
+     *
      */
-    internal class ForecastContentItem(var context: Context) :
+    internal class ForecastContentItem(
+        var context: Context,
+        val prefectureName: String,
+        val telop: String,
+        var url: String,
+        var maxTemperature: String,
+        val minTemperature: String
+    ) :
         BindableItem<ItemForecastContentBinding>() {
         override fun getLayout() = R.layout.item_forecast_content
 
         override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
+            viewBinding.topCardPrefectureText.text = prefectureName
+            viewBinding.topCardTodayWeatherText.text = telop
+            viewBinding.topCardTodayMaxTemperatureText.text = maxTemperature
+            viewBinding.topCardTodayMinTemperatureText.text = minTemperature
             viewBinding.topCardFavoritePlace.setColorFilter(
                 ContextCompat.getColor(
                     context,
