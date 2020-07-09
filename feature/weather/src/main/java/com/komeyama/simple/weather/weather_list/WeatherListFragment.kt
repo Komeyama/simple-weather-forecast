@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
@@ -19,7 +20,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_list.*
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -56,7 +56,6 @@ class WeatherListFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { forecastInfoList ->
                 forecastInfoList.forEach {
-                    Timber.d("mydebug: %s %s", it.prefectureName, it.imgUrl)
                     items.add(
                         ForecastContentItem(
                             requireContext(),
@@ -68,7 +67,6 @@ class WeatherListFragment : DaggerFragment() {
                         )
                     )
                 }
-                Timber.d("mydebug: %s", forecastInfoList)
                 groupAdapter.update(items)
             })
 
@@ -93,6 +91,7 @@ class WeatherListFragment : DaggerFragment() {
         override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
             viewBinding.topCardPrefectureText.text = prefectureName
             viewBinding.topCardTodayWeatherText.text = telop
+            viewBinding.topCardTodayWeatherImage.load(url)
             viewBinding.topCardTodayMaxTemperatureText.text = maxTemperature
             viewBinding.topCardTodayMinTemperatureText.text = minTemperature
             viewBinding.topCardFavoritePlace.setColorFilter(
