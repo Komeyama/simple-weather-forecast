@@ -19,5 +19,5 @@ internal abstract class DetailDescriptionDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<DetailDescriptionEntityImpl>)
+    abstract fun insert(detailDescriptionEntityImplList: List<DetailDescriptionEntityImpl>)
 }

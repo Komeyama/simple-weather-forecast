@@ -19,5 +19,5 @@ internal abstract class TemperatureDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<TemperatureEntityImpl>)
+    abstract fun insert(temperatureEntityImplList: List<TemperatureEntityImpl>)
 }

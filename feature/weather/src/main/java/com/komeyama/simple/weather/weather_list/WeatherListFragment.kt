@@ -27,7 +27,7 @@ class WeatherListFragment : DaggerFragment() {
 
     @Inject
     lateinit var weatherListViewModelProvider: Provider<WeatherListViewModel>
-    private val sessionsViewModel: WeatherListViewModel by assistedActivityViewModels {
+    private val weatherListViewModel: WeatherListViewModel by assistedActivityViewModels {
         weatherListViewModelProvider.get()
     }
 
@@ -36,8 +36,8 @@ class WeatherListFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //sessionsViewModel.callWeatherRepositoryMethod()
-        //sessionsViewModel.callWeatherRepositoryDbMethod()
+        //weatherListViewModel.callWeatherRepositoryMethod()
+        //weatherListViewModel.callWeatherRepositoryDbMethod()
         return inflater.inflate(
             R.layout.weather_list,
             container,
@@ -52,7 +52,7 @@ class WeatherListFragment : DaggerFragment() {
         forecast_list_recycler_view.adapter = groupAdapter
 
         val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
-        sessionsViewModel.forecastInfoLiveData.observe(
+        weatherListViewModel.forecastInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
                 forecastInfoList.forEach {

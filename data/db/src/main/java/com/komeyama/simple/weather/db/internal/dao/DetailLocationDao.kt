@@ -19,5 +19,5 @@ internal abstract class DetailLocationDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sessions: List<DetailLocationEntityImpl>)
+    abstract fun insert(detailLocationEntityImplList: List<DetailLocationEntityImpl>)
 }
