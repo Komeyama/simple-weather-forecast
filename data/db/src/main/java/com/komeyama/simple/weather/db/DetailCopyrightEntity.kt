@@ -2,5 +2,5 @@ package com.komeyama.simple.weather.db
 
 interface DetailCopyrightEntity {
     val detailCopyrightMainEntity: DetailCopyrightMainEntity
-    val pinpointLocationOfCopyEntityImpl: List<PinpointLocationEntity?>
+    val pinpointLocationEntity: List<PinpointLocationEntity?>
 }

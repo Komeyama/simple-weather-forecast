@@ -11,5 +11,5 @@ internal data class DetailCopyrightEntityImpl(
         parentColumn = "detail_copyright_main_id",
         entityColumn = "pinpoint_location_copy_parent_id"
     )
-    override var pinpointLocationOfCopyEntityImpl: List<PinpointLocationOfCopyEntityImpl?>
+    override var pinpointLocationEntity: List<PinpointLocationOfCopyEntityImpl?>
 ) : DetailCopyrightEntity

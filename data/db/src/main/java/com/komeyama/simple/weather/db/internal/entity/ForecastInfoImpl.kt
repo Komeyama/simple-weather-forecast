@@ -5,17 +5,17 @@ import com.komeyama.simple.weather.db.ForecastInfoEntity
 
 internal data class ForecastInfoImpl(
     @Embedded
-    override var forecastInfoEntityImpl: ForecastMainInfoEntityImpl,
+    override var forecastInfoEntity: ForecastMainInfoEntityImpl,
     @Relation(
         parentColumn = "forecast_id",
         entityColumn = "parent_id"
     )
-    override var detailForecastEntityImpl: List<DetailForecastEntityImpl>,
+    override var detailForecastEntity: List<DetailForecastEntityImpl>,
     @Relation(
         parentColumn = "forecast_id",
         entityColumn = "parent_id"
     )
-    override var pinpointLocationEntityImpl: List<PinpointLocationEntityImpl>,
+    override var pinpointLocationEntity: List<PinpointLocationEntityImpl>,
     @Relation(
         parentColumn = "forecast_id",
         entityColumn = "parent_id",

@@ -14,21 +14,21 @@ internal fun List<ForecastInfoEntity>.toForecastInfoList(): List<ForecastInfo> {
 internal fun ForecastInfoEntity.toForecastInfo(): ForecastInfo {
     return ForecastInfo(
         location = DetailLocation(
-            this.forecastInfoEntityImpl.detailLocation?.area,
-            this.forecastInfoEntityImpl.detailLocation?.prefecture,
-            this.forecastInfoEntityImpl.detailLocation?.city
+            this.forecastInfoEntity.detailLocation?.area,
+            this.forecastInfoEntity.detailLocation?.prefecture,
+            this.forecastInfoEntity.detailLocation?.city
         ),
-        title = this.forecastInfoEntityImpl.title,
-        link = this.forecastInfoEntityImpl.link,
-        publicTime = this.forecastInfoEntityImpl.publicTime,
+        title = this.forecastInfoEntity.title,
+        link = this.forecastInfoEntity.link,
+        publicTime = this.forecastInfoEntity.publicTime,
         description = DetailDescription(
-            this.forecastInfoEntityImpl.description?.text,
-            this.forecastInfoEntityImpl.description?.publicTime
+            this.forecastInfoEntity.description?.text,
+            this.forecastInfoEntity.description?.publicTime
         ),
-        forecasts = this.detailForecastEntityImpl.map {
+        forecasts = this.detailForecastEntity.map {
             it.toDetailForecasts()
         },
-        pinpointLocations = this.pinpointLocationEntityImpl.map {
+        pinpointLocations = this.pinpointLocationEntity.map {
             it.toPinpointLocation()
         },
         copyright = DetailCopyright(
@@ -40,7 +40,7 @@ internal fun ForecastInfoEntity.toForecastInfo(): ForecastInfo {
                 this.detailCopyrightEntity.detailCopyrightMainEntity.image?.width,
                 this.detailCopyrightEntity.detailCopyrightMainEntity.image?.height
             ),
-            provider = this.detailCopyrightEntity.pinpointLocationOfCopyEntityImpl.map {
+            provider = this.detailCopyrightEntity.pinpointLocationEntity.map {
                 it?.toPinpointLocation()
             }
         )

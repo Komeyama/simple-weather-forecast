@@ -34,17 +34,17 @@ internal class DataWeatherRepository @Inject constructor(
         info.forEach { forecastInfo ->
             Timber.d(
                 "dummyFunc:load 00:\n forecastId:%s\n title:%s\n link:%s\n publicTime:%s\n description:%s %s\n detailLocation:%s %s %s\n",
-                forecastInfo.forecastInfoEntityImpl.forecastId,
-                forecastInfo.forecastInfoEntityImpl.title,
-                forecastInfo.forecastInfoEntityImpl.link,
-                forecastInfo.forecastInfoEntityImpl.publicTime,
-                forecastInfo.forecastInfoEntityImpl.description?.text,
-                forecastInfo.forecastInfoEntityImpl.description?.publicTime,
-                forecastInfo.forecastInfoEntityImpl.detailLocation?.area,
-                forecastInfo.forecastInfoEntityImpl.detailLocation?.city,
-                forecastInfo.forecastInfoEntityImpl.detailLocation?.prefecture
+                forecastInfo.forecastInfoEntity.forecastId,
+                forecastInfo.forecastInfoEntity.title,
+                forecastInfo.forecastInfoEntity.link,
+                forecastInfo.forecastInfoEntity.publicTime,
+                forecastInfo.forecastInfoEntity.description?.text,
+                forecastInfo.forecastInfoEntity.description?.publicTime,
+                forecastInfo.forecastInfoEntity.detailLocation?.area,
+                forecastInfo.forecastInfoEntity.detailLocation?.city,
+                forecastInfo.forecastInfoEntity.detailLocation?.prefecture
             )
-            forecastInfo.detailForecastEntityImpl.forEach { detailForecast ->
+            forecastInfo.detailForecastEntity.forEach { detailForecast ->
                 Timber.d(
                     "dummyFunc:load 01:\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s\n temperature:%s\n",
                     detailForecast.parentId,
@@ -58,7 +58,7 @@ internal class DataWeatherRepository @Inject constructor(
                     detailForecast.temperature
                 )
             }
-            forecastInfo.pinpointLocationEntityImpl.forEach {
+            forecastInfo.pinpointLocationEntity.forEach {
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
             }
             Timber.d(
@@ -67,7 +67,7 @@ internal class DataWeatherRepository @Inject constructor(
                 forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.title,
                 forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.link,
                 forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.image,
-                forecastInfo.detailCopyrightEntity.pinpointLocationOfCopyEntityImpl
+                forecastInfo.detailCopyrightEntity.pinpointLocationEntity
             )
         }
 
