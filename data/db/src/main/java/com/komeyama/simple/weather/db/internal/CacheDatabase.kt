@@ -13,6 +13,7 @@ import com.komeyama.simple.weather.db.internal.entity.*
 
 @Database(
     entities = [
+        FavoritePlaceEntityImpl::class,
         ForecastMainInfoEntityImpl::class,
         DetailCopyrightMainEntityImpl::class,
         DetailDescriptionEntityImpl::class,
@@ -27,6 +28,7 @@ import com.komeyama.simple.weather.db.internal.entity.*
     ], version = 1
 )
 internal abstract class CacheDatabase : RoomDatabase() {
+    abstract fun favoritePlaceDao(): FavoritePlaceDao
     abstract fun forecastInfoDao(): ForecastInfoDao
     abstract fun forecastMainInfoDao(): ForecastMainInfoDao
     abstract fun detailCopyrightDao(): DetailCopyrightDao
