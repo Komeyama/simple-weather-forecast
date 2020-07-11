@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.TemperatureEntity
 
 @Entity(tableName = "temperature")
-data class TemperatureEntityImpl (
+internal data class TemperatureEntityImpl (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @Embedded(prefix = "min_temperature")

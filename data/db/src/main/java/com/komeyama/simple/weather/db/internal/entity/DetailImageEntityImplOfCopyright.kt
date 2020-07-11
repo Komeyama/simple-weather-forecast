@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.DetailImageEntity
 
 @Entity(tableName = "detail_image_copyright")
-data class DetailImageEntityImplOfCopyright(
+internal data class DetailImageEntityImplOfCopyright(
     @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     @ColumnInfo(name = "title")

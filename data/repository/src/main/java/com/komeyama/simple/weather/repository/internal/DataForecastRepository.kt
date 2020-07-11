@@ -46,8 +46,7 @@ internal class DataWeatherRepository @Inject constructor(
             )
             forecastInfo.detailForecastEntityImpl.forEach { detailForecast ->
                 Timber.d(
-                    "dummyFunc:load 01:\n id:%s\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s\n temperature:%s\n",
-                    detailForecast.id,
+                    "dummyFunc:load 01:\n parentId:%s\n date:%s\n dateLabel:%s\n telop:%s \n image:%s %s %s %s\n temperature:%s\n",
                     detailForecast.parentId,
                     detailForecast.date,
                     detailForecast.dateLabel,
@@ -63,8 +62,7 @@ internal class DataWeatherRepository @Inject constructor(
                 Timber.d("dummyFunc:load 02: %s\n", it.toString())
             }
             Timber.d(
-                "dummyFunc:lad 03:%s\n %s\n %s\n %s\n %s\n %s\n",
-                forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.id,
+                "dummyFunc:lad 03: %s\n %s\n %s\n %s\n %s\n",
                 forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.parentId,
                 forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.title,
                 forecastInfo.detailCopyrightEntity.detailCopyrightMainEntity.link,

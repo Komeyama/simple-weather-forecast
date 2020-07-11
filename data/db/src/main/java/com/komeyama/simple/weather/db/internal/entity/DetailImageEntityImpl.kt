@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.DetailImageEntity
 
 @Entity(tableName = "detail_image")
-class DetailImageEntityImpl (
+internal class DetailImageEntityImpl (
     @PrimaryKey @ColumnInfo(name = "title")
     override var title: String,
     @ColumnInfo(name = "url")

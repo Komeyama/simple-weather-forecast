@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.komeyama.simple.weather.db.DetailCopyrightEntity
 
-data class DetailCopyrightEntityImpl(
+internal data class DetailCopyrightEntityImpl(
     @Embedded
     override var detailCopyrightMainEntity: DetailCopyrightMainEntityImpl,
     @Relation(

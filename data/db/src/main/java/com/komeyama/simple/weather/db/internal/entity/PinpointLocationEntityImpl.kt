@@ -17,9 +17,9 @@ import com.komeyama.simple.weather.db.PinpointLocationEntity
         )
     ]
 )
-data class PinpointLocationEntityImpl(
+internal data class PinpointLocationEntityImpl(
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "pinpoint_location_id")
-    var id: Int = 0,
+    override var id: Int = 0,
     @ColumnInfo(name = "parent_id")
     override var parentId: Int,
     @ColumnInfo(name = "link")

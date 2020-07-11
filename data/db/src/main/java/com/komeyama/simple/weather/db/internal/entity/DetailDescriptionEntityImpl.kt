@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.DetailDescriptionEntity
 
 @Entity(tableName = "detail_description")
-data class DetailDescriptionEntityImpl(
+internal data class DetailDescriptionEntityImpl(
     @PrimaryKey @ColumnInfo(name = "detail_description_location_id")
     var id: Int = 0,
     @ColumnInfo(name = "text")

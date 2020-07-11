@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.DetailTemperatureEntity
 
 @Entity(tableName = "detail_temperature")
-data class DetailTemperatureEntityImpl (
+internal data class DetailTemperatureEntityImpl (
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     @ColumnInfo(name = "celsius")

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.ForecastMainInfoEntity
 
 @Entity(tableName = "forecast_info")
-data class ForecastMainInfoEntityImpl(
+internal data class ForecastMainInfoEntityImpl(
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "forecast_id")
     override var forecastId: Int = 0,
     override var title: String?,

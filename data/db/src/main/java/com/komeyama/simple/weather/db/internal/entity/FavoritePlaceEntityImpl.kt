@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.FavoritePlaceEntity
 
 @Entity(tableName = "favorite_place")
-data class FavoritePlaceEntityImpl (
+internal data class FavoritePlaceEntityImpl (
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     @ColumnInfo(name = "favorite_forecast_id")

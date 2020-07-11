@@ -12,7 +12,7 @@ import com.komeyama.simple.weather.db.DetailForecastEntity
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class DetailForecastEntityImpl(
+internal data class DetailForecastEntityImpl(
     @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     @ColumnInfo(name = "parent_id")

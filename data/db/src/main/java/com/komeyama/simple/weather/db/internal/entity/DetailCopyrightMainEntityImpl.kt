@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.db.internal.entity
 
 import androidx.room.*
 import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
+import com.komeyama.simple.weather.db.DetailImageEntity
 
 @Entity(
     tableName = "detail_copyright",
@@ -14,9 +15,9 @@ import com.komeyama.simple.weather.db.DetailCopyrightMainEntity
         )
     ]
 )
-data class DetailCopyrightMainEntityImpl(
+internal data class DetailCopyrightMainEntityImpl(
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "detail_copyright_main_id")
-    override var id: Int = 0,
+    var id: Int = 0,
     @ColumnInfo(name = "parent_id")
     override var parentId: Int,
     @ColumnInfo(name = "title")

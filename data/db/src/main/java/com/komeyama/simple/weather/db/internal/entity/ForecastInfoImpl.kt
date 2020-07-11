@@ -3,7 +3,7 @@ package com.komeyama.simple.weather.db.internal.entity
 import androidx.room.*
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 
-data class ForecastInfoImpl(
+internal data class ForecastInfoImpl(
     @Embedded
     override var forecastInfoEntityImpl: ForecastMainInfoEntityImpl,
     @Relation(
