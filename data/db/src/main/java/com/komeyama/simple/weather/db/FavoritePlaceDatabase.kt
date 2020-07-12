@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.db
 
 interface FavoritePlaceDatabase {
-    fun favoritePlaceEntity(): List<FavoritePlaceEntity>
+    fun favoriteState(): List<FavoritePlaceEntity>
+    suspend fun saveFavoriteState(favoriteId: String)
 }

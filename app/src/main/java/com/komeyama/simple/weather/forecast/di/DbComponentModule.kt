@@ -12,90 +12,80 @@ class DbComponentModule {
 
     @Provides
     @Singleton
-    fun provideForecastInfoStore(
-        application: Application
-    ): ForecastInfoDatabase {
+    fun provideFavoritePlaceStore(application: Application): FavoritePlaceDatabase {
+        return DbComponent.factory().create(application, Dispatchers.IO, "favorite_place.db")
+            .favoritePlaceDatabase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastInfoStore(application: Application): ForecastInfoDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "forecast_info.db").forecastInfoDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideForecastStore(
-        application: Application
-    ): ForecastMainDatabase {
+    fun provideForecastStore(application: Application): ForecastMainDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "forecast_info.db").forecastMainDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailCopyrightStore(
-        application: Application
-    ): DetailCopyrightDatabase {
+    fun provideDetailCopyrightStore(application: Application): DetailCopyrightDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_copyright.db").detailCopyrightDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailCopyrightMainStore(
-        application: Application
-    ): DetailCopyrightMainDatabase {
+    fun provideDetailCopyrightMainStore(application: Application): DetailCopyrightMainDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "detail_copyright.db").detailCopyrightMainDatabase()
+            .create(application, Dispatchers.IO, "detail_copyright.db")
+            .detailCopyrightMainDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailDescriptionStore(
-        application: Application
-    ): DetailDescriptionDatabase {
+    fun provideDetailDescriptionStore(application: Application): DetailDescriptionDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "detail_description.db").detailDescriptionDatabase()
+            .create(application, Dispatchers.IO, "detail_description.db")
+            .detailDescriptionDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailForecastStore(
-        application: Application
-    ): DetailForecastDatabase {
+    fun provideDetailForecastStore(application: Application): DetailForecastDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_forecast.db").detailForecastDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailImageStore(
-        application: Application
-    ): DetailImageDatabase {
+    fun provideDetailImageStore(application: Application): DetailImageDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_image.db").detailImageDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailImageOfCopyrightStore(
-        application: Application
-    ): DetailImageOfCopyrightDatabase {
+    fun provideDetailImageOfCopyrightStore(application: Application): DetailImageOfCopyrightDatabase {
         return DbComponent.factory()
-            .create(application, Dispatchers.IO, "detail_image_copyright.db").detailImageOfCopyrightDatabase()
+            .create(application, Dispatchers.IO, "detail_image_copyright.db")
+            .detailImageOfCopyrightDatabase()
     }
 
     @Provides
     @Singleton
-    fun provideDetailLocationStore(
-        application: Application
-    ): DetailLocationDatabase {
+    fun provideDetailLocationStore(application: Application): DetailLocationDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "detail_location.db").detailLocationDatabase()
     }
 
     @Provides
     @Singleton
-    fun providePinpointLocationStore(
-        application: Application
-    ): PinpointLocationDatabase {
+    fun providePinpointLocationStore(application: Application): PinpointLocationDatabase {
         return DbComponent.factory()
             .create(application, Dispatchers.IO, "pinpoint_location.db").pinpointLocationDatabase()
     }

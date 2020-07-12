@@ -19,6 +19,7 @@ interface RepositoryComponent {
     @Component.Factory
     interface Factory {
         fun create(
+            @BindsInstance favoritePlaceDatabase: FavoritePlaceDatabase,
             @BindsInstance forecastApi: ForecastApi,
             @BindsInstance forecastInfoDatabase: ForecastInfoDatabase,
             @BindsInstance forecastMainDatabase: ForecastMainDatabase,

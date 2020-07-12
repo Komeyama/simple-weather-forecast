@@ -5,10 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.komeyama.simple.weather.db.internal.CacheDatabase
-import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightMainDao
-import com.komeyama.simple.weather.db.internal.dao.DetailImageDao
-import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
-import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
+import com.komeyama.simple.weather.db.internal.dao.*
 import com.komeyama.simple.weather.db.internal.entity.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
@@ -27,6 +24,7 @@ import java.io.IOException
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+    private lateinit var favoritePlaceDao: FavoritePlaceDao
     private lateinit var forecastMainInfoDao: ForecastMainInfoDao
     private lateinit var copyrightMainDao: DetailCopyrightMainDao
     private lateinit var imageDao: DetailImageDao
@@ -39,6 +37,7 @@ class ExampleInstrumentedTest {
         cacheDatabase = Room.inMemoryDatabaseBuilder(
             context, CacheDatabase::class.java
         ).build()
+        favoritePlaceDao = cacheDatabase.favoritePlaceDao()
         forecastMainInfoDao = cacheDatabase.forecastMainInfoDao()
         copyrightMainDao = cacheDatabase.detailCopyrightMainDao()
         imageDao = cacheDatabase.detailImageDao()
@@ -53,16 +52,40 @@ class ExampleInstrumentedTest {
 
     @Test
     @Throws(Exception::class)
+    fun writeAndDeleteFavoritePlaceAndReadInList() {
+        // write
+        favoritePlaceDao.insert(FavoritePlaceEntityImpl(forecastId = "100001"))
+        favoritePlaceDao.insert(FavoritePlaceEntityImpl(forecastId = "100002"))
+        favoritePlaceDao.insert(FavoritePlaceEntityImpl(forecastId = "100010"))
+
+        // read
+        var favoritePlaceInfo = favoritePlaceDao.favoritePlaceInfo()
+        assertThat(favoritePlaceInfo[0].forecastId, equalTo("100001"))
+        assertThat(favoritePlaceInfo[1].forecastId, equalTo("100002"))
+        assertThat(favoritePlaceInfo[2].forecastId, equalTo("100010"))
+
+        // delete
+        favoritePlaceDao.delete("100002")
+
+        // re-read
+        favoritePlaceInfo = favoritePlaceDao.favoritePlaceInfo()
+        assertThat(favoritePlaceInfo.size, equalTo(2))
+        assertThat(favoritePlaceInfo[0].forecastId, equalTo("100001"))
+        assertThat(favoritePlaceInfo[1].forecastId, equalTo("100010"))
+    }
+
+
+    @Test
+    @Throws(Exception::class)
     fun writeCopyrightMainAndReadInList() {
         insertCopyrightMainData()
         val detailCopyrightMainInfo = copyrightMainDao.detailCopyrightMainInfo()
         assertThat(detailCopyrightMainInfo[0].title, equalTo("copyrightTitle"))
         assertThat(detailCopyrightMainInfo[0].link, equalTo("copyrightLink"))
-        assertThat(detailCopyrightMainInfo[0].image.title, equalTo("imageTitle"))
-        assertThat(detailCopyrightMainInfo[0].image.link, equalTo("imageLink"))
-        assertThat(detailCopyrightMainInfo[0].image.url, equalTo("imageUrl"))
-        assertThat(detailCopyrightMainInfo[0].image.width, equalTo("imageWidth"))
-        assertThat(detailCopyrightMainInfo[0].image.height, equalTo("imageHeight"))
+        assertThat(detailCopyrightMainInfo[0].image?.title, equalTo("imageTitle"))
+        assertThat(detailCopyrightMainInfo[0].image?.url, equalTo("imageUrl"))
+        assertThat(detailCopyrightMainInfo[0].image?.width, equalTo("imageWidth"))
+        assertThat(detailCopyrightMainInfo[0].image?.height, equalTo("imageHeight"))
     }
 
     @Test
@@ -71,7 +94,6 @@ class ExampleInstrumentedTest {
         insertImageData()
         val detailImageInfo = imageDao.detailImageInfo()
         assertThat(detailImageInfo[0].title, equalTo("imageTitle"))
-        assertThat(detailImageInfo[0].link, equalTo("imageLink"))
         assertThat(detailImageInfo[0].url, equalTo("imageUrl"))
         assertThat(detailImageInfo[0].width, equalTo("imageWidth"))
         assertThat(detailImageInfo[0].height, equalTo("imageHeight"))
@@ -79,33 +101,29 @@ class ExampleInstrumentedTest {
 
     private fun insertCopyrightMainData() {
         forecastMainInfoDao.insert(
-            listOf(
                 ForecastMainInfoEntityImpl(
-                    0,
-                    "forecast title",
-                    "forecast link",
-                    "public time",
-                    DetailLocationEntityImpl("detail area", "detail prefecture", "detail city"),
-                    DetailDescriptionEntityImpl("detail text", "detail public time")
+                    forecastId = 0,
+                    title = "forecast title",
+                    link = "forecast_link",
+                    publicTime = "public time",
+                    detailLocation = DetailLocationEntityImpl(area = "detail area", prefecture = "detail prefecture",city =  "detail city"),
+                    description = DetailDescriptionEntityImpl(text = "detail text", publicTime = "detail public time")
                 )
             )
-        )
+
 
         copyrightMainDao.insert(
-            listOf(
                 DetailCopyrightMainEntityImpl(
                     0, 0,
                     "copyrightTitle",
                     "copyrightLink",
                     DetailImageEntityImplOfCopyright(
-                        "imageTitle",
-                        "imageLink",
-                        "imageUrl",
-                        "imageWidth",
-                        "imageHeight"
+                        title = "imageTitle",
+                        url = "imageUrl",
+                        width = "imageWidth",
+                        height = "imageHeight"
                     )
                 )
-            )
         )
     }
 
@@ -113,11 +131,10 @@ class ExampleInstrumentedTest {
         imageDao.insert(
             listOf(
                 DetailImageEntityImpl(
-                    "imageTitle",
-                    "imageLink",
-                    "imageUrl",
-                    "imageWidth",
-                    "imageHeight"
+                    title = "imageTitle",
+                    url = "imageUrl",
+                    width = "imageWidth",
+                    height = "imageHeight"
                 )
             )
         )

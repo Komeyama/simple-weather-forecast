@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.repository.internal
 
 import com.komeyama.simple.weather.api.ForecastApi
+import com.komeyama.simple.weather.db.FavoritePlaceDatabase
 import com.komeyama.simple.weather.db.ForecastInfoDatabase
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 import com.komeyama.simple.weather.model.*
@@ -13,6 +14,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
+    private val favoritePlaceDatabase: FavoritePlaceDatabase,
     private val forecastApi: ForecastApi,
     private val forecastInfoDatabase: ForecastInfoDatabase
 ) : ForecastRepository {
@@ -26,6 +28,10 @@ internal class DataWeatherRepository @Inject constructor(
         return forecastInfoDatabase.forecastInfoFlow().map { forecastInfoList ->
             forecastInfoList.toForecastInfoList()
         }
+    }
+
+    override suspend fun toggleFavorite(favoriteId: String) {
+        favoritePlaceDatabase.saveFavoriteState(favoriteId)
     }
 
     override suspend fun dummyLoad() {

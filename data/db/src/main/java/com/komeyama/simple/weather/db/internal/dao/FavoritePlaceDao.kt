@@ -19,5 +19,8 @@ internal abstract class FavoritePlaceDao {
     abstract fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(favoritePlaceEntityImplList: List<FavoritePlaceEntityImpl>)
+    abstract fun insert(favoritePlaceEntityImpl: FavoritePlaceEntityImpl)
+
+    @Query("DELETE FROM favorite_place WHERE favorite_forecast_id = :forecastId")
+    abstract fun delete(forecastId: String)
 }

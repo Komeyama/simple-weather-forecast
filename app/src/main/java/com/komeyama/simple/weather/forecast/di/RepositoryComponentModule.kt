@@ -21,6 +21,7 @@ object RepositoryComponentModule {
     @Provides
     @Singleton
     fun provideRepositoryComponent(
+        favoritePlaceDatabase: FavoritePlaceDatabase,
         forecastApi: ForecastApi,
         forecastInfoDatabase: ForecastInfoDatabase,
         forecastMainDatabase: ForecastMainDatabase,
@@ -34,6 +35,7 @@ object RepositoryComponentModule {
         pinpointLocationDatabase: PinpointLocationDatabase
     ): RepositoryComponent {
         return RepositoryComponent.factory().create(
+            favoritePlaceDatabase = favoritePlaceDatabase,
             forecastApi = forecastApi,
             forecastInfoDatabase = forecastInfoDatabase,
             forecastMainDatabase = forecastMainDatabase,

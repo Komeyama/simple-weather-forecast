@@ -8,9 +8,7 @@ import com.komeyama.simple.weather.db.FavoritePlaceEntity
 @Entity(tableName = "favorite_place")
 internal data class FavoritePlaceEntityImpl (
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int = 0,
     @ColumnInfo(name = "favorite_forecast_id")
-    override var forecastId: String?,
-    @ColumnInfo(name = "is_favorite")
-    override var isFavorite: Boolean
+    override var forecastId: String?
 ): FavoritePlaceEntity

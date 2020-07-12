@@ -2,12 +2,11 @@ package com.komeyama.simple.weather.db.internal
 
 import androidx.room.withTransaction
 import com.komeyama.simple.weather.db.*
-import com.komeyama.simple.weather.db.internal.dao.*
 import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightMainDao
 import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
-import com.komeyama.simple.weather.db.internal.dao.FavoritePlaceDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
+import com.komeyama.simple.weather.db.internal.entity.FavoritePlaceEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.mapper.*
 import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
 import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 internal class RoomDatabase @Inject constructor(
     private val cacheDatabase: CacheDatabase,
-    private val favoritePlaceDao: FavoritePlaceDao,
     private val forecastMainInfoDao: ForecastMainInfoDao,
     private val detailForecastDao: DetailForecastDao,
     private val detailCopyrightMainDao: DetailCopyrightMainDao,
@@ -40,9 +38,19 @@ internal class RoomDatabase @Inject constructor(
     PinpointLocationOfCopyDatabase,
     TemperatureDatabase {
 
-
-    override fun favoritePlaceEntity(): List<FavoritePlaceEntity> {
+    override fun favoriteState(): List<FavoritePlaceEntity> {
         return cacheDatabase.favoritePlaceDao().favoritePlaceInfo()
+    }
+
+    override suspend fun saveFavoriteState(favoriteId: String) {
+        val favoritePlaceInfo = cacheDatabase.favoritePlaceDao().favoritePlaceInfo()
+        favoritePlaceInfo.forEach {
+            if(it.forecastId == favoriteId) {
+                cacheDatabase.favoritePlaceDao().delete(favoriteId)
+            } else {
+                cacheDatabase.favoritePlaceDao().insert(FavoritePlaceEntityImpl(forecastId = favoriteId))
+            }
+        }
     }
 
     override suspend fun forecastInfo(): List<ForecastInfoEntity> = withContext(Dispatchers.IO) {
@@ -136,4 +144,5 @@ internal class RoomDatabase @Inject constructor(
             }
         }
     }
+
 }
