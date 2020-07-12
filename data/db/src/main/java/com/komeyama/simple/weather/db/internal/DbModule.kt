@@ -18,6 +18,9 @@ import javax.inject.Singleton
 @Module(includes = [DbModule.Providers::class])
 internal abstract class DbModule {
     @Binds
+    abstract fun favoritePlaceDatabase(impl: RoomDatabase): FavoritePlaceDatabase
+
+    @Binds
     abstract fun forecastInfoDatabase(impl: RoomDatabase): ForecastInfoDatabase
 
     @Binds
@@ -69,6 +72,11 @@ internal abstract class DbModule {
                 CacheDatabase::class.java,
                 filename ?: "forecast_info.db"
             ).fallbackToDestructiveMigration().build()
+        }
+
+        @Provides
+        fun favoritePlaceDao(database: CacheDatabase): FavoritePlaceDao {
+            return database.favoritePlaceDao()
         }
 
         @Provides

@@ -14,6 +14,7 @@ import kotlin.coroutines.CoroutineContext
     ]
 )
 interface DbComponent {
+    fun favoritePlaceDatabase(): FavoritePlaceDatabase
     fun forecastInfoDatabase(): ForecastInfoDatabase
     fun forecastMainDatabase(): ForecastMainDatabase
     fun detailCopyrightDatabase(): DetailCopyrightDatabase
