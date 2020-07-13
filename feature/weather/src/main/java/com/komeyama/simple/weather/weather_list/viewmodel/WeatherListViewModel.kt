@@ -19,6 +19,15 @@ class WeatherListViewModel @Inject constructor(
         )
     }
 
+    fun favorite(favoriteId: String) {
+        viewModelScope.launch {
+            try {
+                weatherRepository.toggleFavorite(favoriteId)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
     fun callWeatherRepositoryMethod() {
         viewModelScope.launch {
             try {

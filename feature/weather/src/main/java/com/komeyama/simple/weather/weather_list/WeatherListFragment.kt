@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
+import com.komeyama.simple.weather.model.PrefectureIds
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
 import com.xwray.groupie.GroupAdapter
@@ -59,6 +60,7 @@ class WeatherListFragment : DaggerFragment() {
                     items.add(
                         ForecastContentItem(
                             requireContext(),
+                            weatherListViewModel,
                             it.prefectureName,
                             it.telop,
                             it.imgUrl,
@@ -69,8 +71,6 @@ class WeatherListFragment : DaggerFragment() {
                 }
                 groupAdapter.update(items)
             })
-
-
     }
 
     /**
@@ -79,6 +79,7 @@ class WeatherListFragment : DaggerFragment() {
      */
     internal class ForecastContentItem(
         var context: Context,
+        var viewModel: WeatherListViewModel,
         val prefectureName: String,
         val telop: String,
         var url: String,
@@ -100,6 +101,13 @@ class WeatherListFragment : DaggerFragment() {
                     R.color.colorLight_d3
                 )
             )
+            viewBinding.topCardFavoritePlace.setOnClickListener {
+                PrefectureIds.values().forEach {
+                    if(it.prefectureName == prefectureName) {
+                        viewModel.favorite(it.id)
+                    }
+                }
+            }
         }
     }
 }
