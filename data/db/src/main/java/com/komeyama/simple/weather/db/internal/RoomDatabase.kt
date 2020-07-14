@@ -43,11 +43,16 @@ internal class RoomDatabase @Inject constructor(
     }
 
     override suspend fun saveFavoriteState(favoriteId: String) {
-        val favoritePlaceInfo = cacheDatabase.favoritePlaceDao().favoritePlaceInfo()
-        favoritePlaceInfo.forEach {
-            if(it.forecastId == favoriteId) {
-                cacheDatabase.favoritePlaceDao().delete(favoriteId)
-            } else {
+        cacheDatabase.withTransaction {
+            var isForecastId = false
+            val favoritePlaceInfo = cacheDatabase.favoritePlaceDao().favoritePlaceInfo()
+            favoritePlaceInfo.forEach {
+                if (it.forecastId == favoriteId) {
+                    cacheDatabase.favoritePlaceDao().delete(favoriteId)
+                    isForecastId = true
+                }
+            }
+            if (!isForecastId) {
                 cacheDatabase.favoritePlaceDao().insert(FavoritePlaceEntityImpl(forecastId = favoriteId))
             }
         }

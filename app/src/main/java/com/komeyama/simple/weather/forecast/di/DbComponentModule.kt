@@ -13,7 +13,7 @@ class DbComponentModule {
     @Provides
     @Singleton
     fun provideFavoritePlaceStore(application: Application): FavoritePlaceDatabase {
-        return DbComponent.factory().create(application, Dispatchers.IO, "favorite_place.db")
+        return DbComponent.factory().create(application, Dispatchers.IO, "forecast_info.db")
             .favoritePlaceDatabase()
     }
 
