@@ -103,11 +103,9 @@ class WeatherListFragment : DaggerFragment() {
                 )
             )
             viewBinding.topCardFavoritePlace.setOnClickListener {
-                PrefectureIds.values().forEach {
-                    if (it.prefectureName == prefectureName) {
-                        viewModel.favorite(it.id)
-                    }
-                }
+                viewModel.favorite(
+                    PrefectureIds.values().first { it.prefectureName == prefectureName }.id
+                )
             }
             viewBinding.forecastCardTop.setOnClickListener { v ->
                 val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
