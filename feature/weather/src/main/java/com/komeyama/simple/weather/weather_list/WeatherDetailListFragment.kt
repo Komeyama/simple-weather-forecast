@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import dagger.Module
 import dagger.Provides
 
-class WeatherDetailFragment : Fragment(R.layout.weather_detail) {
+class WeatherDetailListFragment : Fragment(R.layout.weather_detail_list) {
 }
 
 @Module
@@ -17,7 +17,7 @@ abstract class WeatherDetailFragmentModule {
         @JvmStatic
         @Provides
         fun providesLifecycleOwnerLiveData(
-            weatherDetailFragment: WeatherDetailFragment
+            weatherDetailFragment: WeatherDetailListFragment
         ): LiveData<LifecycleOwner> {
             return weatherDetailFragment.viewLifecycleOwnerLiveData
         }

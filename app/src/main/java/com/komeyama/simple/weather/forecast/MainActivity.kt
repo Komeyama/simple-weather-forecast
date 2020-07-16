@@ -30,7 +30,7 @@ abstract class MainActivityModule {
     @ContributesAndroidInjector(
             modules = [WeatherDetailFragmentModule::class]
     )
-    abstract fun contributeWeatherDetailFragment(): WeatherDetailFragment
+    abstract fun contributeWeatherDetailFragment(): WeatherDetailListFragment
 
     @Module
     abstract class MainActivityBuilder {
