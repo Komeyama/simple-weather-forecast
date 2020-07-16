@@ -104,16 +104,22 @@ class WeatherListFragment : DaggerFragment() {
             )
             viewBinding.topCardFavoritePlace.setOnClickListener {
                 PrefectureIds.values().forEach {
-                    if(it.prefectureName == prefectureName) {
+                    if (it.prefectureName == prefectureName) {
                         viewModel.favorite(it.id)
                     }
                 }
             }
-            viewBinding.forecastCardTop.setOnClickListener {
-                findNavController(it).navigate(R.id.action_weather_list_to_weather_detail_list)
+            viewBinding.forecastCardTop.setOnClickListener { v ->
+                val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
+                    prefectureId = PrefectureIds.values()
+                        .first { it.prefectureName == prefectureName }.id
+                )
+                findNavController(v).navigate(navigateId)
             }
         }
     }
+
+
 }
 
 @Module

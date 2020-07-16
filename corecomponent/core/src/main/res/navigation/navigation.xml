@@ -27,6 +27,11 @@
     <fragment
         android:id="@+id/weather_detail_list"
         android:name="com.komeyama.simple.weather.weather_list.WeatherDetailListFragment"
-        android:label="WeatherDetailListFragment" />
+        android:label="WeatherDetailListFragment" >
+        <argument
+            android:name="prefectureId"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
 
 </navigation>
