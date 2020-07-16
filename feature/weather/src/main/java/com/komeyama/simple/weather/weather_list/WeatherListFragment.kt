@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.PrefectureIds
@@ -107,6 +108,9 @@ class WeatherListFragment : DaggerFragment() {
                         viewModel.favorite(it.id)
                     }
                 }
+            }
+            viewBinding.forecastCardTop.setOnClickListener {
+                findNavController(it).navigate(R.id.action_weather_list_to_weather_detail_list)
             }
         }
     }

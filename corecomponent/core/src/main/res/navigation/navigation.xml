@@ -14,8 +14,8 @@
             app:destination="@id/favorite_site" />
 
         <action
-            android:id="@+id/action_weather_list_to_weather_detail"
-            app:destination="@id/weather_detail" />
+            android:id="@+id/action_weather_list_to_weather_detail_list"
+            app:destination="@id/weather_detail_list" />
 
     </fragment>
 
@@ -25,8 +25,8 @@
         android:label="FavoriteSiteFragment" />
 
     <fragment
-        android:id="@+id/weather_detail"
-        android:name="com.komeyama.simple.weather.weather_list.WeatherDetailFragment"
-        android:label="WeatherDetailFragment" />
+        android:id="@+id/weather_detail_list"
+        android:name="com.komeyama.simple.weather.weather_list.WeatherDetailListFragment"
+        android:label="WeatherDetailListFragment" />
 
 </navigation>
