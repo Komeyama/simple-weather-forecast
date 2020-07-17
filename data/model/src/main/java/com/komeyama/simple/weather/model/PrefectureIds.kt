@@ -1,7 +1,7 @@
 package com.komeyama.simple.weather.model
 
 enum class PrefectureIds(val id: String, val prefectureName: String) {
-    HOKKAIDO("016010", "北海道"),
+    HOKKAIDO("016010", "道央"),
     AOMORI("020010", "青森県"),
     IWATE("030010", "岩手県"),
     MIYAGI("040010", "宮城県"),

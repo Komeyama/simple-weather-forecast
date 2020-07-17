@@ -108,16 +108,15 @@ class WeatherListFragment : DaggerFragment() {
                 )
             }
             viewBinding.forecastCardTop.setOnClickListener { v ->
+                val prefectureId = PrefectureIds.values().first { it.prefectureName == prefectureName }.id
                 val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-                    prefectureId = PrefectureIds.values()
-                        .first { it.prefectureName == prefectureName }.id
+                    prefectureId = prefectureId
                 )
+
                 findNavController(v).navigate(navigateId)
             }
         }
     }
-
-
 }
 
 @Module
