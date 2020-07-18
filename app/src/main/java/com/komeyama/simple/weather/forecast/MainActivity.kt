@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.forecast
 
 import android.os.Bundle
 import com.komeyama.simple.weather.weather_list.*
+import com.komeyama.simple.weather.weather_list.di.WeatherDetailListAssistedInjectModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
@@ -28,7 +29,7 @@ abstract class MainActivityModule {
     abstract fun contributeFavoritePlaceFragment(): FavoritePlaceFragment
 
     @ContributesAndroidInjector(
-            modules = [WeatherDetailFragmentModule::class]
+            modules = [WeatherDetailListFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
     )
     abstract fun contributeWeatherDetailFragment(): WeatherDetailListFragment
 
