@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.navArgs
+import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherDetailListViewModel
@@ -79,6 +80,7 @@ abstract class WeatherDetailListFragmentModule {
 
     @Module
     companion object {
+        @PageScope
         @JvmStatic
         @Provides
         fun providesLifecycleOwnerLiveData(

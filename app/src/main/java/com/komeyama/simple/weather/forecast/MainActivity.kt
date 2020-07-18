@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.forecast
 
 import android.os.Bundle
+import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.weather_list.*
 import com.komeyama.simple.weather.weather_list.di.WeatherDetailListAssistedInjectModule
 import dagger.Module
@@ -28,6 +29,7 @@ abstract class MainActivityModule {
     )
     abstract fun contributeFavoritePlaceFragment(): FavoritePlaceFragment
 
+    @PageScope
     @ContributesAndroidInjector(
             modules = [WeatherDetailListFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
     )
