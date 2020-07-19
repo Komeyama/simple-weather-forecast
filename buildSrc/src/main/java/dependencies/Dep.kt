@@ -47,4 +47,10 @@ object Dep {
         val version = "4.7.1"
         val timber = "com.jakewharton.timber:timber:$version"
     }
+
+    object Test {
+        val junit = "junit:junit:4.12"
+        val extJunit = "androidx.test.ext:junit:1.1.1"
+        val espressoCore = "androidx.test.espresso:espresso-core:3.2.0"
+    }
 }
