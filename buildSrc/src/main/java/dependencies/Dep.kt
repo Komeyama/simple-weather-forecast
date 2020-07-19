@@ -14,6 +14,13 @@ object Dep {
             val fragmentKtx = "androidx.navigation:navigation-fragment-ktx:$version"
             val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
         }
+
+        object Room {
+            val version = "2.2.5"
+            val roomKtx = "androidx.room:room-ktx:$version"
+            val roomRuntime =  "androidx.room:room-runtime:$version"
+            val roomCompiler = "androidx.room:room-compiler:$version"
+        }
     }
 
     object Coil {
