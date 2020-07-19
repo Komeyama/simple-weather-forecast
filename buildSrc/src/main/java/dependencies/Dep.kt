@@ -41,6 +41,12 @@ object Dep {
     object Kotlin {
         val version = "1.3.72"
         val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
+
+        object Coroutines {
+            val version = "1.3.4"
+            val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+            val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
+        }
     }
 
     object Timber {
