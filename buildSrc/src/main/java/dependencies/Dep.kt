@@ -5,7 +5,7 @@ object Dep {
     object AndroidX {
         val appcompat = "androidx.appcompat:appcompat:1.1.0"
         val coreKtx = "androidx.core:core-ktx:1.3.0"
-        val livedataKtx =  "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+        val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
         val livedataCoreKtx = "androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
 
@@ -18,7 +18,7 @@ object Dep {
         object Room {
             val version = "2.2.5"
             val roomKtx = "androidx.room:room-ktx:$version"
-            val roomRuntime =  "androidx.room:room-runtime:$version"
+            val roomRuntime = "androidx.room:room-runtime:$version"
             val roomCompiler = "androidx.room:room-compiler:$version"
         }
     }
@@ -35,7 +35,8 @@ object Dep {
         val androidSupport = "com.google.dagger:dagger-android-support:$version"
         val android = "com.google.dagger:dagger-android:$version"
         val androidProcessor = "com.google.dagger:dagger-android-processor:$version"
-        val assistedInjectAnnotations = "com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2"
+        val assistedInjectAnnotations =
+            "com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2"
         val assistedInjectProcessor = "com.squareup.inject:assisted-inject-processor-dagger2:0.5.2"
     }
 
@@ -43,6 +44,13 @@ object Dep {
         val version = "2.4.0-alpha1"
         val groupie = "com.xwray:groupie:$version"
         val databinding = "com.xwray:groupie-databinding:$version"
+    }
+
+    object Ktor {
+        val version = "1.3.2"
+        val clientOkhttp = "io.ktor:ktor-client-okhttp:$version"
+        val clientAndroid = "io.ktor:ktor-client-android:$version"
+        val clientSerializationJvm = "io.ktor:ktor-client-serialization-jvm:$version"
     }
 
     object Kotlin {
