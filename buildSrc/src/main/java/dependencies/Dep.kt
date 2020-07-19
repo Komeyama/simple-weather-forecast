@@ -41,6 +41,7 @@ object Dep {
     object Kotlin {
         val version = "1.3.72"
         val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
+        val serializationRuntime = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 
         object Coroutines {
             val version = "1.3.4"
