@@ -5,6 +5,7 @@ object Dep {
     object AndroidX {
         val appcompat = "androidx.appcompat:appcompat:1.1.0"
         val coreKtx = "androidx.core:core-ktx:1.3.0"
+        val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.2.0"
         val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
         val livedataCoreKtx = "androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0"
         val constraint = "androidx.constraintlayout:constraintlayout:1.1.3"
@@ -63,6 +64,11 @@ object Dep {
             val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
             val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
         }
+    }
+
+    object Stetho {
+        val stetho = "com.facebook.stetho:stetho:1.5.1"
+        val stethoHttp = "com.facebook.stetho:stetho-okhttp3:1.5.1"
     }
 
     object Timber {
