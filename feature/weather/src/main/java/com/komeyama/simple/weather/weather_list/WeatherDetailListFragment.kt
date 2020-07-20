@@ -1,11 +1,13 @@
 package com.komeyama.simple.weather.weather_list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
@@ -45,23 +47,32 @@ class WeatherDetailListFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        weatherDetailListViewModel.checkId()
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_detail_list_recycler_view.adapter = groupAdapter
-        val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
-        items.add(
-            ForecastContentItem(
-                "city name",
-                "telop",
-                "img",
-                "max temperature",
-                "min temperature"
-            )
-        )
-        groupAdapter.update(items)
+        weatherDetailListViewModel.forecastDetailListInfoLiveData.observe(
+            viewLifecycleOwner,
+            Observer { forecastInfoList ->
+                val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
+                forecastInfoList.forEach {
+                    items.add(
+                        ForecastContentItem(
+                            requireContext(),
+                            weatherDetailListViewModel,
+                            it.cityName,
+                            it.telop,
+                            it.imgUrl,
+                            it.maxTemperature,
+                            it.minTemperature
+                        )
+                    )
+                }
+                groupAdapter.update(items)
+            })
     }
 
     internal class ForecastContentItem(
+        val context: Context,
+        val weatherDetailListViewModel: WeatherDetailListViewModel,
         val cityName: String,
         val telop: String,
         var url: String,

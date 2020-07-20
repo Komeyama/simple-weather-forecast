@@ -88,8 +88,7 @@ class WeatherListFragment : DaggerFragment() {
         var url: String,
         var maxTemperature: String,
         val minTemperature: String
-    ) :
-        BindableItem<ItemForecastContentBinding>() {
+    ) : BindableItem<ItemForecastContentBinding>() {
         override fun getLayout() = R.layout.item_forecast_content
 
         override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
@@ -110,7 +109,8 @@ class WeatherListFragment : DaggerFragment() {
                 )
             }
             viewBinding.forecastCardTop.setOnClickListener { v ->
-                val prefectureId = PrefectureIds.values().first { it.prefectureName == prefectureName }.id
+                val prefectureId =
+                    PrefectureIds.values().first { it.prefectureName == prefectureName }.id
                 val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
                     prefectureId = prefectureId
                 )
