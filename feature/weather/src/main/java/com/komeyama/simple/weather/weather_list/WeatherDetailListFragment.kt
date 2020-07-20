@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
@@ -82,7 +84,19 @@ class WeatherDetailListFragment : DaggerFragment() {
         BindableItem<ItemForecastContentBinding>() {
         override fun getLayout() = R.layout.item_forecast_content
 
-        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {}
+        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
+            viewBinding.topCardPrefectureText.text = cityName
+            viewBinding.topCardTodayWeatherText.text = telop
+            viewBinding.topCardTodayWeatherImage.load(url)
+            viewBinding.topCardTodayMaxTemperatureText.text = maxTemperature
+            viewBinding.topCardTodayMinTemperatureText.text = minTemperature
+            viewBinding.topCardFavoritePlace.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.colorLight_d3
+                )
+            )
+        }
     }
 }
 
