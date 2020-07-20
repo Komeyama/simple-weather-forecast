@@ -1,6 +1,6 @@
 package com.komeyama.simple.weather.model
 
-enum class CityIds(val id: String, val prefectureId: String, val prefectureName: String) {
+enum class CityIds(val id: String, val prefectureId: String, val cityName: String) {
     WACCANAI("011000", "016010", "稚内"),
     ASAHIKAWA("012010", "016010", "旭川"),
     RUMOI("012020", "016010", "留萌"),
