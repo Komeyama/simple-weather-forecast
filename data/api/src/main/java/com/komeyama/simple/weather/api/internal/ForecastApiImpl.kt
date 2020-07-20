@@ -44,14 +44,6 @@ internal class ForecastApiImpl @Inject constructor(
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
-    override suspend fun getAllPrefectureForecastList(): List<ForecastInfo> {
-        val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
-        PrefectureIds.values().forEach { prefectureIds ->
-            forecastInfoList.add(getForecastList(prefectureIds.id))
-        }
-        return forecastInfoList
-    }
-
     override suspend fun getAllCityForecastList(): List<ForecastInfo> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         CityIds.values().forEach { cityIds ->

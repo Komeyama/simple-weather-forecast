@@ -18,7 +18,16 @@ fun Flow<List<ForecastInfo>>.toTopPageContentFlow(): Flow<List<TopPageContent>> 
 }
 
 fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
-    return this.map {
+    val forecastPrefectureInfo = mutableListOf<ForecastInfo>()
+    this.map { forecastInfo ->
+        PrefectureIds.values().forEach {
+            if (it.id == linkToPrefectureId(forecastInfo.link)) {
+                forecastPrefectureInfo.add(forecastInfo)
+            }
+        }
+    }
+
+    return forecastPrefectureInfo.map {
         it.toTopPageContent()
     }
 }
@@ -32,4 +41,13 @@ fun ForecastInfo.toTopPageContent(): TopPageContent {
         this.forecasts[0].temperature?.min?.celsius ?: "---",
         this.forecasts[0].temperature?.max?.celsius ?: "---"
     )
+}
+
+/**
+ * This method get prefecture id from link.
+ * e.g.)
+ * from http://weather.livedoor.com/area/forecast/016010 to 016010
+ */
+fun linkToPrefectureId(link: String?): String? {
+    return link?.removePrefix("http://weather.livedoor.com/area/forecast/")
 }

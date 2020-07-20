@@ -20,7 +20,7 @@ internal class DataWeatherRepository @Inject constructor(
 ) : ForecastRepository {
 
     override suspend fun refresh() {
-        val forecastInfoList = forecastApi.getAllPrefectureForecastList()
+        val forecastInfoList = forecastApi.getAllCityForecastList()
         forecastInfoDatabase.save(forecastInfoList)
     }
 
