@@ -1,11 +1,9 @@
 package com.komeyama.simple.weather.weather_list
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -13,7 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.PrefectureIds
-import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
+import com.komeyama.simple.weather.weather_list.databinding.ItemForecastPrefectureContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
@@ -59,12 +57,10 @@ class WeatherListFragment : DaggerFragment() {
         weatherListViewModel.forecastInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
-                val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
+                val items: MutableList<BindableItem<ItemForecastPrefectureContentBinding>> = mutableListOf()
                 forecastInfoList.forEach {
                     items.add(
                         ForecastContentItem(
-                            requireContext(),
-                            weatherListViewModel,
                             it.prefectureName,
                             it.telop,
                             it.imgUrl,
@@ -81,34 +77,22 @@ class WeatherListFragment : DaggerFragment() {
      * todo
      */
     internal class ForecastContentItem(
-        var context: Context,
-        var viewModel: WeatherListViewModel,
         val prefectureName: String,
         val telop: String,
         var url: String,
         var maxTemperature: String,
         val minTemperature: String
-    ) : BindableItem<ItemForecastContentBinding>() {
-        override fun getLayout() = R.layout.item_forecast_content
+    ) : BindableItem<ItemForecastPrefectureContentBinding>() {
+        override fun getLayout() = R.layout.item_forecast_prefecture_content
 
-        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
+        override fun bind(viewBinding: ItemForecastPrefectureContentBinding, position: Int) {
             viewBinding.topCardPrefectureText.text = prefectureName
-            viewBinding.topCardTodayWeatherText.text = telop
-            viewBinding.topCardTodayWeatherImage.load(url)
-            viewBinding.topCardTodayMaxTemperatureText.text = maxTemperature
-            viewBinding.topCardTodayMinTemperatureText.text = minTemperature
-            viewBinding.topCardFavoritePlace.setColorFilter(
-                ContextCompat.getColor(
-                    context,
-                    R.color.colorLight_d3
-                )
-            )
-            viewBinding.topCardFavoritePlace.setOnClickListener {
-                viewModel.favorite(
-                    PrefectureIds.values().first { it.prefectureName == prefectureName }.id
-                )
-            }
-            viewBinding.forecastCardTop.setOnClickListener { v ->
+            viewBinding.topCardPrefectureTodayWeatherText.text = telop
+            viewBinding.topCardPrefectureTodayWeatherImage.load(url)
+            viewBinding.topCardPrefectureTodayMaxTemperatureText.text = maxTemperature
+            viewBinding.topCardPrefectureTodayMinTemperatureText.text = minTemperature
+
+            viewBinding.forecastPrefectureCardTop.setOnClickListener { v ->
                 val prefectureId =
                     PrefectureIds.values().first { it.prefectureName == prefectureName }.id
                 val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(

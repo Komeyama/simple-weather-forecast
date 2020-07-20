@@ -13,7 +13,8 @@ import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
-import com.komeyama.simple.weather.weather_list.databinding.ItemForecastContentBinding
+import com.komeyama.simple.weather.model.CityIds
+import com.komeyama.simple.weather.weather_list.databinding.ItemForecastCityContentBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherDetailListViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.databinding.BindableItem
@@ -54,7 +55,7 @@ class WeatherDetailListFragment : DaggerFragment() {
         weatherDetailListViewModel.forecastDetailListInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
-                val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
+                val items: MutableList<BindableItem<ItemForecastCityContentBinding>> = mutableListOf()
                 forecastInfoList.forEach {
                     items.add(
                         ForecastContentItem(
@@ -74,28 +75,33 @@ class WeatherDetailListFragment : DaggerFragment() {
 
     internal class ForecastContentItem(
         val context: Context,
-        val weatherDetailListViewModel: WeatherDetailListViewModel,
+        val viewModel: WeatherDetailListViewModel,
         val cityName: String,
         val telop: String,
         var url: String,
         var maxTemperature: String,
         val minTemperature: String
     ) :
-        BindableItem<ItemForecastContentBinding>() {
-        override fun getLayout() = R.layout.item_forecast_content
+        BindableItem<ItemForecastCityContentBinding>() {
+        override fun getLayout() = R.layout.item_forecast_city_content
 
-        override fun bind(viewBinding: ItemForecastContentBinding, position: Int) {
-            viewBinding.topCardPrefectureText.text = cityName
-            viewBinding.topCardTodayWeatherText.text = telop
-            viewBinding.topCardTodayWeatherImage.load(url)
-            viewBinding.topCardTodayMaxTemperatureText.text = maxTemperature
-            viewBinding.topCardTodayMinTemperatureText.text = minTemperature
-            viewBinding.topCardFavoritePlace.setColorFilter(
+        override fun bind(viewBinding: ItemForecastCityContentBinding, position: Int) {
+            viewBinding.topCardCityText.text = cityName
+            viewBinding.topCardCityTodayWeatherText.text = telop
+            viewBinding.topCardCityTodayWeatherImage.load(url)
+            viewBinding.topCardCityTodayMaxTemperatureText.text = maxTemperature
+            viewBinding.topCardCityTodayMinTemperatureText.text = minTemperature
+            viewBinding.topCardCityFavoritePlace.setColorFilter(
                 ContextCompat.getColor(
                     context,
                     R.color.colorLight_d3
                 )
             )
+            viewBinding.topCardCityFavoritePlace.setOnClickListener {
+                viewModel.favorite(
+                    CityIds.values().first { it.cityName == cityName }.id
+                )
+            }
         }
     }
 }
