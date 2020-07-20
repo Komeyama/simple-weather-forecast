@@ -53,10 +53,13 @@ class WeatherListFragment : DaggerFragment() {
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_list_recycler_view.adapter = groupAdapter
 
-        val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
+        /**
+         * todo:fix update process
+         */
         weatherListViewModel.forecastInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
+                val items: MutableList<BindableItem<ItemForecastContentBinding>> = mutableListOf()
                 forecastInfoList.forEach {
                     items.add(
                         ForecastContentItem(
@@ -76,7 +79,6 @@ class WeatherListFragment : DaggerFragment() {
 
     /**
      * todo
-     *
      */
     internal class ForecastContentItem(
         var context: Context,
