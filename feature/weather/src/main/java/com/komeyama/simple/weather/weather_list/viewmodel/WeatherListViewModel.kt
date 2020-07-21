@@ -4,8 +4,7 @@ import androidx.lifecycle.*
 import com.komeyama.simple.weather.model.TopPageContent
 import com.komeyama.simple.weather.model.toTopPageContentFlow
 import com.komeyama.simple.weather.repository.ForecastRepository
-import kotlinx.coroutines.launch
-import java.io.IOException
+import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -17,23 +16,10 @@ class WeatherListViewModel @Inject constructor(
         emitSource(
             weatherRepository.forecastContents().toTopPageContentFlow().asLiveData()
         )
-    }
-
-    fun callWeatherRepositoryMethod() {
-        viewModelScope.launch {
-            try {
-                weatherRepository.refresh()
-            } catch (e: Exception) {
-            }
-        }
-    }
-
-    fun callWeatherRepositoryDbMethod() {
-        viewModelScope.launch {
-            try {
-                weatherRepository.dummySave()
-            } catch (e: IOException) {
-            }
+        try {
+            weatherRepository.refresh()
+        } catch (e: Exception) {
+            Timber.d("Fail weatherRepository.refresh(): %s", e.toString())
         }
     }
 }
