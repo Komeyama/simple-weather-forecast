@@ -57,19 +57,15 @@ class WeatherListFragment : DaggerFragment() {
         weatherListViewModel.forecastInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
-                val items: MutableList<BindableItem<ItemForecastPrefectureContentBinding>> = mutableListOf()
-                forecastInfoList.forEach {
-                    items.add(
-                        ForecastContentItem(
-                            it.prefectureName,
-                            it.telop,
-                            it.imgUrl,
-                            it.maxTemperature,
-                            it.minTemperature
-                        )
+                groupAdapter.update(forecastInfoList.map {
+                    ForecastContentItem(
+                        it.prefectureName,
+                        it.telop,
+                        it.imgUrl,
+                        it.maxTemperature,
+                        it.minTemperature
                     )
-                }
-                groupAdapter.update(items)
+                })
             })
     }
 
@@ -77,12 +73,12 @@ class WeatherListFragment : DaggerFragment() {
      * todo
      */
     internal class ForecastContentItem(
-        val prefectureName: String,
-        val telop: String,
-        var url: String,
-        var maxTemperature: String,
-        val minTemperature: String
-    ) : BindableItem<ItemForecastPrefectureContentBinding>() {
+        private val prefectureName: String,
+        private val telop: String,
+        private val url: String,
+        private val maxTemperature: String,
+        private val minTemperature: String
+    ) : BindableItem<ItemForecastPrefectureContentBinding>(prefectureName.hashCode().toLong()) {
         override fun getLayout() = R.layout.item_forecast_prefecture_content
 
         override fun bind(viewBinding: ItemForecastPrefectureContentBinding, position: Int) {

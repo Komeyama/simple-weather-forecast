@@ -55,34 +55,29 @@ class WeatherDetailListFragment : DaggerFragment() {
         weatherDetailListViewModel.forecastDetailListInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
-                val items: MutableList<BindableItem<ItemForecastCityContentBinding>> = mutableListOf()
-                forecastInfoList.forEach {
-                    items.add(
-                        ForecastContentItem(
-                            requireContext(),
-                            weatherDetailListViewModel,
-                            it.cityName,
-                            it.telop,
-                            it.imgUrl,
-                            it.maxTemperature,
-                            it.minTemperature
-                        )
+                groupAdapter.update(forecastInfoList.map {
+                    ForecastContentItem(
+                        requireContext(),
+                        weatherDetailListViewModel,
+                        it.cityName,
+                        it.telop,
+                        it.imgUrl,
+                        it.maxTemperature,
+                        it.minTemperature
                     )
-                }
-                groupAdapter.update(items)
+                })
             })
     }
 
     internal class ForecastContentItem(
-        val context: Context,
-        val viewModel: WeatherDetailListViewModel,
-        val cityName: String,
-        val telop: String,
-        var url: String,
-        var maxTemperature: String,
-        val minTemperature: String
-    ) :
-        BindableItem<ItemForecastCityContentBinding>() {
+        private val context: Context,
+        private val viewModel: WeatherDetailListViewModel,
+        private val cityName: String,
+        private val telop: String,
+        private val url: String,
+        private val maxTemperature: String,
+        private val minTemperature: String
+    ) : BindableItem<ItemForecastCityContentBinding>(cityName.hashCode().toLong()) {
         override fun getLayout() = R.layout.item_forecast_city_content
 
         override fun bind(viewBinding: ItemForecastCityContentBinding, position: Int) {
