@@ -11,7 +11,8 @@ data class ForecastInfo(
         var description: DetailDescription?,
         var forecasts: List<DetailForecasts>,
         var pinpointLocations: List<PinpointLocation?>,
-        var copyright: DetailCopyright?
+        var copyright: DetailCopyright?,
+        var isFavorite: Boolean = false
 )
 
 @Serializable

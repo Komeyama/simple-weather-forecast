@@ -5,11 +5,33 @@ import kotlinx.coroutines.flow.map
 
 data class SubPageContent (
     val cityName: String,
-    var imgUrl: String,
+    val imgUrl: String,
     val telop: String,
     val minTemperature: String,
-    var maxTemperature: String
+    val maxTemperature: String,
+    val isFavorite: Boolean = false
 )
+
+fun List<SubPageContent>.makeSubPageContents(favoriteList: List<String>): List<SubPageContent> {
+    return this.map {
+        it.makeSubSubPageContent(favoriteList)
+    }
+}
+
+fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageContent {
+    var favoriteState: Boolean
+    CityIds.values().firstOrNull { it.cityName == this.cityName }?.id.apply {
+        favoriteState = isFavoriteList.contains(this)
+    }
+
+    return SubPageContent(
+        cityName = this.cityName,
+        imgUrl = this.imgUrl,
+        telop = this.telop,
+        minTemperature = this.minTemperature,
+        maxTemperature = this.maxTemperature,
+        isFavorite = favoriteState)
+}
 
 fun Flow<List<ForecastInfo>>.toSubPageContentFlow(prefectureId: String): Flow<List<SubPageContent>> {
     return this.map {
@@ -25,7 +47,7 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
     val forecastCityInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
         cityIdList.forEach {
-            if (it.id == linkToPrefectureId(forecastInfo.link)) {
+            if (it.id == linkToForecastId(forecastInfo.link)) {
                 forecastCityInfo.add(forecastInfo)
             }
         }
@@ -37,12 +59,12 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
 }
 
 fun ForecastInfo.toSubPageContent(): SubPageContent {
-
     return SubPageContent(
-        this.location?.city ?: "---",
-        this.forecasts[0].image?.url!!,
-        this.forecasts[0].telop ?: "---",
-        this.forecasts[0].temperature?.min?.celsius ?: "---",
-        this.forecasts[0].temperature?.max?.celsius ?: "---"
+        cityName = this.location?.city ?: "---",
+        imgUrl =  this.forecasts[0].image?.url!!,
+        telop = this.forecasts[0].telop ?: "---",
+        minTemperature = this.forecasts[0].temperature?.min?.celsius ?: "---",
+        maxTemperature = this.forecasts[0].temperature?.max?.celsius ?: "---",
+        isFavorite = this.isFavorite
     )
 }

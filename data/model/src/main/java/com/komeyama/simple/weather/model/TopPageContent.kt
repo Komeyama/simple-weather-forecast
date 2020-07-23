@@ -21,7 +21,7 @@ fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
     val forecastPrefectureInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
         PrefectureIds.values().forEach {
-            if (it.id == linkToPrefectureId(forecastInfo.link)) {
+            if (it.id == linkToForecastId(forecastInfo.link)) {
                 forecastPrefectureInfo.add(forecastInfo)
             }
         }
