@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.komeyama.simple.weather.db.internal.entity.FavoritePlaceEntityImpl
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal abstract class FavoritePlaceDao {
@@ -14,6 +15,9 @@ internal abstract class FavoritePlaceDao {
 
     @Query("SELECT * FROM favorite_place")
     abstract fun favoritePlaceInfo(): List<FavoritePlaceEntityImpl>
+
+    @Query("SELECT * FROM favorite_place")
+    abstract fun favoritePlaceInfoFlow(): Flow<List<FavoritePlaceEntityImpl>>
 
     @Query("DELETE FROM favorite_place")
     abstract fun deleteAll()

@@ -19,6 +19,9 @@ internal class DataWeatherRepository @Inject constructor(
     private val forecastInfoDatabase: ForecastInfoDatabase
 ) : ForecastRepository {
 
+    /**
+     *  todo: very rate!
+     */
     override suspend fun refresh() {
         val forecastInfoList = forecastApi.getAllCityForecastList()
         forecastInfoDatabase.save(forecastInfoList)
@@ -27,6 +30,12 @@ internal class DataWeatherRepository @Inject constructor(
     override suspend fun forecastContents(): Flow<List<ForecastInfo>> {
         return forecastInfoDatabase.forecastInfoFlow().map { forecastInfoList ->
             forecastInfoList.toForecastInfoList()
+        }
+    }
+
+    override suspend fun getFavoriteIds(): Flow<List<String>> {
+        return favoritePlaceDatabase.favoriteStateFlow().map { favoriteStateList ->
+            favoriteStateList.toStringList()
         }
     }
 

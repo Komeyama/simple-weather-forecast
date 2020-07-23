@@ -1,9 +1,16 @@
 package com.komeyama.simple.weather.repository.internal
 
 import com.komeyama.simple.weather.db.DetailForecastEntity
+import com.komeyama.simple.weather.db.FavoritePlaceEntity
 import com.komeyama.simple.weather.db.ForecastInfoEntity
 import com.komeyama.simple.weather.db.PinpointLocationEntity
 import com.komeyama.simple.weather.model.*
+
+internal fun List<FavoritePlaceEntity>.toStringList(): List<String> {
+    return this.map {
+        it.forecastId
+    }
+}
 
 internal fun List<ForecastInfoEntity>.toForecastInfoList(): List<ForecastInfo> {
     return this.map {

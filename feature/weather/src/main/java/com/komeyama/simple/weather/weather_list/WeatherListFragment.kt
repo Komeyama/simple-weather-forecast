@@ -85,15 +85,17 @@ class WeatherListFragment : DaggerFragment() {
             viewBinding.topCardPrefectureTodayWeatherImage.load(url)
             viewBinding.topCardPrefectureTodayMaxTemperatureText.text = maxTemperature
             viewBinding.topCardPrefectureTodayMinTemperatureText.text = minTemperature
-
             viewBinding.forecastPrefectureCardTop.setOnClickListener { v ->
-                val prefectureId =
-                    PrefectureIds.values().first { it.prefectureName == prefectureName }.id
-                val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-                    prefectureId = prefectureId
-                )
-
-                findNavController(v).navigate(navigateId)
+                PrefectureIds.values()
+                    .firstOrNull { it.prefectureName == prefectureName }?.id.apply {
+                    if (this != null) {
+                        val navigateId =
+                            WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
+                                prefectureId = this
+                            )
+                        findNavController(v).navigate(navigateId)
+                    }
+                }
             }
         }
     }

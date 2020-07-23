@@ -38,8 +38,8 @@ internal class RoomDatabase @Inject constructor(
     PinpointLocationOfCopyDatabase,
     TemperatureDatabase {
 
-    override fun favoriteState(): List<FavoritePlaceEntity> {
-        return cacheDatabase.favoritePlaceDao().favoritePlaceInfo()
+    override fun favoriteStateFlow(): Flow<List<FavoritePlaceEntity>> {
+        return cacheDatabase.favoritePlaceDao().favoritePlaceInfoFlow()
     }
 
     override suspend fun saveFavoriteState(favoriteId: String) {

@@ -39,6 +39,8 @@ dependencies {
     implementation Dep.AndroidX.Navigation.fragmentKtx
     implementation Dep.AndroidX.Navigation.uiKtx
 
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
     implementation Dep.Dagger.android

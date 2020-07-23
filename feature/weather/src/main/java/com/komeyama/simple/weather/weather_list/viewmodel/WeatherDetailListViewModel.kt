@@ -1,6 +1,7 @@
 package com.komeyama.simple.weather.weather_list.viewmodel
 
 import androidx.lifecycle.*
+import com.komeyama.simple.weather.core.extentions.combine
 import com.komeyama.simple.weather.model.SubPageContent
 import com.komeyama.simple.weather.model.toSubPageContentFlow
 import com.komeyama.simple.weather.repository.ForecastRepository
@@ -14,12 +15,50 @@ class WeatherDetailListViewModel @AssistedInject constructor(
     private val weatherRepository: ForecastRepository
 ) : ViewModel() {
 
-    val forecastDetailListInfoLiveData: LiveData<List<SubPageContent>> = liveData {
+    data class DetailListUiData(
+        val subPageContents: List<SubPageContent>,
+        val favoriteIds: List<String>
+    ) {
+        companion object {
+            val EMPTY = DetailListUiData(
+                listOf(
+                    SubPageContent(
+                        cityName = "",
+                        imgUrl = "",
+                        telop = "",
+                        minTemperature = "",
+                        maxTemperature = ""
+                    )
+                ), listOf("")
+            )
+        }
+    }
+
+    private val forecastDetailListInfoLiveData: LiveData<List<SubPageContent>> = liveData {
         emitSource(
             weatherRepository.forecastContents().toSubPageContentFlow(prefectureId).asLiveData()
         )
     }
 
+    private val favoriteStateLiveData: LiveData<List<String>> = liveData {
+        emitSource(
+            weatherRepository.getFavoriteIds().asLiveData()
+        )
+    }
+
+    val detailListUiData: LiveData<DetailListUiData> = combine(
+        initialValue = DetailListUiData.EMPTY,
+        liveData1 = forecastDetailListInfoLiveData,
+        liveData2 = favoriteStateLiveData
+    ) { current: DetailListUiData,
+        forecastDetail: List<SubPageContent>,
+        favoriteStateLiveData: List<String>
+        ->
+        DetailListUiData(
+            subPageContents = forecastDetail,
+            favoriteIds = favoriteStateLiveData
+        )
+    }
 
     fun favorite(favoriteId: String) {
         viewModelScope.launch {
