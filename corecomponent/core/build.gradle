@@ -36,10 +36,9 @@ dependencies {
     implementation Dep.Kotlin.stdlib
     implementation Dep.AndroidX.appcompat
     implementation Dep.AndroidX.coreKtx
+    implementation Dep.AndroidX.livedataKtx
     implementation Dep.AndroidX.Navigation.fragmentKtx
     implementation Dep.AndroidX.Navigation.uiKtx
-
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 
     implementation Dep.Dagger.core
     implementation Dep.Dagger.androidSupport
