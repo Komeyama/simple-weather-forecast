@@ -10,19 +10,10 @@
         android:label="WeatherListFragment">
 
         <action
-            android:id="@+id/action_weather_list_to_favorite_site"
-            app:destination="@id/favorite_site" />
-
-        <action
             android:id="@+id/action_weather_list_to_weather_detail_list"
             app:destination="@id/weather_detail_list" />
 
     </fragment>
-
-    <fragment
-        android:id="@+id/favorite_site"
-        android:name="com.komeyama.simple.weather.weather_list.FavoriteSiteFragment"
-        android:label="FavoriteSiteFragment" />
 
     <fragment
         android:id="@+id/weather_detail_list"
@@ -33,5 +24,10 @@
             app:argType="string"
             android:defaultValue='""' />
     </fragment>
+
+    <fragment
+        android:id="@+id/favorite_site"
+        android:name="com.komeyama.simple.weather.weather_list.FavoritePlaceFragment"
+        android:label="FavoritePlaceFragment" />
 
 </navigation>
