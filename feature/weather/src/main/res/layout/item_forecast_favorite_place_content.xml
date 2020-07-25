@@ -7,6 +7,10 @@
             name="text"
             type="String" />
 
+        <variable
+            name="content"
+            type="com.komeyama.simple.weather.model.FavoritePlaceTopContent" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -176,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/top_card_favorite"
-                android:src="@drawable/ic_baseline_check_24"
+                android:src="@{content.isFavorite? @drawable/ic_baseline_check_24 : @drawable/ic_baseline_check_d3_24}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -54,11 +54,11 @@ class WeatherDetailListViewModel @AssistedInject constructor(
         liveData2 = favoriteStateLiveData
     ) { current: DetailListUiData,
         forecastDetail: List<SubPageContent>,
-        favoriteStateLiveData: List<String>
+        favoriteStateList: List<String>
         ->
         DetailListUiData(
-            subPageContents = forecastDetail.makeSubPageContents(favoriteStateLiveData),
-            favoriteIds = favoriteStateLiveData
+            subPageContents = forecastDetail.makeSubPageContents(favoriteStateList),
+            favoriteIds = favoriteStateList
         )
     }
 

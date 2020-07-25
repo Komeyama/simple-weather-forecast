@@ -6,11 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import coil.api.load
+import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
+import com.komeyama.simple.weather.model.CityIds
+import com.komeyama.simple.weather.model.FavoritePlaceTopContent
+import com.komeyama.simple.weather.weather_list.databinding.ItemForecastFavoritePlaceContentBinding
+import com.komeyama.simple.weather.weather_list.viewmodel.FavoriteSiteViewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.databinding.BindableItem
+import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.favorite_place.*
+import javax.inject.Inject
+import javax.inject.Provider
 
 class FavoritePlaceFragment : DaggerFragment() {
+
+    @Inject
+    lateinit var favoriteSiteViewModelProvider: Provider<FavoriteSiteViewModel>
+    private val favoriteSiteViewModel: FavoriteSiteViewModel by assistedActivityViewModels {
+        favoriteSiteViewModelProvider.get()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +41,60 @@ class FavoritePlaceFragment : DaggerFragment() {
             container,
             false
         )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        forecast_favorite_place_recycler_view.adapter = groupAdapter
+        favoriteSiteViewModel.favoritePlaceListUiData.observe(
+            viewLifecycleOwner,
+            Observer { forecastInfoList ->
+                forecastInfoList.favoritePlaceTopPageContents.map {
+                    if(it.cityName == "") {
+                        return@Observer
+                    }
+                }
+                groupAdapter.update(forecastInfoList.favoritePlaceTopPageContents.filter { favoritePlaceTopPageContent ->
+                    favoritePlaceTopPageContent.isFavorite
+                }.map { favoritePlaceTopPageContent ->
+                    ForecastContentItem(
+                        favoriteSiteViewModel,
+                        favoritePlaceTopPageContent
+                    )
+                })
+            })
+
+    }
+
+    internal data class ForecastContentItem(
+        private val viewModel: FavoriteSiteViewModel,
+        private val favoritePlaceTopContent: FavoritePlaceTopContent
+    ) : BindableItem<ItemForecastFavoritePlaceContentBinding>(favoritePlaceTopContent.cityName.hashCode().toLong()) {
+        override fun getLayout() = R.layout.item_forecast_favorite_place_content
+        /**
+         * todo: Register the forecast id in the database so that it can be retrieved here.
+         * todo: loading
+         * todo: livedata process
+         */
+        override fun bind(viewBinding: ItemForecastFavoritePlaceContentBinding, position: Int) {
+
+            viewBinding.topCardFavoritePlaceText.text = favoritePlaceTopContent.cityName
+            viewBinding.topCardFavoritePlaceTodayWeatherText.text = favoritePlaceTopContent.telop
+            viewBinding.topCardFavoritePlaceTodayWeatherImage.load(favoritePlaceTopContent.imgUrl)
+            viewBinding.topCardFavoritePlaceTodayMaxTemperatureText.text = favoritePlaceTopContent.maxTemperature
+            viewBinding.topCardFavoritePlaceTodayMinTemperatureText.text = favoritePlaceTopContent.minTemperature
+            viewBinding.topCardFavoritePlaceFavoritePlace.setOnClickListener {
+                CityIds.values().firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                    this?.let { id ->
+                        viewModel.favorite(id)
+                    }
+                }
+            }
+
+            viewBinding.content = favoritePlaceTopContent
+        }
     }
 }
 

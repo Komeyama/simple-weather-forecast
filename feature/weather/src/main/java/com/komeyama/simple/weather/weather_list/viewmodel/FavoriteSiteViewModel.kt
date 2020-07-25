@@ -50,11 +50,11 @@ class FavoriteSiteViewModel @Inject constructor(
         liveData2 = favoriteStateLiveData
     ) { current: FavoritePlaceListUiData,
         favoritePlaceTopContent: List<FavoritePlaceTopContent>,
-        favoriteStateLiveData: List<String>
+        favoriteStateList: List<String>
         ->
         FavoritePlaceListUiData(
-            favoritePlaceTopPageContents = favoritePlaceTopContent.makeFavoritePlaceTopContents(favoriteStateLiveData),
-            favoriteIds = favoriteStateLiveData
+            favoritePlaceTopPageContents = favoritePlaceTopContent.makeFavoritePlaceTopContents(favoriteStateList),
+            favoriteIds = favoriteStateList
         )
     }
 
