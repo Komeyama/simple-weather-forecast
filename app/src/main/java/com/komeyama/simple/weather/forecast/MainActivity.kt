@@ -1,9 +1,11 @@
 package com.komeyama.simple.weather.forecast
 
 import android.os.Bundle
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.komeyama.simple.weather.core.di.PageScope
+import com.komeyama.simple.weather.forecast.ui.BottomNavigationBehavior
 import com.komeyama.simple.weather.weather_list.*
 import com.komeyama.simple.weather.weather_list.di.WeatherDetailListAssistedInjectModule
 import dagger.Module
@@ -12,6 +14,8 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
+
+    lateinit var bottomNavigationBehavior: BottomNavigationBehavior
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +26,11 @@ class MainActivity : DaggerAppCompatActivity() {
          */
         val navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
         setupWithNavController(bottom_navigation_view, navController)
+
+        val layoutParams: CoordinatorLayout.LayoutParams = bottom_navigation_view.layoutParams as CoordinatorLayout.LayoutParams
+        bottomNavigationBehavior = BottomNavigationBehavior(this)
+        layoutParams.behavior = bottomNavigationBehavior
+
     }
 }
 
