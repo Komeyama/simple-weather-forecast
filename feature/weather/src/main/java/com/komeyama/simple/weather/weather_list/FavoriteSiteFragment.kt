@@ -12,8 +12,10 @@ import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.FavoritePlaceTopContent
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastFavoritePlaceContentBinding
+import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.FavoriteSiteViewModel
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -48,6 +50,9 @@ class FavoritePlaceFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_favorite_place_recycler_view.adapter = groupAdapter
+        val section = Section()
+        section.setHeader(WeatherListFragment.HeaderItem())
+
         favoriteSiteViewModel.favoritePlaceListUiData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
@@ -56,7 +61,7 @@ class FavoritePlaceFragment : DaggerFragment() {
                         return@Observer
                     }
                 }
-                groupAdapter.update(forecastInfoList.favoritePlaceTopPageContents.filter { favoritePlaceTopPageContent ->
+                section.update(forecastInfoList.favoritePlaceTopPageContents.filter { favoritePlaceTopPageContent ->
                     favoritePlaceTopPageContent.isFavorite
                 }.map { favoritePlaceTopPageContent ->
                     ForecastContentItem(
@@ -65,6 +70,7 @@ class FavoritePlaceFragment : DaggerFragment() {
                     )
                 })
             })
+        groupAdapter.add(section)
 
     }
 
@@ -95,6 +101,12 @@ class FavoritePlaceFragment : DaggerFragment() {
 
             viewBinding.content = favoritePlaceTopContent
         }
+    }
+
+    internal class HeaderItem() : BindableItem<ItemHeadderBinding>() {
+        override fun getLayout() = R.layout.item_headder
+
+        override fun bind(viewBinding: ItemHeadderBinding, position: Int) {}
     }
 }
 
