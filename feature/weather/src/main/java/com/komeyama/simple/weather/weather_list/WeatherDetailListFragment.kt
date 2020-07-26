@@ -14,8 +14,10 @@ import com.komeyama.simple.weather.core.extentions.assistedViewModels
 import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.SubPageContent
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastCityContentBinding
+import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherDetailListViewModel
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -51,6 +53,9 @@ class WeatherDetailListFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_detail_list_recycler_view.adapter = groupAdapter
+        val section = Section()
+        section.setHeader(WeatherListFragment.HeaderItem())
+
         weatherDetailListViewModel.detailListUiData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
@@ -59,14 +64,14 @@ class WeatherDetailListFragment : DaggerFragment() {
                         return@Observer
                     }
                 }
-                groupAdapter.update(forecastInfoList.subPageContents.map { subPageContent ->
+                section.update(forecastInfoList.subPageContents.map { subPageContent ->
                     ForecastContentItem(
                         weatherDetailListViewModel,
                         subPageContent
                     )
                 })
             })
-
+        groupAdapter.add(section)
     }
 
     internal data class ForecastContentItem(
@@ -97,6 +102,12 @@ class WeatherDetailListFragment : DaggerFragment() {
 
             viewBinding.content = subPageContent
         }
+    }
+
+    internal class HeaderItem() : BindableItem<ItemHeadderBinding>() {
+        override fun getLayout() = R.layout.item_headder
+
+        override fun bind(viewBinding: ItemHeadderBinding, position: Int) {}
     }
 }
 
