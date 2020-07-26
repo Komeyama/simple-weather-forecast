@@ -11,9 +11,12 @@ import androidx.navigation.Navigation.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.PrefectureIds
+import com.komeyama.simple.weather.model.TopPageContent
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastPrefectureContentBinding
+import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.ViewHolder
 import dagger.Module
@@ -48,56 +51,56 @@ class WeatherListFragment : DaggerFragment() {
 
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_list_recycler_view.adapter = groupAdapter
-
+        val section = Section()
+        section.setHeader(HeaderItem())
         /**
          * todo:fix update process
          */
         weatherListViewModel.forecastInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
-                groupAdapter.update(forecastInfoList.map {
-                    ForecastContentItem(
-                        it.prefectureName,
-                        it.telop,
-                        it.imgUrl,
-                        it.maxTemperature,
-                        it.minTemperature
-                    )
+                section.update(forecastInfoList.map { topPageContent ->
+                    ForecastContentItem(topPageContent)
                 })
             })
+        groupAdapter.add(section)
     }
-
-    /**
-     * todo
-     */
+    
     internal class ForecastContentItem(
-        private val prefectureName: String,
-        private val telop: String,
-        private val url: String,
-        private val maxTemperature: String,
-        private val minTemperature: String
-    ) : BindableItem<ItemForecastPrefectureContentBinding>(prefectureName.hashCode().toLong()) {
+        private val topPageContent: TopPageContent
+    ) : BindableItem<ItemForecastPrefectureContentBinding>(
+        topPageContent.prefectureName.hashCode().toLong()
+    ) {
         override fun getLayout() = R.layout.item_forecast_prefecture_content
 
         override fun bind(viewBinding: ItemForecastPrefectureContentBinding, position: Int) {
-            viewBinding.topCardPrefectureText.text = prefectureName
-            viewBinding.topCardPrefectureTodayWeatherText.text = telop
-            viewBinding.topCardPrefectureTodayWeatherImage.load(url)
-            viewBinding.topCardPrefectureTodayMaxTemperatureText.text = maxTemperature
-            viewBinding.topCardPrefectureTodayMinTemperatureText.text = minTemperature
+
+            viewBinding.topCardPrefectureText.text = topPageContent.prefectureName
+            viewBinding.topCardPrefectureTodayWeatherText.text = topPageContent.telop
+            viewBinding.topCardPrefectureTodayWeatherImage.load(topPageContent.imgUrl)
+            viewBinding.topCardPrefectureTodayMaxTemperatureText.text =
+                topPageContent.maxTemperature
+            viewBinding.topCardPrefectureTodayMinTemperatureText.text =
+                topPageContent.minTemperature
             viewBinding.forecastPrefectureCardTop.setOnClickListener { v ->
                 PrefectureIds.values()
-                    .firstOrNull { it.prefectureName == prefectureName }?.id.apply {
-                    if (this != null) {
-                        val navigateId =
-                            WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-                                prefectureId = this
-                            )
-                        findNavController(v).navigate(navigateId)
+                    .firstOrNull { it.prefectureName == topPageContent.prefectureName }?.id.apply {
+                        if (this != null) {
+                            val navigateId =
+                                WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
+                                    prefectureId = this
+                                )
+                            findNavController(v).navigate(navigateId)
+                        }
                     }
-                }
             }
         }
+    }
+
+    internal class HeaderItem() : BindableItem<ItemHeadderBinding>() {
+        override fun getLayout() = R.layout.item_headder
+
+        override fun bind(viewBinding: ItemHeadderBinding, position: Int) {}
     }
 }
 
