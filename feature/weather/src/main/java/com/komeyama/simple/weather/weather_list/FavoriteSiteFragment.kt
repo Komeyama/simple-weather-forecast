@@ -51,7 +51,7 @@ class FavoritePlaceFragment : DaggerFragment() {
         val groupAdapter = GroupAdapter<ViewHolder<*>>()
         forecast_favorite_place_recycler_view.adapter = groupAdapter
         val section = Section()
-        section.setHeader(WeatherListFragment.HeaderItem())
+        section.setHeader(HeaderItem())
 
         favoriteSiteViewModel.favoritePlaceListUiData.observe(
             viewLifecycleOwner,

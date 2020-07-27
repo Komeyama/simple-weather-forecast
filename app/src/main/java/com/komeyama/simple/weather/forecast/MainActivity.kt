@@ -2,8 +2,11 @@ package com.komeyama.simple.weather.forecast
 
 import android.os.Bundle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.forecast.ui.BottomNavigationBehavior
 import com.komeyama.simple.weather.weather_list.*
@@ -24,32 +27,42 @@ class MainActivity : DaggerAppCompatActivity() {
         /**
          * TODO: Maybe I'll keep the last instance.
          */
-        val navController = (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
         setupWithNavController(bottom_navigation_view, navController)
 
-        val layoutParams: CoordinatorLayout.LayoutParams = bottom_navigation_view.layoutParams as CoordinatorLayout.LayoutParams
+        val layoutParams: CoordinatorLayout.LayoutParams =
+            bottom_navigation_view.layoutParams as CoordinatorLayout.LayoutParams
         bottomNavigationBehavior = BottomNavigationBehavior(this)
         layoutParams.behavior = bottomNavigationBehavior
 
+
+        setSupportActionBar(toolbar)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
     }
+
+    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
+
 }
 
 @Module
 abstract class MainActivityModule {
 
     @ContributesAndroidInjector(
-            modules = [WeatherListFragmentModule::class]
+        modules = [WeatherListFragmentModule::class]
     )
     abstract fun contributeWeatherListFragment(): WeatherListFragment
 
     @ContributesAndroidInjector(
-            modules = [FavoriteSiteFragmentModule::class]
+        modules = [FavoriteSiteFragmentModule::class]
     )
     abstract fun contributeFavoritePlaceFragment(): FavoritePlaceFragment
 
     @PageScope
     @ContributesAndroidInjector(
-            modules = [WeatherDetailListFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
+        modules = [WeatherDetailListFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
     )
     abstract fun contributeWeatherDetailFragment(): WeatherDetailListFragment
 
