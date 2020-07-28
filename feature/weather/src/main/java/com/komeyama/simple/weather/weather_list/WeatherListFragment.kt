@@ -1,9 +1,7 @@
 package com.komeyama.simple.weather.weather_list
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -39,6 +37,7 @@ class WeatherListFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         return inflater.inflate(
             R.layout.weather_list,
             container,
@@ -101,6 +100,20 @@ class WeatherListFragment : DaggerFragment() {
         override fun getLayout() = R.layout.item_headder
 
         override fun bind(viewBinding: ItemHeadderBinding, position: Int) {}
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_search -> {
+                return false
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 
