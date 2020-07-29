@@ -13,21 +13,30 @@
             android:id="@+id/action_weather_list_to_weather_detail_list"
             app:destination="@id/weather_detail_list" />
 
+        <action
+            android:id="@+id/action_weather_list_to_search_place"
+            app:destination="@id/search_place" />
+
     </fragment>
 
     <fragment
         android:id="@+id/weather_detail_list"
         android:name="com.komeyama.simple.weather.weather_list.WeatherDetailListFragment"
-        android:label="WeatherDetailListFragment" >
+        android:label="WeatherDetailListFragment">
         <argument
             android:name="prefectureId"
-            app:argType="string"
-            android:defaultValue='""' />
+            android:defaultValue='""'
+            app:argType="string" />
     </fragment>
 
     <fragment
         android:id="@+id/favorite_site"
         android:name="com.komeyama.simple.weather.weather_list.FavoritePlaceFragment"
         android:label="FavoritePlaceFragment" />
+
+    <fragment
+        android:id="@+id/search_place"
+        android:name="com.komeyama.simple.weather.weather_list.SearchPlacesFragment"
+        android:label="SearchPlacesFragment" />
 
 </navigation>
