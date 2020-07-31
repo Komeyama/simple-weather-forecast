@@ -1,13 +1,14 @@
 package com.komeyama.simple.weather.weather_list
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemPlaceNameBinding
+import com.komeyama.simple.weather.weather_list.viewmodel.SearchPlacesViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
@@ -16,8 +17,21 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_place.*
+import javax.inject.Inject
+import javax.inject.Provider
 
 class SearchPlacesFragment : DaggerFragment() {
+
+    @Inject
+    lateinit var searchPlacesViewModelProvider: Provider<SearchPlacesViewModel>
+    private val searchPlacesViewModel: SearchPlacesViewModel by assistedActivityViewModels {
+        searchPlacesViewModelProvider.get()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +60,28 @@ class SearchPlacesFragment : DaggerFragment() {
             )
         )
         groupAdapter.add(section)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.toolbar_search_menu, menu)
+        val searchView = menu.findItem(R.id.search_view).actionView as SearchView
+        searchView.isIconified = false
+        searchView.clearFocus()
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(s: String): Boolean {
+                searchPlacesViewModel.updateSearchQuery(s)
+                return false
+            }
+        })
+        searchView.setOnCloseListener {
+            searchView.setQuery("", true)
+            true
+        }
     }
 
     internal data class ForecastContentItem(
