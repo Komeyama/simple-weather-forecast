@@ -18,7 +18,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_place.*
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -56,18 +55,19 @@ class SearchPlacesFragment : DaggerFragment() {
         section.setHeader(HeaderItem())
 
         searchPlacesViewModel.uiModel.observe(viewLifecycleOwner,
-            Observer{
-                it.searchResult.forecastInfo.forEach {forecastInfo ->
-                    Timber.d("search ui model %s", forecastInfo.location?.city)
+            Observer {
+                if (it.searchResult.query == "") {
+                    return@Observer
                 }
+
+                section.update(
+                    it.searchResult.forecastInfo.map { forecastInfo ->
+                        forecastInfo.location?.city?.let { cityName ->
+                            ForecastContentItem(cityName)
+                        }
+                    }
+                )
             }
-        )
-        section.update(
-            listOf(
-                ForecastContentItem("test1"),
-                ForecastContentItem("test2"),
-                ForecastContentItem("test3")
-            )
         )
         groupAdapter.add(section)
     }

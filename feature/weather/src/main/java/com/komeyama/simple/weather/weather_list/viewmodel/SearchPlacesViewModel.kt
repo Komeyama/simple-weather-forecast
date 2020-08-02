@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.komeyama.simple.weather.core.extentions.combine
 import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class SearchPlacesViewModel @Inject constructor(
@@ -43,7 +42,6 @@ class SearchPlacesViewModel @Inject constructor(
     }
 
     fun updateSearchQuery(query: String) {
-        Timber.d("update search query: %s", query)
         searchQueryLiveData.postValue(query)
     }
 
