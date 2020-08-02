@@ -5,6 +5,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemPlaceNameBinding
@@ -17,6 +18,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_place.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -52,6 +54,14 @@ class SearchPlacesFragment : DaggerFragment() {
         search_place_recycler_view.adapter = groupAdapter
         val section = Section()
         section.setHeader(HeaderItem())
+
+        searchPlacesViewModel.uiModel.observe(viewLifecycleOwner,
+            Observer{
+                it.searchResult.forecastInfo.forEach {forecastInfo ->
+                    Timber.d("search ui model %s", forecastInfo.location?.city)
+                }
+            }
+        )
         section.update(
             listOf(
                 ForecastContentItem("test1"),
