@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/weather_list"
         android:name="com.komeyama.simple.weather.weather_list.WeatherListFragment"
-        android:label="WeatherListFragment">
+        android:label="@string/weather_list_title">
 
         <action
             android:id="@+id/action_weather_list_to_weather_detail_list"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/weather_detail_list"
         android:name="com.komeyama.simple.weather.weather_list.WeatherDetailListFragment"
-        android:label="WeatherDetailListFragment">
+        android:label="@string/weather_detail_list_title">
         <argument
             android:name="prefectureId"
             android:defaultValue='""'
@@ -32,11 +32,11 @@
     <fragment
         android:id="@+id/favorite_site"
         android:name="com.komeyama.simple.weather.weather_list.FavoritePlaceFragment"
-        android:label="FavoritePlaceFragment" />
+        android:label="@string/favorite_site_title" />
 
     <fragment
         android:id="@+id/search_place"
         android:name="com.komeyama.simple.weather.weather_list.SearchPlacesFragment"
-        android:label="SearchPlacesFragment" />
+        android:label="@string/search_place_title" />
 
 </navigation>
