@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemPlaceNameBinding
@@ -63,7 +64,10 @@ class SearchPlacesFragment : DaggerFragment() {
                 section.update(
                     it.searchResult.forecastInfo.map { forecastInfo ->
                         forecastInfo.location?.city?.let { cityName ->
-                            ForecastContentItem(cityName)
+                            ForecastContentItem(
+                                cityName = cityName,
+                                forecastImageUrl = forecastInfo.forecasts[0].image?.url
+                            )
                         }
                     }
                 )
@@ -95,12 +99,14 @@ class SearchPlacesFragment : DaggerFragment() {
     }
 
     internal data class ForecastContentItem(
-        private val text: String
+        private val cityName: String,
+        private val forecastImageUrl: String?
     ) : BindableItem<ItemPlaceNameBinding>() {
         override fun getLayout() = R.layout.item_place_name
 
         override fun bind(viewBinding: ItemPlaceNameBinding, position: Int) {
-            viewBinding.cityName.text = text
+            viewBinding.searchPlaceCityName.text = cityName
+            viewBinding.searchPlaceForecastImage.load(forecastImageUrl)
         }
     }
 
