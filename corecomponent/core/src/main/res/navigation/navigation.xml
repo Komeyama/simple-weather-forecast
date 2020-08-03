@@ -27,16 +27,37 @@
             android:name="prefectureId"
             android:defaultValue='""'
             app:argType="string" />
+
+        <action
+            android:id="@+id/action_weather_detail_list_to_detail_forecast"
+            app:destination="@id/detail_forecast" />
     </fragment>
+
+    <fragment
+        android:id="@+id/detail_forecast"
+        android:name="com.komeyama.simple.weather.weather_list.DetailForecastFragment"
+        android:label="" />
 
     <fragment
         android:id="@+id/favorite_site"
         android:name="com.komeyama.simple.weather.weather_list.FavoritePlaceFragment"
-        android:label="@string/favorite_site_title" />
+        android:label="@string/favorite_site_title">
+
+        <action
+            android:id="@+id/action_favorite_site_to_detail_forecast"
+            app:destination="@id/detail_forecast" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/search_place"
         android:name="com.komeyama.simple.weather.weather_list.SearchPlacesFragment"
-        android:label="@string/search_place_title" />
+        android:label="@string/search_place_title">
+
+        <action
+            android:id="@+id/action_search_place_to_detail_forecast"
+            app:destination="@id/detail_forecast" />
+
+    </fragment>
 
 </navigation>

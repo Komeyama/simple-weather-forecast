@@ -71,6 +71,11 @@ abstract class MainActivityModule {
     )
     abstract fun contributeSearchPlacesFragment(): SearchPlacesFragment
 
+    @ContributesAndroidInjector(
+        modules = [DetailForecastFragmentModule::class]
+    )
+    abstract fun contributeDetailForecastFragment(): DetailForecastFragment
+
     @Module
     abstract class MainActivityBuilder {
         @ContributesAndroidInjector(modules = [MainActivityModule::class])
