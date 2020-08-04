@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">simple-weather-forecast</string>
-    <string name="weather_list">weather list</string>
-    <string name="favorite_place">favorite place</string>
+
+    <!-- forecast card -->
     <string name="top_card_prefecture_name">---</string>
     <string name="top_card_today_weather_image">can not load</string>
     <string name="top_card_today_weather_name">---</string>
@@ -10,8 +10,16 @@
     <string name="top_card_temperature_name">---</string>
     <string name="top_card_celsius">℃</string>
     <string name="top_card_favorite">favorite_image</string>
-    <string name="weather_list_title">"Today's weather"</string>
-    <string name="weather_detail_list_title">"Today's weather"</string>
+
+    <!-- toolbar menu-->
+    <string name="favorite_place">favorite place</string>
+
+    <!-- toolbar title-->
+    <string name="detail_forecast_title">""</string>
     <string name="favorite_site_title">"Today's weather"</string>
     <string name="search_place_title">""</string>
+    <string name="weather_detail_list_title">"Today's weather"</string>
+    <string name="weather_list">weather list</string>
+    <string name="weather_list_title">"Today's weather"</string>
+
 </resources>

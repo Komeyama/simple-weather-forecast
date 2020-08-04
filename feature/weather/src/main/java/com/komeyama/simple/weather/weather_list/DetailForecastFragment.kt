@@ -19,7 +19,7 @@ class DetailForecastFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         return inflater.inflate(
-            R.layout.weather_detail_list,
+            R.layout.detail_forecast,
             container,
             false
         )

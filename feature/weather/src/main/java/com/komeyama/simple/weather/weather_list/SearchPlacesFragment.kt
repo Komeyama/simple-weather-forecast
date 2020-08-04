@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
@@ -107,6 +108,9 @@ class SearchPlacesFragment : DaggerFragment() {
         override fun bind(viewBinding: ItemPlaceNameBinding, position: Int) {
             viewBinding.searchPlaceCityName.text = cityName
             viewBinding.searchPlaceForecastImage.load(forecastImageUrl)
+            viewBinding.searchPlaceCardTop.setOnClickListener {
+                it.findNavController().navigate(R.id.action_search_place_to_detail_forecast)
+            }
         }
     }
 

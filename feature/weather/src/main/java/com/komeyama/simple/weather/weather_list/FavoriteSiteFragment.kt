@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.CityIds
@@ -97,6 +98,9 @@ class FavoritePlaceFragment : DaggerFragment() {
                         viewModel.favorite(id)
                     }
                 }
+            }
+            viewBinding.forecastFavoritePlaceCardTop.setOnClickListener {
+                it.findNavController().navigate(R.id.action_favorite_site_to_detail_forecast)
             }
 
             viewBinding.content = favoritePlaceTopContent
