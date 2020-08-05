@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
@@ -101,8 +101,17 @@ class WeatherDetailListFragment : DaggerFragment() {
                 }
             }
 
-            viewBinding.forecastCityCardTop.setOnClickListener {
-                it.findNavController().navigate(R.id.action_weather_detail_list_to_detail_forecast)
+            viewBinding.forecastCityCardTop.setOnClickListener { v ->
+                CityIds.values()
+                    .firstOrNull { it.cityName == subPageContent.cityName }?.id.apply {
+                        if (this != null) {
+                            val navigateId =
+                                WeatherDetailListFragmentDirections.actionWeatherDetailListToDetailForecast(
+                                    cityId = this
+                                )
+                            Navigation.findNavController(v).navigate(navigateId)
+                        }
+                    }
             }
 
             viewBinding.content = subPageContent
