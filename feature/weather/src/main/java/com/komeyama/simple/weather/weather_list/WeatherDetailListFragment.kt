@@ -61,7 +61,7 @@ class WeatherDetailListFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { forecastInfoList ->
                 forecastInfoList.subPageContents.map {
-                    if(it.cityName == "") {
+                    if (it.cityName == "") {
                         return@Observer
                     }
                 }

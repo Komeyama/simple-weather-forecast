@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.CityIds
@@ -58,7 +58,7 @@ class FavoritePlaceFragment : DaggerFragment() {
             viewLifecycleOwner,
             Observer { forecastInfoList ->
                 forecastInfoList.favoritePlaceTopPageContents.map {
-                    if(it.cityName == "") {
+                    if (it.cityName == "") {
                         return@Observer
                     }
                 }
@@ -78,8 +78,11 @@ class FavoritePlaceFragment : DaggerFragment() {
     internal data class ForecastContentItem(
         private val viewModel: FavoriteSiteViewModel,
         private val favoritePlaceTopContent: FavoritePlaceTopContent
-    ) : BindableItem<ItemForecastFavoritePlaceContentBinding>(favoritePlaceTopContent.cityName.hashCode().toLong()) {
+    ) : BindableItem<ItemForecastFavoritePlaceContentBinding>(
+        favoritePlaceTopContent.cityName.hashCode().toLong()
+    ) {
         override fun getLayout() = R.layout.item_forecast_favorite_place_content
+
         /**
          * todo: Register the forecast id in the database so that it can be retrieved here.
          * todo: loading
@@ -90,17 +93,29 @@ class FavoritePlaceFragment : DaggerFragment() {
             viewBinding.topCardFavoritePlaceText.text = favoritePlaceTopContent.cityName
             viewBinding.topCardFavoritePlaceTodayWeatherText.text = favoritePlaceTopContent.telop
             viewBinding.topCardFavoritePlaceTodayWeatherImage.load(favoritePlaceTopContent.imgUrl)
-            viewBinding.topCardFavoritePlaceTodayMaxTemperatureText.text = favoritePlaceTopContent.maxTemperature
-            viewBinding.topCardFavoritePlaceTodayMinTemperatureText.text = favoritePlaceTopContent.minTemperature
+            viewBinding.topCardFavoritePlaceTodayMaxTemperatureText.text =
+                favoritePlaceTopContent.maxTemperature
+            viewBinding.topCardFavoritePlaceTodayMinTemperatureText.text =
+                favoritePlaceTopContent.minTemperature
             viewBinding.topCardFavoritePlaceFavoritePlace.setOnClickListener {
-                CityIds.values().firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
-                    this?.let { id ->
-                        viewModel.favorite(id)
+                CityIds.values()
+                    .firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                        this?.let { id ->
+                            viewModel.favorite(id)
+                        }
                     }
-                }
             }
-            viewBinding.forecastFavoritePlaceCardTop.setOnClickListener {
-                it.findNavController().navigate(R.id.action_favorite_site_to_detail_forecast)
+            viewBinding.forecastFavoritePlaceCardTop.setOnClickListener { v ->
+                CityIds.values()
+                    .firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                        if (this != null) {
+                            val navigateId =
+                                FavoritePlaceFragmentDirections.actionFavoriteSiteToDetailForecast(
+                                    cityId = this
+                                )
+                            Navigation.findNavController(v).navigate(navigateId)
+                        }
+                    }
             }
 
             viewBinding.content = favoritePlaceTopContent
