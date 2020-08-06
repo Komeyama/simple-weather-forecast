@@ -10,7 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.forecast.ui.BottomNavigationBehavior
 import com.komeyama.simple.weather.weather_list.*
-import com.komeyama.simple.weather.weather_list.di.WeatherDetailListAssistedInjectModule
+import com.komeyama.simple.weather.weather_list.di.AssistedInjectModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
@@ -62,7 +62,7 @@ abstract class MainActivityModule {
 
     @PageScope
     @ContributesAndroidInjector(
-        modules = [WeatherDetailListFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
+        modules = [WeatherDetailListFragmentModule::class, AssistedInjectModule::class]
     )
     abstract fun contributeWeatherDetailFragment(): WeatherDetailListFragment
 
@@ -72,7 +72,7 @@ abstract class MainActivityModule {
     abstract fun contributeSearchPlacesFragment(): SearchPlacesFragment
 
     @ContributesAndroidInjector(
-        modules = [DetailForecastFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
+        modules = [DetailForecastFragmentModule::class, AssistedInjectModule::class]
     )
     abstract fun contributeDetailForecastFragment(): DetailForecastFragment
 
