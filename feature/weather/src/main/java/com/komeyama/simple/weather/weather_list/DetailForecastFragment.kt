@@ -8,12 +8,20 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.navArgs
 import com.komeyama.simple.weather.core.di.PageScope
+import com.komeyama.simple.weather.core.extentions.assistedViewModels
+import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
-import timber.log.Timber
+import javax.inject.Inject
 
 class DetailForecastFragment : DaggerFragment() {
+
+    @Inject
+    lateinit var detailForecastViewModelFactory: DetailForecastViewModel.Factory
+    private val detailForecastViewModel by assistedViewModels {
+        detailForecastViewModelFactory.create(navArgs.cityId)
+    }
 
     private val navArgs: DetailForecastFragmentArgs by navArgs()
 
@@ -23,7 +31,7 @@ class DetailForecastFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        Timber.d("nav args: %s", navArgs.cityId)
+        detailForecastViewModel.dummyFunc()
 
         return inflater.inflate(
             R.layout.detail_forecast,

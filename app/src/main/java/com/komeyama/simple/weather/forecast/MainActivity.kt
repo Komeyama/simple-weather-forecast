@@ -72,7 +72,7 @@ abstract class MainActivityModule {
     abstract fun contributeSearchPlacesFragment(): SearchPlacesFragment
 
     @ContributesAndroidInjector(
-        modules = [DetailForecastFragmentModule::class]
+        modules = [DetailForecastFragmentModule::class, WeatherDetailListAssistedInjectModule::class]
     )
     abstract fun contributeDetailForecastFragment(): DetailForecastFragment
 
