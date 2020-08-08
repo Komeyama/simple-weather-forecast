@@ -12,6 +12,7 @@ import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class ForecastApiImpl @Inject constructor(
@@ -42,6 +43,7 @@ internal class ForecastApiImpl @Inject constructor(
             url("http://api.openweathermap.org/data/2.5//weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
+        Timber.d("getForecastList: %s", rawResponse)
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
@@ -50,9 +52,10 @@ internal class ForecastApiImpl @Inject constructor(
      */
     override suspend fun getAllCityForecastList(): List<ForecastInfo> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
-        CityIds.values().forEach { cityIds ->
-            //forecastInfoList.add(getForecastList(cityIds.id))
-        }
+//        CityIds.values().forEach { cityIds ->
+//            forecastInfoList.add(getForecastList(cityIds.id))
+//        }
+        forecastInfoList.add(getForecastList(35.6809704F,139.7678007F))
         return forecastInfoList
     }
 }

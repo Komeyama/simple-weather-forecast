@@ -1,9 +1,7 @@
 package com.komeyama.simple.weather.repository.internal
 
-import com.komeyama.simple.weather.db.DetailForecastEntity
 import com.komeyama.simple.weather.db.FavoritePlaceEntity
 import com.komeyama.simple.weather.db.ForecastInfoEntity
-import com.komeyama.simple.weather.db.PinpointLocationEntity
 import com.komeyama.simple.weather.model.*
 
 internal fun List<FavoritePlaceEntity>.toStringList(): List<String> {
@@ -20,6 +18,48 @@ internal fun List<ForecastInfoEntity>.toForecastInfoList(): List<ForecastInfo> {
 
 internal fun ForecastInfoEntity.toForecastInfo(): ForecastInfo {
     return ForecastInfo(
+        coord = CoordInfo(
+            lon = forecastInfoEntity.coord?.lon,
+            lat = forecastInfoEntity.coord?.lat
+        ),
+        weather = weatherEntity.map {
+            WeatherInfo(
+                id = it.id,
+                main = it.main,
+                description = it.description,
+                icon = it.icon
+            )
+        },
+        base = forecastInfoEntity.base,
+        main = MainInfo(
+            temp = forecastInfoEntity.main?.temp,
+            feels_like = forecastInfoEntity.main?.feels_like,
+            temp_min = forecastInfoEntity.main?.temp_min,
+            temp_max = forecastInfoEntity.main?.temp_max,
+            pressure = forecastInfoEntity.main?.pressure,
+            humidity = forecastInfoEntity.main?.humidity
+        ),
+        visibility = forecastInfoEntity.visibility,
+        wind = WindInfo(
+            speed = forecastInfoEntity.wind?.speed,
+            deg = forecastInfoEntity.wind?.deg
+        ),
+        clouds = CloudsInfo(
+            all = forecastInfoEntity.clouds?.all
+        ),
+        sys = SysInfo(
+            type = forecastInfoEntity.sys?.type,
+            id = forecastInfoEntity.sys?.id,
+            country = forecastInfoEntity.sys?.country,
+            sunrise = forecastInfoEntity.sys?.sunrise,
+            sunset = forecastInfoEntity.sys?.sunset
+        ),
+        timezone = forecastInfoEntity.timezone,
+        id = forecastInfoEntity.id,
+        name = forecastInfoEntity.name,
+        cod = forecastInfoEntity.cod
+
+        /*
         location = DetailLocation(
             this.forecastInfoEntity.detailLocation?.area,
             this.forecastInfoEntity.detailLocation?.prefecture,
@@ -51,9 +91,11 @@ internal fun ForecastInfoEntity.toForecastInfo(): ForecastInfo {
                 it?.toPinpointLocation()
             }
         )
+        */
     )
 }
 
+/*
 internal fun DetailForecastEntity.toDetailForecasts(): DetailForecasts {
     return DetailForecasts(
         date = date,
@@ -84,3 +126,4 @@ internal fun PinpointLocationEntity.toPinpointLocation(): PinpointLocation {
         name = this.name
     )
 }
+*/

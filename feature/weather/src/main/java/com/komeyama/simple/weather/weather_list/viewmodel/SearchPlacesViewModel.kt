@@ -45,10 +45,13 @@ class SearchPlacesViewModel @Inject constructor(
         searchQueryLiveData.postValue(query)
     }
 
+    /**
+     * TODO: fix emergency
+     */
     private fun List<ForecastInfo>.search(query: String): SearchResult {
         return SearchResult(
             this.filter {
-                find(query, it.location?.city)
+                find(query, it.name)
             },
             query
         )

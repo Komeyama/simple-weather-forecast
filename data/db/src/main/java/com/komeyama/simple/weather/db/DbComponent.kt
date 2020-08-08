@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.db
 
 import android.content.Context
 import com.komeyama.simple.weather.db.internal.DbModule
+import com.komeyama.simple.weather.db.old.*
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -17,16 +18,17 @@ interface DbComponent {
     fun favoritePlaceDatabase(): FavoritePlaceDatabase
     fun forecastInfoDatabase(): ForecastInfoDatabase
     fun forecastMainDatabase(): ForecastMainDatabase
-    fun detailCopyrightDatabase(): DetailCopyrightDatabase
-    fun detailCopyrightMainDatabase(): DetailCopyrightMainDatabase
-    fun detailDescriptionDatabase(): DetailDescriptionDatabase
-    fun detailForecastDatabase(): DetailForecastDatabase
-    fun detailImageDatabase(): DetailImageDatabase
-    fun detailImageOfCopyrightDatabase(): DetailImageOfCopyrightDatabase
-    fun detailLocationDatabase(): DetailLocationDatabase
-    fun detailTemperatureDatabase(): DetailTemperatureDatabase
-    fun pinpointLocationDatabase(): PinpointLocationDatabase
-    fun temperatureDatabase(): TemperatureDatabase
+    fun weatherDatabase(): WeatherDatabase
+//    fun detailCopyrightDatabase(): DetailCopyrightDatabase
+//    fun detailCopyrightMainDatabase(): DetailCopyrightMainDatabase
+//    fun detailDescriptionDatabase(): DetailDescriptionDatabase
+//    fun detailForecastDatabase(): DetailForecastDatabase
+//    fun detailImageDatabase(): DetailImageDatabase
+//    fun detailImageOfCopyrightDatabase(): DetailImageOfCopyrightDatabase
+//    fun detailLocationDatabase(): DetailLocationDatabase
+//    fun detailTemperatureDatabase(): DetailTemperatureDatabase
+//    fun pinpointLocationDatabase(): PinpointLocationDatabase
+//    fun temperatureDatabase(): TemperatureDatabase
 
     @Component.Factory
     interface Factory {

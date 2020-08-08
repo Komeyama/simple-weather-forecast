@@ -20,14 +20,16 @@ fun Flow<List<ForecastInfo>>.toTopPageContentFlow(): Flow<List<TopPageContent>> 
 fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
     val forecastPrefectureInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
-        PrefectureIds.values().forEach {
-            /**
-             * TODO: fix emergency
-             */
+        /**
+         * TODO: fix emergency
+         */
+//        PrefectureIds.values().forEach {
+//
 //            if (it.id == linkToForecastId(forecastInfo.link)) {
 //                forecastPrefectureInfo.add(forecastInfo)
 //            }
-        }
+//        }
+        forecastPrefectureInfo.add(forecastInfo)
     }
 
     return forecastPrefectureInfo.map {

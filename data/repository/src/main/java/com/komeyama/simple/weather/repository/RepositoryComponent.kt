@@ -23,14 +23,7 @@ interface RepositoryComponent {
             @BindsInstance forecastApi: ForecastApi,
             @BindsInstance forecastInfoDatabase: ForecastInfoDatabase,
             @BindsInstance forecastMainDatabase: ForecastMainDatabase,
-            @BindsInstance detailCopyrightDatabase: DetailCopyrightDatabase,
-            @BindsInstance detailCopyrightMainDatabase: DetailCopyrightMainDatabase,
-            @BindsInstance detailDescriptionDatabase: DetailDescriptionDatabase,
-            @BindsInstance detailForecastDatabase: DetailForecastDatabase,
-            @BindsInstance detailImageDatabase: DetailImageDatabase,
-            @BindsInstance detailImageOfCopyrightDatabase: DetailImageOfCopyrightDatabase,
-            @BindsInstance detailLocationDatabase: DetailLocationDatabase,
-            @BindsInstance pinpointLocationDatabase: PinpointLocationDatabase
+            @BindsInstance weatherDatabase: WeatherDatabase
         ): RepositoryComponent
     }
 

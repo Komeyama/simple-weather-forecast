@@ -56,8 +56,8 @@ data class CloudsInfo(
 
 @Serializable
 data class SysInfo(
-    var type: Int,
-    var id: Int,
+    var type: Int?,
+    var id: Int?,
     var country: String?,
     var sunrise: Int?,
     var sunset: Int?

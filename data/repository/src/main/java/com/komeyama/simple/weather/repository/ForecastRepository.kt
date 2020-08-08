@@ -8,6 +8,4 @@ interface ForecastRepository {
     suspend fun forecastContents(): Flow<List<ForecastInfo>>
     suspend fun getFavoriteIds(): Flow<List<String>>
     suspend fun toggleFavorite(favoriteId: String)
-    suspend fun dummySave()
-    suspend fun dummyLoad()
 }

@@ -63,12 +63,15 @@ class SearchPlacesFragment : DaggerFragment() {
                     return@Observer
                 }
 
+                /**
+                 * TODO: fix emergency
+                 */
                 section.update(
                     it.searchResult.forecastInfo.map { forecastInfo ->
-                        forecastInfo.location?.city?.let { cityName ->
+                        forecastInfo.name?.let { cityName ->
                             ForecastContentItem(
                                 cityName = cityName,
-                                forecastImageUrl = forecastInfo.forecasts[0].image?.url
+                                forecastImageUrl = forecastInfo.weather?.get(0)?.icon
                             )
                         }
                     }

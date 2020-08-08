@@ -46,14 +46,15 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
 
     val forecastCityInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
-        cityIdList.forEach {
-            /**
-             * TODO: fix emergency
-             */
+        /**
+         * TODO: fix emergency
+         */
+//        cityIdList.forEach {
 //            if (it.id == linkToForecastId(forecastInfo.link)) {
 //                forecastCityInfo.add(forecastInfo)
 //            }
-        }
+//        }
+        forecastCityInfo.add(forecastInfo)
     }
 
     return forecastCityInfo.map {

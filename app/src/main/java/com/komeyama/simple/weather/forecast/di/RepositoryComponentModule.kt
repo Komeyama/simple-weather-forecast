@@ -25,28 +25,14 @@ object RepositoryComponentModule {
         forecastApi: ForecastApi,
         forecastInfoDatabase: ForecastInfoDatabase,
         forecastMainDatabase: ForecastMainDatabase,
-        detailCopyrightDatabase: DetailCopyrightDatabase,
-        detailCopyrightMainDatabase: DetailCopyrightMainDatabase,
-        detailDescriptionDatabase: DetailDescriptionDatabase,
-        detailForecastDatabase: DetailForecastDatabase,
-        detailImageDatabase: DetailImageDatabase,
-        detailImageOfCopyrightDatabase: DetailImageOfCopyrightDatabase,
-        detailLocationDatabase: DetailLocationDatabase,
-        pinpointLocationDatabase: PinpointLocationDatabase
+        weatherDatabase: WeatherDatabase
     ): RepositoryComponent {
         return RepositoryComponent.factory().create(
             favoritePlaceDatabase = favoritePlaceDatabase,
             forecastApi = forecastApi,
             forecastInfoDatabase = forecastInfoDatabase,
             forecastMainDatabase = forecastMainDatabase,
-            detailCopyrightDatabase = detailCopyrightDatabase,
-            detailCopyrightMainDatabase = detailCopyrightMainDatabase,
-            detailDescriptionDatabase = detailDescriptionDatabase,
-            detailForecastDatabase = detailForecastDatabase,
-            detailImageDatabase = detailImageDatabase,
-            detailImageOfCopyrightDatabase = detailImageOfCopyrightDatabase,
-            detailLocationDatabase = detailLocationDatabase,
-            pinpointLocationDatabase = pinpointLocationDatabase
+            weatherDatabase = weatherDatabase
         )
     }
 }

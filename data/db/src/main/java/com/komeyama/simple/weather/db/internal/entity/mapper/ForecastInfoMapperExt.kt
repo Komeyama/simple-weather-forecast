@@ -10,23 +10,56 @@ internal fun List<ForecastInfo?>.toForecastMainInfoEntities(id: Int): List<Forec
 
 internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEntityImpl {
     return ForecastMainInfoEntityImpl(
-        forecastId = id,
-        title = title,
-        link = link,
-        publicTime = publicTime,
-        detailLocation = DetailLocationEntityImpl(
-            id = id,
-            area = location?.area,
-            prefecture = location?.prefecture,
-            city = location?.city
+        id = id,
+        coord = CoordInfoEntityImpl(
+            lon = coord?.lon,
+            lat = coord?.lat
         ),
-        description = DetailDescriptionEntityImpl(
-            text = description?.text,
-            publicTime = description?.publicTime
-        )
+        base = base,
+        main = MainInfoEntityImpl(
+            temp = main?.temp,
+            feels_like = main?.feels_like,
+            temp_min = main?.temp_min,
+            temp_max = main?.temp_max,
+            pressure = main?.pressure,
+            humidity = main?.humidity
+        ),
+        visibility = visibility,
+        wind = WindInfoEntityImpl(
+            speed = wind.speed,
+            deg = wind.deg
+        ),
+        clouds = CloudsInfoEntityImpl(
+            all = clouds.all
+        ),
+        sys = SysInfoImpl(
+            id = sys?.id,
+            type = sys?.type,
+            country = sys?.country,
+            sunrise = sys?.sunrise,
+            sunset = sys?.sunset
+        ),
+        timezone = timezone,
+        name = name,
+        cod = cod
+//        forecastId = id,
+//        title = title,
+//        link = link,
+//        publicTime = publicTime,
+//        detailLocation = DetailLocationEntityImpl(
+//            id = id,
+//            area = location?.area,
+//            prefecture = location?.prefecture,
+//            city = location?.city
+//        ),
+//        description = DetailDescriptionEntityImpl(
+//            text = description?.text,
+//            publicTime = description?.publicTime
+//        )
     )
 }
 
+/*
 internal fun DetailCopyright.toDetailCopyrightMainEntity(id: Int): DetailCopyrightMainEntityImpl {
     return DetailCopyrightMainEntityImpl(
         id = id,
@@ -113,3 +146,4 @@ internal fun DetailTemperature.toDetailTemperatureEntity(): DetailTemperatureEnt
         fahrenheit = fahrenheit
     )
 }
+*/
