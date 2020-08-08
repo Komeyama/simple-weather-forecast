@@ -16,6 +16,7 @@ import java.lang.Exception
  */
 class ExampleUnitTest {
 
+    /*
     @Test
     fun api_area_correct_test() {
         assertEquals(
@@ -23,6 +24,7 @@ class ExampleUnitTest {
             fetchForecastInfo(PrefectureIds.HOKKAIDO.id)?.location?.area
         )
     }
+
 
     @Test
     fun api_prefecture_correct_test() {
@@ -221,12 +223,26 @@ class ExampleUnitTest {
         }
 
     }
+    */
 
-    private fun fetchForecastInfo(cityId: String): com.komeyama.simple.weather.model.ForecastInfo? {
+    @Test
+    fun dummy_test() {
+        try {
+            // tokyo station
+            print(fetchForecastInfo(lat = 35.6809704F, lon = 139.7678007F))
+        } catch (e: Exception) {
+            print(e.message)
+        }
+    }
+
+    private fun fetchForecastInfo(
+        lat: Float,
+        lon: Float
+    ): com.komeyama.simple.weather.model.ForecastInfo? {
         val apiModule = ApiModule()
         val httpClient = apiModule.provideHttpClient()
         return runBlocking {
-            apiModule.provideForecastApi(httpClient).getForecastList(cityId)
+            apiModule.provideForecastApi(httpClient).getForecastList(lat,lon)
         }
     }
 }

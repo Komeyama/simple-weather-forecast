@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.api.internal
 
+import com.komeyama.simple.weather.api.BuildConfig
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.ForecastInfo
@@ -36,18 +37,21 @@ internal class ForecastApiImpl @Inject constructor(
      *      Timber.e(e.message)
      *  }
      */
-    override suspend fun getForecastList(id: String): ForecastInfo {
+    override suspend fun getForecastList(lat: Float, lon: Float): ForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("http://weather.livedoor.com/forecast/webservice/json/v1?city=${id}")
+            url("http://api.openweathermap.org/data/2.5//weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
+    /**
+     * TODO: fix emergency
+     */
     override suspend fun getAllCityForecastList(): List<ForecastInfo> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         CityIds.values().forEach { cityIds ->
-            forecastInfoList.add(getForecastList(cityIds.id))
+            //forecastInfoList.add(getForecastList(cityIds.id))
         }
         return forecastInfoList
     }

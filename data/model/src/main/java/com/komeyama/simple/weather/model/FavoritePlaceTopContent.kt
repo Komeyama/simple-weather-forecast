@@ -45,13 +45,16 @@ fun List<ForecastInfo>.toFavoritePlaceTopContentList(): List<FavoritePlaceTopCon
     }
 }
 
+/**
+ * TODO: fix emergency
+ */
 fun ForecastInfo.toFavoritePlaceTopContent(): FavoritePlaceTopContent {
     return FavoritePlaceTopContent(
-        cityName = this.location?.city ?: "---",
-        imgUrl =  this.forecasts[0].image?.url!!,
-        telop = this.forecasts[0].telop ?: "---",
-        minTemperature = this.forecasts[0].temperature?.min?.celsius ?: "---",
-        maxTemperature = this.forecasts[0].temperature?.max?.celsius ?: "---",
+        cityName = this.name ?: "---",
+        imgUrl =  "",
+        telop = "---",
+        minTemperature = this.main?.temp_min.toString(),
+        maxTemperature = this.main?.temp_max.toString(),
         isFavorite = this.isFavorite
     )
 }

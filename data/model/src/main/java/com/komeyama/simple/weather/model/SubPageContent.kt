@@ -47,9 +47,12 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
     val forecastCityInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
         cityIdList.forEach {
-            if (it.id == linkToForecastId(forecastInfo.link)) {
-                forecastCityInfo.add(forecastInfo)
-            }
+            /**
+             * TODO: fix emergency
+             */
+//            if (it.id == linkToForecastId(forecastInfo.link)) {
+//                forecastCityInfo.add(forecastInfo)
+//            }
         }
     }
 
@@ -58,13 +61,16 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
     }
 }
 
+/**
+ * TODO: fix emergency
+ */
 fun ForecastInfo.toSubPageContent(): SubPageContent {
     return SubPageContent(
-        cityName = this.location?.city ?: "---",
-        imgUrl =  this.forecasts[0].image?.url!!,
-        telop = this.forecasts[0].telop ?: "---",
-        minTemperature = this.forecasts[0].temperature?.min?.celsius ?: "---",
-        maxTemperature = this.forecasts[0].temperature?.max?.celsius ?: "---",
+        cityName = this.name ?: "---",
+        imgUrl =  "",
+        telop = "---",
+        minTemperature = this.main?.temp_min.toString(),
+        maxTemperature = this.main?.temp_max.toString(),
         isFavorite = this.isFavorite
     )
 }

@@ -21,9 +21,12 @@ fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
     val forecastPrefectureInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
         PrefectureIds.values().forEach {
-            if (it.id == linkToForecastId(forecastInfo.link)) {
-                forecastPrefectureInfo.add(forecastInfo)
-            }
+            /**
+             * TODO: fix emergency
+             */
+//            if (it.id == linkToForecastId(forecastInfo.link)) {
+//                forecastPrefectureInfo.add(forecastInfo)
+//            }
         }
     }
 
@@ -32,13 +35,16 @@ fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
     }
 }
 
+/**
+ * TODO: fix emergency
+ */
 fun ForecastInfo.toTopPageContent(): TopPageContent {
 
     return TopPageContent(
-        this.location?.prefecture ?: "---",
-        this.forecasts[0].image?.url!!,
-        this.forecasts[0].telop ?: "---",
-        this.forecasts[0].temperature?.min?.celsius ?: "---",
-        this.forecasts[0].temperature?.max?.celsius ?: "---"
+        this.name ?: "---",
+        "",
+        "---",
+        this.main?.temp_min.toString(),
+        this.main?.temp_max.toString()
     )
 }
