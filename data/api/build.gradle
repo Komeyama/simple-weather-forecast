@@ -59,8 +59,6 @@ dependencies {
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
 
-    implementation Dep.Timber.timber
-
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.extJunit
     androidTestImplementation Dep.Test.espressoCore
