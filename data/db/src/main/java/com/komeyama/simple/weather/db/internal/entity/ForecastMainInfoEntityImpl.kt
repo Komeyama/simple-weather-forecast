@@ -118,6 +118,16 @@ internal data class WeatherEntityImpl(
     override var icon: String,
     @ColumnInfo(name = "parent_id")
     override var parentId: Int
-) : WeatherEntity
+) : WeatherEntity {
+    companion object {
+        val EMPTY = WeatherEntityImpl(
+            id = 0,
+            main = "",
+            description = "",
+            icon = "",
+            parentId = 0
+        )
+    }
+}
 
 

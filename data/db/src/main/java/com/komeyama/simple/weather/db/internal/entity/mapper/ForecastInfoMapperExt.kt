@@ -1,5 +1,7 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.internal.entity.*
 import com.komeyama.simple.weather.model.*
 
@@ -58,6 +60,22 @@ internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEnt
 //        )
     )
 }
+
+internal fun ForecastInfo.toWeatherEntity(id: Int): WeatherEntityImpl {
+    return if (weather?.size == 0) {
+        WeatherEntityImpl.EMPTY
+    } else {
+        WeatherEntityImpl(
+            id = weather?.get(0)?.id,
+            main = weather?.get(0)?.main ?: "",
+            description = weather?.get(0)?.description ?: "",
+            icon = weather?.get(0)?.icon ?: "",
+            parentId = id
+        )
+    }
+}
+
+
 
 /*
 internal fun DetailCopyright.toDetailCopyrightMainEntity(id: Int): DetailCopyrightMainEntityImpl {

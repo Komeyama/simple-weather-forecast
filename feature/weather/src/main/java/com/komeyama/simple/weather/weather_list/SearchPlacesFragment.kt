@@ -21,6 +21,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_place.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -68,10 +69,11 @@ class SearchPlacesFragment : DaggerFragment() {
                  */
                 section.update(
                     it.searchResult.forecastInfo.map { forecastInfo ->
+                        Timber.d("forecast info: %s", forecastInfo)
                         forecastInfo.name?.let { cityName ->
                             ForecastContentItem(
                                 cityName = cityName,
-                                forecastImageUrl = forecastInfo.weather?.get(0)?.icon
+                                forecastImageUrl = forecastInfo.weather?.get(0)?.icon ?: ""
                             )
                         }
                     }

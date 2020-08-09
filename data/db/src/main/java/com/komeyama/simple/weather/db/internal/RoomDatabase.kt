@@ -75,6 +75,8 @@ internal class RoomDatabase @Inject constructor(
             var previousForecastInfoSize = 0
             forecastInfo.forEachIndexed { id, forecastInfo ->
                 forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
+                weatherDao.insert(forecastInfo?.toWeatherEntity(id))
+
 //                detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
 //
 //                pinpointLocationDao.insert(

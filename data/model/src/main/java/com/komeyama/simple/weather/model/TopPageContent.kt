@@ -43,10 +43,10 @@ fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
 fun ForecastInfo.toTopPageContent(): TopPageContent {
 
     return TopPageContent(
-        this.name ?: "---",
-        "",
-        "---",
-        this.main?.temp_min.toString(),
-        this.main?.temp_max.toString()
+        prefectureName = this.name ?: "---",
+        imgUrl = this.weather?.get(0)?.icon ?: "---",
+        telop = this.weather?.get(0)?.main ?: "---" ,
+        minTemperature = this.main?.temp_min.toString(),
+        maxTemperature = this.main?.temp_max.toString()
     )
 }
