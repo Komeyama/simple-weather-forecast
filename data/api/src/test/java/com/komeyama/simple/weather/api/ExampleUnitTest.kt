@@ -242,7 +242,7 @@ class ExampleUnitTest {
         val apiModule = ApiModule()
         val httpClient = apiModule.provideHttpClient()
         return runBlocking {
-            apiModule.provideForecastApi(httpClient).getForecastList(lat,lon)
+            apiModule.provideForecastApi(httpClient).getForecastListFromLatLon(lat,lon)
         }
     }
 }
