@@ -70,8 +70,8 @@ fun ForecastInfo.toSubPageContent(): SubPageContent {
         cityName = this.name ?: "---",
         imgUrl =  "",
         telop = "---",
-        minTemperature = this.main?.temp_min.toString(),
-        maxTemperature = this.main?.temp_max.toString(),
+        minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
+        maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString(),
         isFavorite = this.isFavorite
     )
 }

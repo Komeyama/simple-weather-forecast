@@ -58,7 +58,7 @@ fun ForecastInfo.toTopPageContent(): TopPageContent {
                 ""
             }
         } ?: "" ,
-        minTemperature = this.main?.temp_min.toString(),
-        maxTemperature = this.main?.temp_max.toString()
+        minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
+        maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString()
     )
 }

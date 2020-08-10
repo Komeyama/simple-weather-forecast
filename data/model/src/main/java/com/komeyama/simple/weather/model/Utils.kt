@@ -8,3 +8,7 @@ package com.komeyama.simple.weather.model
 fun linkToForecastId(link: String?): String {
     return link?.removePrefix("http://weather.livedoor.com/area/forecast/") ?: ""
 }
+
+fun Float.toFromKelvinToCelsius(): Float {
+    return this - 273.15F
+}
