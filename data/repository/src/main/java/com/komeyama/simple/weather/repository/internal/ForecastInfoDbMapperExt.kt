@@ -24,7 +24,7 @@ internal fun ForecastInfoEntity.toForecastInfo(): ForecastInfo {
         ),
         weather = weatherEntity.map {
             WeatherInfo(
-                id = it.id,
+                id = it.weatherId,
                 main = it.main,
                 description = it.description,
                 icon = it.icon

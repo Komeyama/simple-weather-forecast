@@ -92,7 +92,7 @@ internal data class ForecastMainInfoEntityImpl(
 
 interface WeatherEntity {
     var parentId: Int
-    var id: Int?
+    var weatherId: Int?
     var main: String
     var description: String
     var icon: String
@@ -108,8 +108,10 @@ interface WeatherEntity {
     )]
 )
 internal data class WeatherEntityImpl(
-    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "weather_id")
-    override var id: Int?,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    @ColumnInfo(name = "weather_id")
+    override var weatherId: Int? = 0,
     @ColumnInfo(name = "main")
     override var main: String,
     @ColumnInfo(name = "description")
@@ -120,12 +122,12 @@ internal data class WeatherEntityImpl(
     override var parentId: Int
 ) : WeatherEntity {
     companion object {
-        val EMPTY = WeatherEntityImpl(
+        fun empty(parentId: Int) = WeatherEntityImpl(
             id = 0,
             main = "",
             description = "",
             icon = "",
-            parentId = 0
+            parentId = parentId
         )
     }
 }
