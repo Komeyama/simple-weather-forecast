@@ -44,8 +44,20 @@ fun ForecastInfo.toTopPageContent(): TopPageContent {
 
     return TopPageContent(
         prefectureName = this.name ?: "---",
-        imgUrl = this.weather?.get(0)?.icon ?: "---",
-        telop = this.weather?.get(0)?.main ?: "---" ,
+        imgUrl = this.weather?.let {
+                if (it.isNotEmpty()) {
+                    it[0].icon
+                } else {
+                    ""
+                }
+        } ?: "",
+        telop = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].main
+            } else {
+                ""
+            }
+        } ?: "" ,
         minTemperature = this.main?.temp_min.toString(),
         maxTemperature = this.main?.temp_max.toString()
     )

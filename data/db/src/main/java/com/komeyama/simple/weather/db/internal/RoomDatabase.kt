@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.db.internal
 
+import android.util.Log
 import androidx.room.withTransaction
 import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
@@ -72,8 +73,12 @@ internal class RoomDatabase @Inject constructor(
 //            detailCopyrightMainDao.deleteAll()
 //            pinpointLocationOfCopyDao.deleteAll()
 
+            forecastMainInfoDao.deleteAll()
+            weatherDao.deleteAll()
+
             var previousForecastInfoSize = 0
             forecastInfo.forEachIndexed { id, forecastInfo ->
+
                 forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
                 weatherDao.insert(forecastInfo?.toWeatherEntity(id))
 

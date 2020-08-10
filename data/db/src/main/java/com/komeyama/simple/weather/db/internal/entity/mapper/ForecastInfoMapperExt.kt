@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.db.internal.entity.mapper
 
+import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import com.komeyama.simple.weather.db.internal.entity.*
@@ -62,14 +63,14 @@ internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEnt
 }
 
 internal fun ForecastInfo.toWeatherEntity(id: Int): WeatherEntityImpl {
-    return if (weather?.size == 0) {
-        WeatherEntityImpl.EMPTY
+    return if (this.weather?.size == 0) {
+        WeatherEntityImpl.empty(id)
     } else {
         WeatherEntityImpl(
-            id = weather?.get(0)?.id,
-            main = weather?.get(0)?.main ?: "",
-            description = weather?.get(0)?.description ?: "",
-            icon = weather?.get(0)?.icon ?: "",
+            weatherId = this.weather?.get(0)?.id,
+            main = this.weather?.get(0)?.main ?: "",
+            description = this.weather?.get(0)?.description ?: "",
+            icon = this.weather?.get(0)?.icon ?: "",
             parentId = id
         )
     }
