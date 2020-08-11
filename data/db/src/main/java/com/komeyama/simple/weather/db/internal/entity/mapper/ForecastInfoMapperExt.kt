@@ -70,10 +70,14 @@ internal fun ForecastInfo.toWeatherEntity(id: Int): WeatherEntityImpl {
             weatherId = this.weather?.get(0)?.id,
             main = this.weather?.get(0)?.main ?: "",
             description = this.weather?.get(0)?.description ?: "",
-            icon = this.weather?.get(0)?.icon ?: "",
+            icon = this.weather?.get(0)?.icon?.toIconUrl() ?: "",
             parentId = id
         )
     }
+}
+
+internal fun String.toIconUrl(): String {
+    return "http://openweathermap.org/img/wn/$this.png"
 }
 
 
