@@ -47,7 +47,7 @@ internal class ForecastApiImpl @Inject constructor(
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
-    override suspend fun getForecastLostFromName(name: String): ForecastInfo {
+    override suspend fun getForecastListFromName(name: String): ForecastInfo {
         val rawResponse = httpClient.get<String> {
             url("http://api.openweathermap.org/data/2.5//weather?q=${name}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
@@ -65,7 +65,7 @@ internal class ForecastApiImpl @Inject constructor(
 //            forecastInfoList.add(getForecastLostFromName(cityIds.cityName))
 //        }
         PrefectureIds.values().forEach { prefectureId ->
-            forecastInfoList.add(getForecastLostFromName(prefectureId.prefectureName))
+            forecastInfoList.add(getForecastListFromName(prefectureId.prefectureName))
         }
         return forecastInfoList
     }
