@@ -38,7 +38,7 @@ class WeatherDetailListViewModel @AssistedInject constructor(
 
     private val forecastDetailListInfoLiveData: LiveData<List<SubPageContent>> = liveData {
         emitSource(
-            weatherRepository.forecastContents().toSubPageContentFlow(prefectureId).asLiveData()
+            weatherRepository.forecastCityContents(prefectureId).toSubPageContentFlow().asLiveData()
         )
     }
 

@@ -46,7 +46,7 @@ fun ForecastInfo.toTopPageContent(): TopPageContent {
         prefectureName = this.name ?: "---",
         imgUrl = this.weather?.let {
                 if (it.isNotEmpty()) {
-                    it[0].icon
+                    it[0].icon?.toIconUrl()
                 } else {
                     ""
                 }

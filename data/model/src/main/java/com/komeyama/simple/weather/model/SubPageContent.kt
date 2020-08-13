@@ -33,13 +33,14 @@ fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageC
         isFavorite = favoriteState)
 }
 
-fun Flow<List<ForecastInfo>>.toSubPageContentFlow(prefectureId: String): Flow<List<SubPageContent>> {
+fun Flow<List<ForecastInfo>>.toSubPageContentFlow(): Flow<List<SubPageContent>> {
     return this.map {
-        it.toSubPageContentList(prefectureId)
+        it.toSubPageContentList()
     }
 }
 
-fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageContent> {
+fun List<ForecastInfo>.toSubPageContentList(): List<SubPageContent> {
+    /*
     val cityIdList= CityIds.values().filter {
         it.prefectureId == prefectureId
     }
@@ -60,6 +61,10 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
     return forecastCityInfo.map {
         it.toSubPageContent()
     }
+    */
+    return this.map {
+        it.toSubPageContent()
+    }
 }
 
 /**
@@ -68,10 +73,26 @@ fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageC
 fun ForecastInfo.toSubPageContent(): SubPageContent {
     return SubPageContent(
         cityName = this.name ?: "---",
-        imgUrl =  "",
-        telop = "---",
+        imgUrl = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].icon?.toIconUrl()
+            } else {
+                ""
+            }
+        } ?: "",
+        telop = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].main
+            } else {
+                ""
+            }
+        } ?: "" ,
         minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
         maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString(),
         isFavorite = this.isFavorite
     )
+}
+
+internal fun String.toIconUrl(): String {
+    return "http://openweathermap.org/img/wn/$this.png"
 }

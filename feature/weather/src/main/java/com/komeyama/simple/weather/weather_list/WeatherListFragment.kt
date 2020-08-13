@@ -9,6 +9,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
+import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.PrefectureIds
 import com.komeyama.simple.weather.model.TopPageContent
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastPrefectureContentBinding
@@ -22,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_list.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -83,16 +85,21 @@ class WeatherListFragment : DaggerFragment() {
             viewBinding.topCardPrefectureTodayMinTemperatureText.text =
                 topPageContent.minTemperature
             viewBinding.forecastPrefectureCardTop.setOnClickListener { v ->
-                PrefectureIds.values()
-                    .firstOrNull { it.prefectureName == topPageContent.prefectureName }?.id.apply {
-                        if (this != null) {
-                            val navigateId =
-                                WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-                                    prefectureId = this
-                                )
-                            findNavController(v).navigate(navigateId)
-                        }
-                    }
+                val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
+                        prefectureId = topPageContent.prefectureName
+                    )
+                findNavController(v).navigate(navigateId)
+//                CityIds.values()
+//                    .firstOrNull { it.prefectureId == topPageContent.prefectureName }?.id.apply {
+//                        Timber.d("hogehoge %s", this)
+//                        if (this != null) {
+//                            val navigateId =
+//                                WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
+//                                    prefectureId = this
+//                                )
+//                            findNavController(v).navigate(navigateId)
+//                        }
+//                    }
             }
         }
     }
