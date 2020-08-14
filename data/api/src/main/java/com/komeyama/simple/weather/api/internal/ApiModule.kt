@@ -24,6 +24,11 @@ internal class ApiModule {
                     )
                 )
             }
+            engine {
+                config {
+                    retryOnConnectionFailure(true)
+                }
+            }
         }
     }
 
