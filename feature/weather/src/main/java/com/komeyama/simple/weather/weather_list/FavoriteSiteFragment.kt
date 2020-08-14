@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.favorite_place.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 

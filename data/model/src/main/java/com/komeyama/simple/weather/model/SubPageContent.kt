@@ -20,7 +20,7 @@ fun List<SubPageContent>.makeSubPageContents(favoriteList: List<String>): List<S
 
 fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageContent {
     var favoriteState: Boolean
-    CityIds.values().firstOrNull { it.cityName == this.cityName }?.id.apply {
+    CityIds.values().firstOrNull { it.id == this.cityName }?.id.apply {
         favoriteState = isFavoriteList.contains(this)
     }
 

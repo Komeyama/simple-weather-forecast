@@ -25,6 +25,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_detail_list.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class WeatherDetailListFragment : DaggerFragment() {
@@ -94,7 +95,7 @@ class WeatherDetailListFragment : DaggerFragment() {
             viewBinding.topCardCityTodayMaxTemperatureText.text = subPageContent.maxTemperature
             viewBinding.topCardCityTodayMinTemperatureText.text = subPageContent.minTemperature
             viewBinding.topCardCityFavoritePlace.setOnClickListener {
-                CityIds.values().firstOrNull { it.cityName == subPageContent.cityName }?.id.apply {
+                CityIds.values().firstOrNull { it.id == subPageContent.cityName }?.id.apply {
                     this?.let { id ->
                         viewModel.favorite(id)
                     }
@@ -103,7 +104,7 @@ class WeatherDetailListFragment : DaggerFragment() {
 
             viewBinding.forecastCityCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.cityName == subPageContent.cityName }?.id.apply {
+                    .firstOrNull { it.id == subPageContent.cityName }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 WeatherDetailListFragmentDirections.actionWeatherDetailListToDetailForecast(

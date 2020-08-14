@@ -7,9 +7,14 @@ import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
 import dagger.Module
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
@@ -40,6 +45,17 @@ internal class DataWeatherRepository @Inject constructor(
             }
             forecastInfoList as List<ForecastInfo>
         }.asFlow()
+    }
+
+    override suspend fun forecastFavoriteCityContents(): Flow<List<ForecastInfo>> {
+        val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
+        return favoritePlaceDatabase.favoriteStateFlow().map { favoriteStateList ->
+            favoriteStateList.map {
+                forecastInfoList.add(forecastApi.getForecastListFromName(it.forecastId))
+            }
+            forecastInfoList as List<ForecastInfo>
+        }
+
     }
 
     override suspend fun getFavoriteIds(): Flow<List<String>> {
