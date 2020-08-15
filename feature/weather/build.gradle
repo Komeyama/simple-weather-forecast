@@ -58,6 +58,7 @@ dependencies {
     kapt Dep.Dagger.assistedInjectProcessor
 
     implementation Dep.Groupie.groupie
+    implementation Dep.Groupie.groupieKotlinExtensions
     implementation Dep.Groupie.databinding
 
     implementation Dep.Timber.timber

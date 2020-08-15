@@ -16,9 +16,10 @@ import com.komeyama.simple.weather.weather_list.databinding.ItemForecastFavorite
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.FavoriteSiteViewModel
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
-import com.xwray.groupie.databinding.ViewHolder
+import com.xwray.groupie.databinding.GroupieViewHolder
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
@@ -50,7 +51,7 @@ class FavoritePlaceFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
         forecast_favorite_place_recycler_view.adapter = groupAdapter
         val section = Section()
         section.setHeader(HeaderItem())
