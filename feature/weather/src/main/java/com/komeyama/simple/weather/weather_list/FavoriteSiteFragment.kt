@@ -16,7 +16,6 @@ import com.komeyama.simple.weather.weather_list.databinding.ItemForecastFavorite
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.FavoriteSiteViewModel
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
 import com.xwray.groupie.databinding.GroupieViewHolder
@@ -24,7 +23,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.favorite_place.*
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -67,7 +65,6 @@ class FavoritePlaceFragment : DaggerFragment() {
                 section.update(forecastInfoList.favoritePlaceTopPageContents.filter { favoritePlaceTopPageContent ->
                     favoritePlaceTopPageContent.isFavorite
                 }.map { favoritePlaceTopPageContent ->
-                    Timber.d("favorite!!! hoge %s", favoritePlaceTopPageContent.cityName)
                     ForecastContentItem(
                         favoriteSiteViewModel,
                         favoritePlaceTopPageContent

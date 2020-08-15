@@ -12,12 +12,15 @@ import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import timber.log.Timber
 import javax.inject.Inject
 
 internal class ForecastApiImpl @Inject constructor(
     private val httpClient: HttpClient
 ) : ForecastApi {
+
+    companion object {
+        val API_BASE_URL = "http://api.openweathermap.org/data/2.5/"
+    }
 
     /**
      * Options list: https://github.com/Kotlin/kotlinx.serialization/blob/ffe216f0293231b09eea24a10aa4bc26ff6d5b90/runtime/commonMain/src/kotlinx/serialization/json/JsonConfiguration.kt#L15-L44
@@ -40,7 +43,7 @@ internal class ForecastApiImpl @Inject constructor(
      */
     override suspend fun getForecastListFromLatLon(lat: Float, lon: Float): ForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("http://api.openweathermap.org/data/2.5//weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
+            url("${API_BASE_URL}/weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)
@@ -48,7 +51,7 @@ internal class ForecastApiImpl @Inject constructor(
 
     override suspend fun getForecastListFromName(name: String): ForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("http://api.openweathermap.org/data/2.5//weather?q=${name}&APPID=${BuildConfig.API_KEY}")
+            url("${API_BASE_URL}/weather?q=${name}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)

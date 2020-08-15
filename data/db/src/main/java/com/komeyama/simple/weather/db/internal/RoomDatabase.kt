@@ -1,6 +1,5 @@
 package com.komeyama.simple.weather.db.internal
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
@@ -68,15 +67,7 @@ internal class RoomDatabase @Inject constructor(
         forecastInfo: List<ForecastInfo?>
     ) {
         cacheDatabase.withTransaction {
-//            detailForecastDao.deleteAll()
-//            pinpointLocationDao.deleteAll()
-//            detailCopyrightMainDao.deleteAll()
-//            pinpointLocationOfCopyDao.deleteAll()
 
-            //orecastMainInfoDao.deleteAll()
-            //weatherDao.deleteAll()
-
-            var previousForecastInfoSize = 0
             var prefectureFirstId = 0
             CityIds.values().forEach {
                 if (forecastInfo[0]?.name == it.id) {
@@ -88,27 +79,6 @@ internal class RoomDatabase @Inject constructor(
             forecastInfo.forEachIndexed { id, forecastInfo ->
                 forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(prefectureFirstId + id))
                 weatherDao.insert(forecastInfo?.toWeatherEntity(forecastInfo.name ?: ""))
-
-//                detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
-//
-//                pinpointLocationDao.insert(
-//                    forecastInfo?.pinpointLocations?.toPinpointLocationEntities(
-//                        id,
-//                        previousForecastInfoSize
-//                    )
-//                )
-//                previousForecastInfoSize += forecastInfo?.pinpointLocations?.size ?: 0
-//
-//                detailCopyrightMainDao.insert(
-//                    forecastInfo?.copyright?.toDetailCopyrightMainEntity(
-//                        id
-//                    )
-//                )
-//                pinpointLocationOfCopyDao.insertOfCopy(
-//                    forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(
-//                        id
-//                    )
-//                )
             }
         }
     }

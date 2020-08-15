@@ -9,8 +9,6 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
-import com.komeyama.simple.weather.model.CityIds
-import com.komeyama.simple.weather.model.PrefectureIds
 import com.komeyama.simple.weather.model.TopPageContent
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastPrefectureContentBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
@@ -23,7 +21,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_list.*
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -67,7 +64,7 @@ class WeatherListFragment : DaggerFragment() {
             })
         groupAdapter.add(section)
     }
-    
+
     internal class ForecastContentItem(
         private val topPageContent: TopPageContent
     ) : BindableItem<ItemForecastPrefectureContentBinding>(
@@ -86,20 +83,9 @@ class WeatherListFragment : DaggerFragment() {
                 topPageContent.minTemperature
             viewBinding.forecastPrefectureCardTop.setOnClickListener { v ->
                 val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-                        prefectureId = topPageContent.prefectureName
-                    )
+                    prefectureId = topPageContent.prefectureName
+                )
                 findNavController(v).navigate(navigateId)
-//                CityIds.values()
-//                    .firstOrNull { it.prefectureId == topPageContent.prefectureName }?.id.apply {
-//                        Timber.d("hogehoge %s", this)
-//                        if (this != null) {
-//                            val navigateId =
-//                                WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-//                                    prefectureId = this
-//                                )
-//                            findNavController(v).navigate(navigateId)
-//                        }
-//                    }
             }
         }
     }

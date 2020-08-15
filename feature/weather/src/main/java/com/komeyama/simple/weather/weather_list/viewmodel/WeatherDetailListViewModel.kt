@@ -2,14 +2,12 @@ package com.komeyama.simple.weather.weather_list.viewmodel
 
 import androidx.lifecycle.*
 import com.komeyama.simple.weather.core.extentions.combine
-import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.model.SubPageContent
 import com.komeyama.simple.weather.model.makeSubPageContents
 import com.komeyama.simple.weather.model.toSubPageContentFlow
 import com.komeyama.simple.weather.repository.ForecastRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.Exception

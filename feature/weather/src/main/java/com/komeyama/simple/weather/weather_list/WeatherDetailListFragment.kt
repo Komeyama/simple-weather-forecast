@@ -25,7 +25,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_detail_list.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class WeatherDetailListFragment : DaggerFragment() {

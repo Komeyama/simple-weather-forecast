@@ -40,28 +40,6 @@ fun Flow<List<ForecastInfo>>.toSubPageContentFlow(): Flow<List<SubPageContent>> 
 }
 
 fun List<ForecastInfo>.toSubPageContentList(): List<SubPageContent> {
-    /*
-    val cityIdList= CityIds.values().filter {
-        it.prefectureId == prefectureId
-    }
-
-    val forecastCityInfo = mutableListOf<ForecastInfo>()
-    this.map { forecastInfo ->
-        /**
-         * TODO: fix emergency
-         */
-//        cityIdList.forEach {
-//            if (it.id == linkToForecastId(forecastInfo.link)) {
-//                forecastCityInfo.add(forecastInfo)
-//            }
-//        }
-        forecastCityInfo.add(forecastInfo)
-    }
-
-    return forecastCityInfo.map {
-        it.toSubPageContent()
-    }
-    */
     return this.map {
         it.toSubPageContent()
     }
@@ -93,6 +71,9 @@ fun ForecastInfo.toSubPageContent(): SubPageContent {
     )
 }
 
+/**
+ * TODO: fix emergency
+ */
 internal fun String.toIconUrl(): String {
     return "http://openweathermap.org/img/wn/$this.png"
 }

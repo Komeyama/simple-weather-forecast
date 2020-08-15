@@ -23,12 +23,6 @@ fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
         /**
          * TODO: fix emergency
          */
-//        PrefectureIds.values().forEach {
-//
-//            if (it.id == linkToForecastId(forecastInfo.link)) {
-//                forecastPrefectureInfo.add(forecastInfo)
-//            }
-//        }
         forecastPrefectureInfo.add(forecastInfo)
     }
 

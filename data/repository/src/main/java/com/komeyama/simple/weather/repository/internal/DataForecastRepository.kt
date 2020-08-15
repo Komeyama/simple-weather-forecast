@@ -38,7 +38,6 @@ internal class DataWeatherRepository @Inject constructor(
                 forecastInfoList.add(forecastApi.getForecastListFromName(it.id))
             }
         }
-        Timber.d("refresh! %s", forecastInfoList)
         forecastInfoDatabase.save(forecastInfoList)
     }
 
@@ -70,7 +69,6 @@ internal class DataWeatherRepository @Inject constructor(
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         return favoritePlaceDatabase.favoriteStateFlow().map { favoriteStateList ->
             favoriteStateList.map {
-                Timber.d("favorite!!! %s", it.forecastId)
                 forecastInfoList.add(forecastApi.getForecastListFromName(it.forecastId))
             }
             forecastInfoList as List<ForecastInfo>
