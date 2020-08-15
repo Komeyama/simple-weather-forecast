@@ -69,7 +69,7 @@ internal class RoomDatabase @Inject constructor(
 
             var prefectureFirstId = 0
             CityIds.values().forEach {
-                if (forecastInfo[0]?.name == it.id) {
+                if (forecastInfo[0]?.name?.conversionsInSpecialCases() == it.id.conversionsInSpecialCases()) {
                     PrefectureIds.values()
                     prefectureFirstId = it.ordinal
                     return@forEach
@@ -82,4 +82,25 @@ internal class RoomDatabase @Inject constructor(
         }
     }
 
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.conversionsInSpecialCases(): String {
+
+    return when {
+        this.contains("Ō") -> {
+            return this.replace("Ō", "O")
+        }
+        this.contains("ō") -> {
+            return this.replace("ō", "o")
+        }
+        this.contains("Kochi-shi") -> {
+            return this.replace("Kochi-shi", "Kochi")
+        }
+        else -> {
+            this
+        }
+    }
 }

@@ -94,7 +94,8 @@ class WeatherDetailListFragment : DaggerFragment() {
             viewBinding.topCardCityTodayMaxTemperatureText.text = subPageContent.maxTemperature
             viewBinding.topCardCityTodayMinTemperatureText.text = subPageContent.minTemperature
             viewBinding.topCardCityFavoritePlace.setOnClickListener {
-                CityIds.values().firstOrNull { it.id == subPageContent.cityName }?.id.apply {
+                CityIds.values()
+                    .firstOrNull { it.id.conversionsInSpecialCases() == subPageContent.cityName.conversionsInSpecialCases() }?.id.apply {
                     this?.let { id ->
                         viewModel.favorite(id)
                     }
@@ -103,7 +104,7 @@ class WeatherDetailListFragment : DaggerFragment() {
 
             viewBinding.forecastCityCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.id == subPageContent.cityName }?.id.apply {
+                    .firstOrNull { it.id.conversionsInSpecialCases() == subPageContent.cityName.conversionsInSpecialCases() }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 WeatherDetailListFragmentDirections.actionWeatherDetailListToDetailForecast(
@@ -122,6 +123,27 @@ class WeatherDetailListFragment : DaggerFragment() {
         override fun getLayout() = R.layout.item_headder
 
         override fun bind(viewBinding: ItemHeadderBinding, position: Int) {}
+    }
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.conversionsInSpecialCases(): String {
+
+    return when {
+        this.contains("Ō") -> {
+            return this.replace("Ō", "O")
+        }
+        this.contains("ō") -> {
+            return this.replace("ō", "o")
+        }
+        this.contains("Kochi") -> {
+            return this.replace("Kochi-shi", "Kochi")
+        }
+        else -> {
+            this
+        }
     }
 }
 

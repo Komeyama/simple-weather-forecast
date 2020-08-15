@@ -98,7 +98,7 @@ class FavoritePlaceFragment : DaggerFragment() {
                 favoritePlaceTopContent.minTemperature
             viewBinding.topCardFavoritePlaceFavoritePlace.setOnClickListener {
                 CityIds.values()
-                    .firstOrNull { it.id == favoritePlaceTopContent.cityName }?.id.apply {
+                    .firstOrNull { it.id.conversionsInSpecialCases() == favoritePlaceTopContent.cityName.conversionsInSpecialCases() }?.id.apply {
                         this?.let { id ->
                             viewModel.favorite(id)
                         }
@@ -106,7 +106,7 @@ class FavoritePlaceFragment : DaggerFragment() {
             }
             viewBinding.forecastFavoritePlaceCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.id == favoritePlaceTopContent.cityName }?.id.apply {
+                    .firstOrNull { it.id.conversionsInSpecialCases() == favoritePlaceTopContent.cityName.conversionsInSpecialCases() }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 FavoritePlaceFragmentDirections.actionFavoriteSiteToDetailForecast(

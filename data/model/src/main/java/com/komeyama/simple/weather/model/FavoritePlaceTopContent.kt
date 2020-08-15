@@ -20,7 +20,7 @@ fun List<FavoritePlaceTopContent>.makeFavoritePlaceTopContents(favoriteList: Lis
 
 fun FavoritePlaceTopContent.makeFavoritePlaceTopContent(isFavoriteList: List<String>): FavoritePlaceTopContent {
     var favoriteState: Boolean
-    CityIds.values().firstOrNull { it.id == this.cityName }?.id.apply {
+    CityIds.values().firstOrNull { it.id.conversionsInSpecialCases() == this.cityName.conversionsInSpecialCases() }?.id.apply {
         favoriteState = isFavoriteList.contains(this)
     }
 
@@ -69,4 +69,25 @@ fun ForecastInfo.toFavoritePlaceTopContent(): FavoritePlaceTopContent {
         maxTemperature = this.main?.temp_max.toString(),
         isFavorite = this.isFavorite
     )
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.conversionsInSpecialCases(): String {
+
+    return when {
+        this.contains("Ō") -> {
+            return this.replace("Ō", "O")
+        }
+        this.contains("ō") -> {
+            return this.replace("ō", "o")
+        }
+        this.contains("Kochi-shi") -> {
+            return this.replace("Kochi-shi", "Kochi")
+        }
+        else -> {
+            this
+        }
+    }
 }
