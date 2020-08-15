@@ -18,7 +18,7 @@ import com.komeyama.simple.weather.weather_list.viewmodel.FavoriteSiteViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
-import com.xwray.groupie.databinding.ViewHolder
+import com.xwray.groupie.databinding.GroupieViewHolder
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
@@ -49,7 +49,7 @@ class FavoritePlaceFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
         forecast_favorite_place_recycler_view.adapter = groupAdapter
         val section = Section()
         section.setHeader(HeaderItem())
@@ -72,7 +72,6 @@ class FavoritePlaceFragment : DaggerFragment() {
                 })
             })
         groupAdapter.add(section)
-
     }
 
     internal data class ForecastContentItem(
@@ -99,7 +98,7 @@ class FavoritePlaceFragment : DaggerFragment() {
                 favoritePlaceTopContent.minTemperature
             viewBinding.topCardFavoritePlaceFavoritePlace.setOnClickListener {
                 CityIds.values()
-                    .firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                    .firstOrNull { it.id.conversionsInSpecialCases() == favoritePlaceTopContent.cityName.conversionsInSpecialCases() }?.id.apply {
                         this?.let { id ->
                             viewModel.favorite(id)
                         }
@@ -107,7 +106,7 @@ class FavoritePlaceFragment : DaggerFragment() {
             }
             viewBinding.forecastFavoritePlaceCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                    .firstOrNull { it.id.conversionsInSpecialCases() == favoritePlaceTopContent.cityName.conversionsInSpecialCases() }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 FavoritePlaceFragmentDirections.actionFavoriteSiteToDetailForecast(

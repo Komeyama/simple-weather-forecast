@@ -20,7 +20,7 @@ fun List<FavoritePlaceTopContent>.makeFavoritePlaceTopContents(favoriteList: Lis
 
 fun FavoritePlaceTopContent.makeFavoritePlaceTopContent(isFavoriteList: List<String>): FavoritePlaceTopContent {
     var favoriteState: Boolean
-    CityIds.values().firstOrNull { it.cityName == this.cityName }?.id.apply {
+    CityIds.values().firstOrNull { it.id.conversionsInSpecialCases() == this.cityName.conversionsInSpecialCases() }?.id.apply {
         favoriteState = isFavoriteList.contains(this)
     }
 
@@ -45,13 +45,49 @@ fun List<ForecastInfo>.toFavoritePlaceTopContentList(): List<FavoritePlaceTopCon
     }
 }
 
+/**
+ * TODO: fix emergency
+ */
 fun ForecastInfo.toFavoritePlaceTopContent(): FavoritePlaceTopContent {
     return FavoritePlaceTopContent(
-        cityName = this.location?.city ?: "---",
-        imgUrl =  this.forecasts[0].image?.url!!,
-        telop = this.forecasts[0].telop ?: "---",
-        minTemperature = this.forecasts[0].temperature?.min?.celsius ?: "---",
-        maxTemperature = this.forecasts[0].temperature?.max?.celsius ?: "---",
+        cityName = this.name ?: "---",
+        imgUrl = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].icon?.toIconUrl()
+            } else {
+                ""
+            }
+        } ?: "",
+        telop = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].main
+            } else {
+                ""
+            }
+        } ?: "" ,
+        minTemperature = this.main?.temp_min.toString(),
+        maxTemperature = this.main?.temp_max.toString(),
         isFavorite = this.isFavorite
     )
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.conversionsInSpecialCases(): String {
+
+    return when {
+        this.contains("Ō") -> {
+            return this.replace("Ō", "O")
+        }
+        this.contains("ō") -> {
+            return this.replace("ō", "o")
+        }
+        this.contains("Kochi-shi") -> {
+            return this.replace("Kochi-shi", "Kochi")
+        }
+        else -> {
+            this
+        }
+    }
 }

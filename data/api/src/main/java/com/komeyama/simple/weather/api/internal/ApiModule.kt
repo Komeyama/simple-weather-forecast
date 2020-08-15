@@ -14,6 +14,9 @@ import javax.inject.Singleton
 @Module
 internal class ApiModule {
 
+    /**
+     * https://github.com/ktorio/ktor/issues/1708#issuecomment-609988128
+     */
     @Provides
     fun provideHttpClient(): HttpClient {
         return HttpClient(OkHttp) {
@@ -23,6 +26,11 @@ internal class ApiModule {
                         JsonConfiguration.Stable.copy()
                     )
                 )
+            }
+            engine {
+                config {
+                    retryOnConnectionFailure(true)
+                }
             }
         }
     }

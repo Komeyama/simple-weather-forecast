@@ -20,11 +20,10 @@ fun Flow<List<ForecastInfo>>.toTopPageContentFlow(): Flow<List<TopPageContent>> 
 fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
     val forecastPrefectureInfo = mutableListOf<ForecastInfo>()
     this.map { forecastInfo ->
-        PrefectureIds.values().forEach {
-            if (it.id == linkToForecastId(forecastInfo.link)) {
-                forecastPrefectureInfo.add(forecastInfo)
-            }
-        }
+        /**
+         * TODO: fix emergency
+         */
+        forecastPrefectureInfo.add(forecastInfo)
     }
 
     return forecastPrefectureInfo.map {
@@ -32,13 +31,28 @@ fun List<ForecastInfo>.toTopPageContentList(): List<TopPageContent> {
     }
 }
 
+/**
+ * TODO: fix emergency
+ */
 fun ForecastInfo.toTopPageContent(): TopPageContent {
 
     return TopPageContent(
-        this.location?.prefecture ?: "---",
-        this.forecasts[0].image?.url!!,
-        this.forecasts[0].telop ?: "---",
-        this.forecasts[0].temperature?.min?.celsius ?: "---",
-        this.forecasts[0].temperature?.max?.celsius ?: "---"
+        prefectureName = this.name ?: "---",
+        imgUrl = this.weather?.let {
+                if (it.isNotEmpty()) {
+                    it[0].icon?.toIconUrl()
+                } else {
+                    ""
+                }
+        } ?: "",
+        telop = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].main
+            } else {
+                ""
+            }
+        } ?: "" ,
+        minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
+        maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString()
     )
 }

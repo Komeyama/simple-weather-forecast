@@ -17,6 +17,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        /**
+         * TODO
+         */
+        def properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def API_KEY = properties.getProperty("api_key")
+        buildConfigField("String", "API_KEY", "\"${API_KEY}\"")
     }
 
     buildTypes {
@@ -50,6 +58,8 @@ dependencies {
     kapt Dep.Dagger.androidProcessor
     compileOnly Dep.Dagger.assistedInjectAnnotations
     kapt Dep.Dagger.assistedInjectProcessor
+
+    implementation Dep.Timber.timber
 
     testImplementation Dep.Test.junit
     androidTestImplementation Dep.Test.extJunit

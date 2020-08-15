@@ -20,7 +20,7 @@ fun List<SubPageContent>.makeSubPageContents(favoriteList: List<String>): List<S
 
 fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageContent {
     var favoriteState: Boolean
-    CityIds.values().firstOrNull { it.cityName == this.cityName }?.id.apply {
+    CityIds.values().firstOrNull { it.id.conversionsInSpecialCases() == this.cityName.conversionsInSpecialCases() }?.id.apply {
         favoriteState = isFavoriteList.contains(this)
     }
 
@@ -33,38 +33,47 @@ fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageC
         isFavorite = favoriteState)
 }
 
-fun Flow<List<ForecastInfo>>.toSubPageContentFlow(prefectureId: String): Flow<List<SubPageContent>> {
+fun Flow<List<ForecastInfo>>.toSubPageContentFlow(): Flow<List<SubPageContent>> {
     return this.map {
-        it.toSubPageContentList(prefectureId)
+        it.toSubPageContentList()
     }
 }
 
-fun List<ForecastInfo>.toSubPageContentList(prefectureId: String): List<SubPageContent> {
-    val cityIdList= CityIds.values().filter {
-        it.prefectureId == prefectureId
-    }
-
-    val forecastCityInfo = mutableListOf<ForecastInfo>()
-    this.map { forecastInfo ->
-        cityIdList.forEach {
-            if (it.id == linkToForecastId(forecastInfo.link)) {
-                forecastCityInfo.add(forecastInfo)
-            }
-        }
-    }
-
-    return forecastCityInfo.map {
+fun List<ForecastInfo>.toSubPageContentList(): List<SubPageContent> {
+    return this.map {
         it.toSubPageContent()
     }
 }
 
+/**
+ * TODO: fix emergency
+ */
 fun ForecastInfo.toSubPageContent(): SubPageContent {
     return SubPageContent(
-        cityName = this.location?.city ?: "---",
-        imgUrl =  this.forecasts[0].image?.url!!,
-        telop = this.forecasts[0].telop ?: "---",
-        minTemperature = this.forecasts[0].temperature?.min?.celsius ?: "---",
-        maxTemperature = this.forecasts[0].temperature?.max?.celsius ?: "---",
+        cityName = this.name ?: "---",
+        imgUrl = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].icon?.toIconUrl()
+            } else {
+                ""
+            }
+        } ?: "",
+        telop = this.weather?.let {
+            if (it.isNotEmpty()) {
+                it[0].main
+            } else {
+                ""
+            }
+        } ?: "" ,
+        minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
+        maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString(),
         isFavorite = this.isFavorite
     )
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.toIconUrl(): String {
+    return "http://openweathermap.org/img/wn/$this.png"
 }

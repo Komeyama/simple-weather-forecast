@@ -1,5 +1,6 @@
 package com.komeyama.simple.weather.api.internal
 
+import com.komeyama.simple.weather.api.BuildConfig
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.ForecastInfo
@@ -16,6 +17,10 @@ import javax.inject.Inject
 internal class ForecastApiImpl @Inject constructor(
     private val httpClient: HttpClient
 ) : ForecastApi {
+
+    companion object {
+        val API_BASE_URL = "http://api.openweathermap.org/data/2.5/"
+    }
 
     /**
      * Options list: https://github.com/Kotlin/kotlinx.serialization/blob/ffe216f0293231b09eea24a10aa4bc26ff6d5b90/runtime/commonMain/src/kotlinx/serialization/json/JsonConfiguration.kt#L15-L44
@@ -36,19 +41,40 @@ internal class ForecastApiImpl @Inject constructor(
      *      Timber.e(e.message)
      *  }
      */
-    override suspend fun getForecastList(id: String): ForecastInfo {
+    override suspend fun getForecastListFromLatLon(lat: Float, lon: Float): ForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("http://weather.livedoor.com/forecast/webservice/json/v1?city=${id}")
+            url("${API_BASE_URL}/weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
+    override suspend fun getForecastListFromName(name: String): ForecastInfo {
+        val rawResponse = httpClient.get<String> {
+            url("${API_BASE_URL}/weather?q=${name}&APPID=${BuildConfig.API_KEY}")
+            accept(ContentType.Application.Json)
+        }
+        return json.parse(ForecastInfo.serializer(), rawResponse)
+    }
+
+    /**
+     * TODO: fix emergency
+     */
     override suspend fun getAllCityForecastList(): List<ForecastInfo> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
-        CityIds.values().forEach { cityIds ->
-            forecastInfoList.add(getForecastList(cityIds.id))
+        CityIds.values().forEach { cityId ->
+            forecastInfoList.add(getForecastListFromName(cityId.id))
         }
         return forecastInfoList
     }
+
+    override suspend fun getAllPrefectureForecastList(): List<ForecastInfo> {
+        val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
+        PrefectureIds.values().forEach { prefectureId ->
+            forecastInfoList.add(getForecastListFromName(prefectureId.prefectureName))
+        }
+        return forecastInfoList
+    }
+
+
 }

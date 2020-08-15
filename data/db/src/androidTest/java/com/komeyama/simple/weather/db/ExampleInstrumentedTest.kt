@@ -6,7 +6,11 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.komeyama.simple.weather.db.internal.CacheDatabase
 import com.komeyama.simple.weather.db.internal.dao.*
+import com.komeyama.simple.weather.db.internal.dao.old.DetailCopyrightMainDao
+import com.komeyama.simple.weather.db.internal.dao.old.DetailImageDao
+import com.komeyama.simple.weather.db.internal.dao.old.PinpointLocationDao
 import com.komeyama.simple.weather.db.internal.entity.*
+import com.komeyama.simple.weather.db.internal.entity.old.*
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 
@@ -106,24 +110,31 @@ class ExampleInstrumentedTest {
                     title = "forecast title",
                     link = "forecast_link",
                     publicTime = "public time",
-                    detailLocation = DetailLocationEntityImpl(area = "detail area", prefecture = "detail prefecture",city =  "detail city"),
-                    description = DetailDescriptionEntityImpl(text = "detail text", publicTime = "detail public time")
+                    detailLocation = DetailLocationEntityImpl(
+                        area = "detail area",
+                        prefecture = "detail prefecture",
+                        city = "detail city"
+                    ),
+                    description = DetailDescriptionEntityImpl(
+                        text = "detail text",
+                        publicTime = "detail public time"
+                    )
                 )
             )
 
 
         copyrightMainDao.insert(
-                DetailCopyrightMainEntityImpl(
-                    0, 0,
-                    "copyrightTitle",
-                    "copyrightLink",
-                    DetailImageEntityImplOfCopyright(
-                        title = "imageTitle",
-                        url = "imageUrl",
-                        width = "imageWidth",
-                        height = "imageHeight"
-                    )
+            DetailCopyrightMainEntityImpl(
+                0, 0,
+                "copyrightTitle",
+                "copyrightLink",
+                DetailImageEntityImplOfCopyright(
+                    title = "imageTitle",
+                    url = "imageUrl",
+                    width = "imageWidth",
+                    height = "imageHeight"
                 )
+            )
         )
     }
 

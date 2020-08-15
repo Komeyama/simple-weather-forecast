@@ -16,7 +16,7 @@ import com.komeyama.simple.weather.weather_list.viewmodel.SearchPlacesViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
-import com.xwray.groupie.databinding.ViewHolder
+import com.xwray.groupie.databinding.GroupieViewHolder
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
@@ -52,7 +52,7 @@ class SearchPlacesFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
         search_place_recycler_view.adapter = groupAdapter
         val section = Section()
         section.setHeader(HeaderItem())
@@ -63,12 +63,15 @@ class SearchPlacesFragment : DaggerFragment() {
                     return@Observer
                 }
 
+                /**
+                 * TODO: fix emergency
+                 */
                 section.update(
                     it.searchResult.forecastInfo.map { forecastInfo ->
-                        forecastInfo.location?.city?.let { cityName ->
+                        forecastInfo.name?.let { cityName ->
                             ForecastContentItem(
                                 cityName = cityName,
-                                forecastImageUrl = forecastInfo.forecasts[0].image?.url
+                                forecastImageUrl = forecastInfo.weather?.get(0)?.icon?.toIconUrl() ?: ""
                             )
                         }
                     }
@@ -111,7 +114,7 @@ class SearchPlacesFragment : DaggerFragment() {
             viewBinding.searchPlaceForecastImage.load(forecastImageUrl)
             viewBinding.searchPlaceCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.cityName == cityName }?.id.apply {
+                    .firstOrNull { it.cityName.conversionsInSpecialCases() == cityName.conversionsInSpecialCases() }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 SearchPlacesFragmentDirections.actionSearchPlaceToDetailForecast(
@@ -144,4 +147,11 @@ abstract class SearchPlacesFragmentModule {
             return searchPlacesFragment.viewLifecycleOwnerLiveData
         }
     }
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.toIconUrl(): String {
+    return "http://openweathermap.org/img/wn/$this.png"
 }

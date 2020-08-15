@@ -9,7 +9,6 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
-import com.komeyama.simple.weather.model.PrefectureIds
 import com.komeyama.simple.weather.model.TopPageContent
 import com.komeyama.simple.weather.weather_list.databinding.ItemForecastPrefectureContentBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemHeadderBinding
@@ -17,7 +16,7 @@ import com.komeyama.simple.weather.weather_list.viewmodel.WeatherListViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.databinding.BindableItem
-import com.xwray.groupie.databinding.ViewHolder
+import com.xwray.groupie.databinding.GroupieViewHolder
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
@@ -49,7 +48,7 @@ class WeatherListFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val groupAdapter = GroupAdapter<ViewHolder<*>>()
+        val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
         forecast_list_recycler_view.adapter = groupAdapter
         val section = Section()
         section.setHeader(HeaderItem())
@@ -65,7 +64,7 @@ class WeatherListFragment : DaggerFragment() {
             })
         groupAdapter.add(section)
     }
-    
+
     internal class ForecastContentItem(
         private val topPageContent: TopPageContent
     ) : BindableItem<ItemForecastPrefectureContentBinding>(
@@ -83,16 +82,10 @@ class WeatherListFragment : DaggerFragment() {
             viewBinding.topCardPrefectureTodayMinTemperatureText.text =
                 topPageContent.minTemperature
             viewBinding.forecastPrefectureCardTop.setOnClickListener { v ->
-                PrefectureIds.values()
-                    .firstOrNull { it.prefectureName == topPageContent.prefectureName }?.id.apply {
-                        if (this != null) {
-                            val navigateId =
-                                WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
-                                    prefectureId = this
-                                )
-                            findNavController(v).navigate(navigateId)
-                        }
-                    }
+                val navigateId = WeatherListFragmentDirections.actionWeatherListToWeatherDetailList(
+                    prefectureId = topPageContent.prefectureName
+                )
+                findNavController(v).navigate(navigateId)
             }
         }
     }

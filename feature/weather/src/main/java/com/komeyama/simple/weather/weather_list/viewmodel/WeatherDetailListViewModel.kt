@@ -9,6 +9,7 @@ import com.komeyama.simple.weather.repository.ForecastRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.lang.Exception
 
 class WeatherDetailListViewModel @AssistedInject constructor(
@@ -38,8 +39,13 @@ class WeatherDetailListViewModel @AssistedInject constructor(
 
     private val forecastDetailListInfoLiveData: LiveData<List<SubPageContent>> = liveData {
         emitSource(
-            weatherRepository.forecastContents().toSubPageContentFlow(prefectureId).asLiveData()
+            weatherRepository.forecastCityContents(prefectureId).toSubPageContentFlow().asLiveData()
         )
+        try {
+            weatherRepository.refresh(prefectureId)
+        } catch (e: Exception) {
+            Timber.d("Fail weatherRepository.refresh(): %s", e.toString())
+        }
     }
 
     private val favoriteStateLiveData: LiveData<List<String>> = liveData {

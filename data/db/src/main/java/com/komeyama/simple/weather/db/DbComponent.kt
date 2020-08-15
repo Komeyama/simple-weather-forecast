@@ -17,16 +17,7 @@ interface DbComponent {
     fun favoritePlaceDatabase(): FavoritePlaceDatabase
     fun forecastInfoDatabase(): ForecastInfoDatabase
     fun forecastMainDatabase(): ForecastMainDatabase
-    fun detailCopyrightDatabase(): DetailCopyrightDatabase
-    fun detailCopyrightMainDatabase(): DetailCopyrightMainDatabase
-    fun detailDescriptionDatabase(): DetailDescriptionDatabase
-    fun detailForecastDatabase(): DetailForecastDatabase
-    fun detailImageDatabase(): DetailImageDatabase
-    fun detailImageOfCopyrightDatabase(): DetailImageOfCopyrightDatabase
-    fun detailLocationDatabase(): DetailLocationDatabase
-    fun detailTemperatureDatabase(): DetailTemperatureDatabase
-    fun pinpointLocationDatabase(): PinpointLocationDatabase
-    fun temperatureDatabase(): TemperatureDatabase
+    fun weatherDatabase(): WeatherDatabase
 
     @Component.Factory
     interface Factory {

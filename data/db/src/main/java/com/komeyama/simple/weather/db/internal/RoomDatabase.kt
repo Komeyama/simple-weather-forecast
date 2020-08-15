@@ -2,14 +2,10 @@ package com.komeyama.simple.weather.db.internal
 
 import androidx.room.withTransaction
 import com.komeyama.simple.weather.db.*
-import com.komeyama.simple.weather.db.internal.dao.DetailCopyrightMainDao
-import com.komeyama.simple.weather.db.internal.dao.DetailForecastDao
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
-import com.komeyama.simple.weather.db.internal.dao.PinpointLocationDao
+import com.komeyama.simple.weather.db.internal.dao.WeatherDao
 import com.komeyama.simple.weather.db.internal.entity.FavoritePlaceEntityImpl
 import com.komeyama.simple.weather.db.internal.entity.mapper.*
-import com.komeyama.simple.weather.db.internal.entity.mapper.toDetailForecastEntities
-import com.komeyama.simple.weather.db.internal.entity.mapper.toPinpointLocationEntities
 import com.komeyama.simple.weather.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,24 +15,11 @@ import javax.inject.Inject
 internal class RoomDatabase @Inject constructor(
     private val cacheDatabase: CacheDatabase,
     private val forecastMainInfoDao: ForecastMainInfoDao,
-    private val detailForecastDao: DetailForecastDao,
-    private val detailCopyrightMainDao: DetailCopyrightMainDao,
-    private val pinpointLocationDao: PinpointLocationDao,
-    private val pinpointLocationOfCopyDao: PinpointLocationDao
+    private val weatherDao: WeatherDao
 ) : FavoritePlaceDatabase,
     ForecastInfoDatabase,
     ForecastMainDatabase,
-    DetailCopyrightDatabase,
-    DetailCopyrightMainDatabase,
-    DetailDescriptionDatabase,
-    DetailForecastDatabase,
-    DetailImageDatabase,
-    DetailImageOfCopyrightDatabase,
-    DetailLocationDatabase,
-    DetailTemperatureDatabase,
-    PinpointLocationDatabase,
-    PinpointLocationOfCopyDatabase,
-    TemperatureDatabase {
+    WeatherDatabase {
 
     override suspend fun favoriteState(): List<FavoritePlaceEntity> {
         return cacheDatabase.favoritePlaceDao().favoritePlaceInfo()
@@ -57,7 +40,8 @@ internal class RoomDatabase @Inject constructor(
                 }
             }
             if (!isForecastId) {
-                cacheDatabase.favoritePlaceDao().insert(FavoritePlaceEntityImpl(forecastId = favoriteId))
+                cacheDatabase.favoritePlaceDao()
+                    .insert(FavoritePlaceEntityImpl(forecastId = favoriteId))
             }
         }
     }
@@ -74,84 +58,49 @@ internal class RoomDatabase @Inject constructor(
         return cacheDatabase.forecastMainInfoDao().forecastMainInfo()
     }
 
-    override fun detailCopyrightEntity(): List<DetailCopyrightEntity> {
-        return cacheDatabase.detailCopyrightDao().detailCopyLightInfo()
-    }
-
-    override fun detailCopyrightMainEntity(): List<DetailCopyrightMainEntity> {
-        return cacheDatabase.detailCopyrightMainDao().detailCopyrightMainInfo()
-    }
-
-    override fun detailDescriptionEntity(): List<DetailDescriptionEntity> {
-        return cacheDatabase.detailDescriptionDao().detailDescriptionInfo()
-    }
-
-    override fun detailForecastEntity(): List<DetailForecastEntity> {
-        return cacheDatabase.detailForecastDao().detailForecast()
-    }
-
-    override fun detailImageEntity(): List<DetailImageEntity> {
-        return cacheDatabase.detailImageDao().detailImageInfo()
-    }
-
-    override fun detailImageOfCopyrightEntity(): List<DetailImageEntity> {
-        return cacheDatabase.detailImageDao().detailImageOfCopyrightInfo()
-    }
-
-    override fun detailLocationEntity(): List<DetailLocationEntity> {
-        return cacheDatabase.detailLocationDao().detailLocationInfo()
-    }
-
-    override fun detailTemperatureEntity(): List<DetailTemperatureEntity> {
-        return cacheDatabase.detailTemperatureDao().detailTemperatureInfo()
-    }
-
-    override fun pinpointLocationEntity(): List<PinpointLocationEntity> {
-        return cacheDatabase.pinpointLocationDao().pinpointLocations()
-    }
-
-    override fun pinpointLocationOfCopyEntity(): List<PinpointLocationEntity> {
-        return cacheDatabase.pinpointLocationDao().pinpointLocationsOfCopy()
-    }
-
-    override fun temperatureEntity(): List<TemperatureEntity> {
-        return cacheDatabase.temperatureDao().temperatureInfo()
+    override fun weatherDatabaseInfoEntity(): List<WeatherEntity> {
+        return cacheDatabase.weatherDao().weatherInfo()
     }
 
     override suspend fun save(
         forecastInfo: List<ForecastInfo?>
     ) {
         cacheDatabase.withTransaction {
-            detailForecastDao.deleteAll()
-            pinpointLocationDao.deleteAll()
-            detailCopyrightMainDao.deleteAll()
-            pinpointLocationOfCopyDao.deleteAll()
 
-            var previousForecastInfoSize = 0
+            var prefectureFirstId = 0
+            CityIds.values().forEach {
+                if (forecastInfo[0]?.name?.conversionsInSpecialCases() == it.id.conversionsInSpecialCases()) {
+                    PrefectureIds.values()
+                    prefectureFirstId = it.ordinal
+                    return@forEach
+                }
+            }
             forecastInfo.forEachIndexed { id, forecastInfo ->
-                forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
-                detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
-
-                pinpointLocationDao.insert(
-                    forecastInfo?.pinpointLocations?.toPinpointLocationEntities(
-                        id,
-                        previousForecastInfoSize
-                    )
-                )
-                previousForecastInfoSize += forecastInfo?.pinpointLocations?.size ?: 0
-
-                detailCopyrightMainDao.insert(
-                    forecastInfo?.copyright?.toDetailCopyrightMainEntity(
-                        id
-                    )
-                )
-                pinpointLocationOfCopyDao.insertOfCopy(
-                    forecastInfo?.copyright?.provider?.toPinpointLocationOfCopyEntities(
-                        id
-                    )
-                )
+                forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(prefectureFirstId + id))
+                weatherDao.insert(forecastInfo?.toWeatherEntity(forecastInfo.name ?: ""))
             }
         }
     }
 
+}
+
+/**
+ * TODO: fix emergency
+ */
+internal fun String.conversionsInSpecialCases(): String {
+
+    return when {
+        this.contains("Ō") -> {
+            return this.replace("Ō", "O")
+        }
+        this.contains("ō") -> {
+            return this.replace("ō", "o")
+        }
+        this.contains("Kochi-shi") -> {
+            return this.replace("Kochi-shi", "Kochi")
+        }
+        else -> {
+            this
+        }
+    }
 }
