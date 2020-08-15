@@ -5,7 +5,6 @@ import com.komeyama.simple.weather.db.*
 import com.komeyama.simple.weather.db.internal.dao.ForecastMainInfoDao
 import com.komeyama.simple.weather.db.internal.dao.WeatherDao
 import com.komeyama.simple.weather.db.internal.entity.FavoritePlaceEntityImpl
-import com.komeyama.simple.weather.db.internal.entity.WeatherEntity
 import com.komeyama.simple.weather.db.internal.entity.mapper.*
 import com.komeyama.simple.weather.model.*
 import kotlinx.coroutines.Dispatchers
