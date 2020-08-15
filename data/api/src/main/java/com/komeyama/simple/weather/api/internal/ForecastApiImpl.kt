@@ -43,7 +43,6 @@ internal class ForecastApiImpl @Inject constructor(
             url("http://api.openweathermap.org/data/2.5//weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
-        Timber.d("getForecastList: %s", rawResponse)
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
@@ -52,7 +51,6 @@ internal class ForecastApiImpl @Inject constructor(
             url("http://api.openweathermap.org/data/2.5//weather?q=${name}&APPID=${BuildConfig.API_KEY}")
             accept(ContentType.Application.Json)
         }
-        Timber.d("getForecastList: %s", rawResponse)
         return json.parse(ForecastInfo.serializer(), rawResponse)
     }
 
@@ -61,12 +59,19 @@ internal class ForecastApiImpl @Inject constructor(
      */
     override suspend fun getAllCityForecastList(): List<ForecastInfo> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
-//        CityIds.values().forEach { cityIds ->
-//            forecastInfoList.add(getForecastLostFromName(cityIds.cityName))
-//        }
+        CityIds.values().forEach { cityId ->
+            forecastInfoList.add(getForecastListFromName(cityId.id))
+        }
+        return forecastInfoList
+    }
+
+    override suspend fun getAllPrefectureForecastList(): List<ForecastInfo> {
+        val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         PrefectureIds.values().forEach { prefectureId ->
             forecastInfoList.add(getForecastListFromName(prefectureId.prefectureName))
         }
         return forecastInfoList
     }
+
+
 }

@@ -26,8 +26,19 @@ internal class DataWeatherRepository @Inject constructor(
     /**
      *  todo: very rate!
      */
-    override suspend fun refresh() {
-        val forecastInfoList = forecastApi.getAllCityForecastList()
+//    override suspend fun refresh() {
+//        val forecastInfoList = forecastApi.getAllCityForecastList()
+//        forecastInfoDatabase.save(forecastInfoList)
+//    }
+
+    override suspend fun refresh(prefectureId: String) {
+        val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
+        CityIds.values().map {
+            if (it.prefectureId == prefectureId) {
+                forecastInfoList.add(forecastApi.getForecastListFromName(it.id))
+            }
+        }
+        Timber.d("refresh! %s", forecastInfoList)
         forecastInfoDatabase.save(forecastInfoList)
     }
 
@@ -35,6 +46,14 @@ internal class DataWeatherRepository @Inject constructor(
         return forecastInfoDatabase.forecastInfoFlow().map { forecastInfoList ->
             forecastInfoList.toForecastInfoList()
         }
+    }
+
+    override suspend fun forecastPrefectureContents(): Flow<List<ForecastInfo>> {
+        val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
+        return forecastApi.getAllPrefectureForecastList().map {
+            forecastInfoList.add(it)
+            forecastInfoList as List<ForecastInfo>
+        }.asFlow()
     }
 
     override suspend fun forecastCityContents(prefectureIds: String): Flow<List<ForecastInfo>> {
@@ -51,11 +70,11 @@ internal class DataWeatherRepository @Inject constructor(
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         return favoritePlaceDatabase.favoriteStateFlow().map { favoriteStateList ->
             favoriteStateList.map {
+                Timber.d("favorite!!! %s", it.forecastId)
                 forecastInfoList.add(forecastApi.getForecastListFromName(it.forecastId))
             }
             forecastInfoList as List<ForecastInfo>
         }
-
     }
 
     override suspend fun getFavoriteIds(): Flow<List<String>> {

@@ -43,7 +43,7 @@ internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEnt
             sunset = sys?.sunset
         ),
         timezone = timezone,
-        name = name,
+        name = name ?: "",
         cod = cod
 //        forecastId = id,
 //        title = title,
@@ -62,7 +62,7 @@ internal fun ForecastInfo.toForecastMainInfoEntity(id: Int): ForecastMainInfoEnt
     )
 }
 
-internal fun ForecastInfo.toWeatherEntity(id: Int): WeatherEntityImpl {
+internal fun ForecastInfo.toWeatherEntity(id: String): WeatherEntityImpl {
     return if (this.weather?.size == 0) {
         WeatherEntityImpl.empty(id)
     } else {

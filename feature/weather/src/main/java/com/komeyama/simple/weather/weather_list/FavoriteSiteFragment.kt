@@ -67,6 +67,7 @@ class FavoritePlaceFragment : DaggerFragment() {
                 section.update(forecastInfoList.favoritePlaceTopPageContents.filter { favoritePlaceTopPageContent ->
                     favoritePlaceTopPageContent.isFavorite
                 }.map { favoritePlaceTopPageContent ->
+                    Timber.d("favorite!!! hoge %s", favoritePlaceTopPageContent.cityName)
                     ForecastContentItem(
                         favoriteSiteViewModel,
                         favoritePlaceTopPageContent
@@ -74,7 +75,6 @@ class FavoritePlaceFragment : DaggerFragment() {
                 })
             })
         groupAdapter.add(section)
-
     }
 
     internal data class ForecastContentItem(
@@ -101,7 +101,7 @@ class FavoritePlaceFragment : DaggerFragment() {
                 favoritePlaceTopContent.minTemperature
             viewBinding.topCardFavoritePlaceFavoritePlace.setOnClickListener {
                 CityIds.values()
-                    .firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                    .firstOrNull { it.id == favoritePlaceTopContent.cityName }?.id.apply {
                         this?.let { id ->
                             viewModel.favorite(id)
                         }
@@ -109,7 +109,7 @@ class FavoritePlaceFragment : DaggerFragment() {
             }
             viewBinding.forecastFavoritePlaceCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.cityName == favoritePlaceTopContent.cityName }?.id.apply {
+                    .firstOrNull { it.id == favoritePlaceTopContent.cityName }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 FavoritePlaceFragmentDirections.actionFavoriteSiteToDetailForecast(

@@ -14,10 +14,10 @@ class WeatherListViewModel @Inject constructor(
 
     val forecastInfoLiveData: LiveData<List<TopPageContent>> = liveData {
         emitSource(
-            weatherRepository.forecastContents().toTopPageContentFlow().asLiveData()
+            weatherRepository.forecastPrefectureContents().toTopPageContentFlow().asLiveData()
         )
         try {
-            weatherRepository.refresh()
+            //weatherRepository.refresh()
         } catch (e: Exception) {
             Timber.d("Fail weatherRepository.refresh(): %s", e.toString())
         }

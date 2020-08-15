@@ -73,14 +73,21 @@ internal class RoomDatabase @Inject constructor(
 //            detailCopyrightMainDao.deleteAll()
 //            pinpointLocationOfCopyDao.deleteAll()
 
-            forecastMainInfoDao.deleteAll()
-            weatherDao.deleteAll()
+            //orecastMainInfoDao.deleteAll()
+            //weatherDao.deleteAll()
 
             var previousForecastInfoSize = 0
+            var prefectureFirstId = 0
+            CityIds.values().forEach {
+                if (forecastInfo[0]?.name == it.id) {
+                    PrefectureIds.values()
+                    prefectureFirstId = it.ordinal
+                    return@forEach
+                }
+            }
             forecastInfo.forEachIndexed { id, forecastInfo ->
-
-                forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(id))
-                weatherDao.insert(forecastInfo?.toWeatherEntity(id))
+                forecastMainInfoDao.insert(forecastInfo?.toForecastMainInfoEntity(prefectureFirstId + id))
+                weatherDao.insert(forecastInfo?.toWeatherEntity(forecastInfo.name ?: ""))
 
 //                detailForecastDao.insert(forecastInfo?.forecasts?.toDetailForecastEntities(id))
 //

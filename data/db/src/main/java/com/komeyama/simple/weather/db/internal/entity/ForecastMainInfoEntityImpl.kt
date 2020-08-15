@@ -66,7 +66,6 @@ internal data class SysInfoImpl(
 
 @Entity(tableName = "forecast_info")
 internal data class ForecastMainInfoEntityImpl(
-    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "forecast_id")
     override var id: Int?,
     @Embedded override var coord: CoordInfoEntityImpl?,
     override var base: String?,
@@ -76,7 +75,8 @@ internal data class ForecastMainInfoEntityImpl(
     @Embedded override var clouds: CloudsInfoEntityImpl?,
     @Embedded override var sys: SysInfoImpl?,
     override var timezone: Int?,
-    override var name: String?,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "forecast_id")
+    override var name: String,
     override var cod: Int?
 
 //    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "forecast_id")
@@ -91,7 +91,7 @@ internal data class ForecastMainInfoEntityImpl(
 ) : ForecastMainInfoEntity
 
 interface WeatherEntity {
-    var parentId: Int
+    var parentId: String
     var weatherId: Int?
     var main: String
     var description: String
@@ -119,10 +119,10 @@ internal data class WeatherEntityImpl(
     @ColumnInfo(name = "icon")
     override var icon: String,
     @ColumnInfo(name = "parent_id")
-    override var parentId: Int
+    override var parentId: String
 ) : WeatherEntity {
     companion object {
-        fun empty(parentId: Int) = WeatherEntityImpl(
+        fun empty(parentId: String) = WeatherEntityImpl(
             id = 0,
             main = "",
             description = "",

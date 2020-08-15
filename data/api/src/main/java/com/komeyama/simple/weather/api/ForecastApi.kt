@@ -6,4 +6,5 @@ interface ForecastApi {
     suspend fun getForecastListFromLatLon(lat: Float, lon: Float): ForecastInfo
     suspend fun getForecastListFromName(name: String): ForecastInfo
     suspend fun getAllCityForecastList(): List<ForecastInfo>
+    suspend fun getAllPrefectureForecastList(): List<ForecastInfo>
 }

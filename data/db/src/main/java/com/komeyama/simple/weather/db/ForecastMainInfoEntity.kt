@@ -10,7 +10,7 @@ interface ForecastMainInfoEntity {
     val clouds: CloudsInfoEntity?
     val sys: SysInfo?
     var timezone: Int?
-    var name: String?
+    var name: String
     var cod: Int?
 }
 

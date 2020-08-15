@@ -5,7 +5,6 @@ import com.komeyama.simple.weather.core.extentions.combine
 import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -35,8 +34,7 @@ class FavoriteSiteViewModel @Inject constructor(
 
     private val forecastFavoritePlaceListInfoLiveData: LiveData<List<FavoritePlaceTopContent>> = liveData {
         emitSource(
-            //weatherRepository.forecastContents().toFavoritePlaceTopContentFlow().asLiveData()
-            weatherRepository.forecastFavoriteCityContents().toFavoritePlaceTopContentFlow().asLiveData()
+            weatherRepository.forecastContents().toFavoritePlaceTopContentFlow().asLiveData()
         )
     }
 
