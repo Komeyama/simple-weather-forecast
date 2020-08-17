@@ -55,9 +55,11 @@ class WeatherListFragment : DaggerFragment() {
         /**
          * todo:fix update process
          */
+        progress_bar.visibility = View.VISIBLE
         weatherListViewModel.forecastInfoLiveData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
+                progress_bar.visibility = View.GONE
                 section.update(forecastInfoList.map { topPageContent ->
                     ForecastContentItem(topPageContent)
                 })
