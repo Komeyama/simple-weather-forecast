@@ -114,7 +114,7 @@ class SearchPlacesFragment : DaggerFragment() {
             viewBinding.searchPlaceForecastImage.load(forecastImageUrl)
             viewBinding.searchPlaceCardTop.setOnClickListener { v ->
                 CityIds.values()
-                    .firstOrNull { it.cityName.conversionsInSpecialCases() == cityName.conversionsInSpecialCases() }?.id.apply {
+                    .firstOrNull { it.id.conversionsInSpecialCases() == cityName.conversionsInSpecialCases() }?.id.apply {
                         if (this != null) {
                             val navigateId =
                                 SearchPlacesFragmentDirections.actionSearchPlaceToDetailForecast(
