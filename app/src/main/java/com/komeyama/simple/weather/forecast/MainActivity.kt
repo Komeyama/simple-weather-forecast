@@ -36,10 +36,16 @@ class MainActivity : DaggerAppCompatActivity() {
         bottomNavigationBehavior = BottomNavigationBehavior(this)
         layoutParams.behavior = bottomNavigationBehavior
 
-
         setSupportActionBar(toolbar)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { _, _, _ ->
+            layoutParams.behavior
+            bottomNavigationBehavior.scrolledDown = true
+            bottomNavigationBehavior.scrolledUp = true
+            bottom_navigation_view.animate().translationY(0f)
+        }
 
     }
 
