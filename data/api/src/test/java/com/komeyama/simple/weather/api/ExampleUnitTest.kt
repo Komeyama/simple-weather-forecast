@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.api
 
 import com.komeyama.simple.weather.api.internal.ApiModule
 import com.komeyama.simple.weather.model.CityIds
+import com.komeyama.simple.weather.model.DetailForecastInfo
 import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.model.PrefectureIds
 import junit.framework.TestCase.assertEquals
@@ -66,6 +67,42 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun api_detail_city_correct_test() {
+        try {
+            CityIds.values().forEach {
+                when {
+                    it.id == CityIds.OFUNATO.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name, containsString("Ōfunato"))
+                    }
+                    it.id == CityIds.SHINJO.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name, containsString("Shinjō"))
+                    }
+                    it.id == CityIds.OTAWARA.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name ,containsString("Ōtawara"))
+                    }
+                    it.id == CityIds.OTSU.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name ,containsString("Ōtsu"))
+                    }
+                    it.id == CityIds.SHOBARA.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name ,containsString("Shōbara"))
+                    }
+                    it.id == CityIds.OITA.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name ,containsString("Ōita"))
+                    }
+                    it.id != CityIds.KOUCHI.id -> {
+                        assertThat(fetchDetailForecastInfo(it.id)?.city?.name , containsString(it.id))
+                    }
+                }
+                assertEquals("JP", fetchDetailForecastInfo(it.id)?.city?.country)
+            }
+        } catch (e: Exception) {
+            print(e)
+            assertThat(e.message, containsString("404"))
+        }
+
+    }
+
+    @Test
     fun api_cityID_is_not_existence_test() {
         try {
             assertEquals(null, fetchForecastInfo("komeyama"))
@@ -80,6 +117,14 @@ class ExampleUnitTest {
         val httpClient = apiModule.provideHttpClient()
         return runBlocking {
             apiModule.provideForecastApi(httpClient).getForecastListFromName(cityName)
+        }
+    }
+
+    private fun fetchDetailForecastInfo(cityName: String): DetailForecastInfo? {
+        val apiModule = ApiModule()
+        val httpClient = apiModule.provideHttpClient()
+        return runBlocking {
+            apiModule.provideForecastApi(httpClient).getDetailForecastListFromName(cityName)
         }
     }
 }

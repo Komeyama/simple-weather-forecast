@@ -3,6 +3,7 @@ package com.komeyama.simple.weather.api.internal
 import com.komeyama.simple.weather.api.BuildConfig
 import com.komeyama.simple.weather.api.ForecastApi
 import com.komeyama.simple.weather.model.CityIds
+import com.komeyama.simple.weather.model.DetailForecastInfo
 import com.komeyama.simple.weather.model.ForecastInfo
 import com.komeyama.simple.weather.model.PrefectureIds
 import io.ktor.client.HttpClient
@@ -55,6 +56,14 @@ internal class ForecastApiImpl @Inject constructor(
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)
+    }
+
+    override suspend fun getDetailForecastListFromName(name: String): DetailForecastInfo {
+        val rawResponse = httpClient.get<String> {
+            url("${API_BASE_URL}/forecast?q=${name}&APPID=${BuildConfig.API_KEY}")
+            accept(ContentType.Application.Json)
+        }
+        return json.parse(DetailForecastInfo.serializer(), rawResponse)
     }
 
     /**
