@@ -7,14 +7,11 @@ import com.komeyama.simple.weather.model.*
 import com.komeyama.simple.weather.repository.ForecastRepository
 import dagger.Binds
 import dagger.Module
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 internal class DataWeatherRepository @Inject constructor(
@@ -22,14 +19,6 @@ internal class DataWeatherRepository @Inject constructor(
     private val forecastApi: ForecastApi,
     private val forecastInfoDatabase: ForecastInfoDatabase
 ) : ForecastRepository {
-
-    /**
-     *  todo: very rate!
-     */
-//    override suspend fun refresh() {
-//        val forecastInfoList = forecastApi.getAllCityForecastList()
-//        forecastInfoDatabase.save(forecastInfoList)
-//    }
 
     override suspend fun refresh(prefectureId: String) {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
@@ -39,6 +28,11 @@ internal class DataWeatherRepository @Inject constructor(
             }
         }
         forecastInfoDatabase.save(forecastInfoList)
+    }
+
+    @FlowPreview
+    override suspend fun detailForecastContents(cityIds: String): Flow<DetailForecastInfo> {
+        return suspend{ forecastApi.getDetailForecastListFromName(cityIds) }.asFlow()
     }
 
     override suspend fun forecastContents(): Flow<List<ForecastInfo>> {
@@ -55,10 +49,10 @@ internal class DataWeatherRepository @Inject constructor(
         }.asFlow()
     }
 
-    override suspend fun forecastCityContents(prefectureIds: String): Flow<List<ForecastInfo>> {
+    override suspend fun forecastCityContents(cityIds: String): Flow<List<ForecastInfo>> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         return CityIds.values().map {
-            if (it.prefectureId == prefectureIds) {
+            if (it.prefectureId == cityIds) {
                 forecastInfoList.add(forecastApi.getForecastListFromName(it.id))
             }
             forecastInfoList as List<ForecastInfo>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
@@ -13,6 +14,7 @@ import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewMode
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 class DetailForecastFragment : DaggerFragment() {
@@ -30,9 +32,6 @@ class DetailForecastFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        detailForecastViewModel.dummyFunc()
-
         return inflater.inflate(
             R.layout.detail_forecast,
             container,
@@ -40,6 +39,13 @@ class DetailForecastFragment : DaggerFragment() {
         )
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
+            Observer {
+                Timber.d("detail forecast data %s", it)
+            })
+    }
 }
 
 @Module
