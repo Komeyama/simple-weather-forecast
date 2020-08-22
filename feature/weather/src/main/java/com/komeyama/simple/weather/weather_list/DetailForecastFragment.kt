@@ -50,8 +50,8 @@ class DetailForecastFragment : DaggerFragment() {
                 detail_today_weather_image.load(it.list[0].weather[0].icon?.toIconUrl())
                 detail_today_weather_main.text = it.list[0].weather[0].main
                 detail_today_temp.text = it.list[0].main.temp.toFromKelvinToCelsius().toInt().toString()
-                detail_today_temp_max.text = it.list[0].main.temp_max.toFromKelvinToCelsius().toInt().toString()
-                detail_today_temp_min.text = it.list[0].main.temp_min.toFromKelvinToCelsius().toInt().toString()
+                detail_today_temp_max_value.text = it.list[0].main.temp_max.toFromKelvinToCelsius().toInt().toString()
+                detail_today_temp_min_value.text = it.list[0].main.temp_min.toFromKelvinToCelsius().toInt().toString()
             })
     }
 

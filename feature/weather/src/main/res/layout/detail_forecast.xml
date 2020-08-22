@@ -70,7 +70,7 @@
                 android:id="@+id/detail_today_temp_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/detail_today_temp"
@@ -80,27 +80,15 @@
                     android:id="@+id/detail_today_temp_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="○"
+                    android:text="⚪︎"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_max"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_max_top"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/detail_today_temp_max"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/top_card_temperature_name"
-                    app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_min"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_unit" />
-
-                <TextView
-                    android:id="@+id/detail_today_temp_min"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detail_today_temp_max_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/top_card_temperature_name"
@@ -108,7 +96,74 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_max" />
+                    app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_unit">
+
+                    <TextView
+                        android:id="@+id/detail_today_temp_max_notation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="max"
+                        app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_min_notation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_today_temp_max_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="--"
+                        app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_min_value"
+                        app:layout_constraintEnd_toStartOf="@+id/detail_today_temp_max_unit"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_today_temp_max_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="56dp"
+                        android:paddingTop="4dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="0dp"
+                        android:text="○"
+                        android:textSize="4sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/detail_today_temp_min_notation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="min"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_max_notation" />
+
+                    <TextView
+                        android:id="@+id/detail_today_temp_min_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/detail_today_temp_min_unit"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_max_value" />
+
+                    <TextView
+                        android:id="@+id/detail_today_temp_min_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="56dp"
+                        android:paddingTop="4dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="0dp"
+                        android:text="○"
+                        android:textSize="4sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_max_value" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
