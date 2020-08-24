@@ -13,7 +13,7 @@ import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
-import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherFiveHoursBinding
+import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
@@ -52,7 +52,7 @@ class DetailForecastFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
-        forecast_five_hours_weather_recycler_view.adapter = groupAdapter
+        forecast_three_hours_weather_recycler_view.adapter = groupAdapter
         val section = Section()
 
         detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
@@ -82,18 +82,18 @@ class DetailForecastFragment : DaggerFragment() {
 
     internal class ForecastContentItem(
         private val detailWeatherInfo: DetailWeatherInfo
-    ) : BindableItem<ItemWeatherFiveHoursBinding>(
+    ) : BindableItem<ItemWeatherThreeHoursBinding>(
         detailWeatherInfo.dt_txt.hashCode().toLong()
     ) {
-        override fun getLayout() = R.layout.item_weather_five_hours
+        override fun getLayout() = R.layout.item_weather_three_hours
 
-        override fun bind(viewBinding: ItemWeatherFiveHoursBinding, position: Int) {
+        override fun bind(viewBinding: ItemWeatherThreeHoursBinding, position: Int) {
             /**
              * TODO: time
              */
-            viewBinding.fiveHoursWeatherTime.text = "9:00"
-            viewBinding.fiveHoursWeatherImage.load(detailWeatherInfo.weather[0].icon?.toIconUrl())
-            viewBinding.fiveHoursWeatherTemp.text =
+            viewBinding.threeHoursWeatherTime.text = "9:00"
+            viewBinding.threeHoursWeatherImage.load(detailWeatherInfo.weather[0].icon?.toIconUrl())
+            viewBinding.threeHoursWeatherTemp.text =
                 detailWeatherInfo.main.temp.toFromKelvinToCelsius().toInt().toString()
         }
     }
