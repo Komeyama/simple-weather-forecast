@@ -2,10 +2,7 @@ package com.komeyama.simple.weather.api.internal
 
 import com.komeyama.simple.weather.api.BuildConfig
 import com.komeyama.simple.weather.api.ForecastApi
-import com.komeyama.simple.weather.model.CityIds
-import com.komeyama.simple.weather.model.DetailForecastInfo
-import com.komeyama.simple.weather.model.ForecastInfo
-import com.komeyama.simple.weather.model.PrefectureIds
+import com.komeyama.simple.weather.model.*
 import io.ktor.client.HttpClient
 import io.ktor.client.request.accept
 import io.ktor.client.request.get
@@ -20,7 +17,7 @@ internal class ForecastApiImpl @Inject constructor(
 ) : ForecastApi {
 
     companion object {
-        val API_BASE_URL = "http://api.openweathermap.org/data/2.5/"
+        const val API_BASE_URL = "http://api.openweathermap.org/data/2.5/"
     }
 
     /**
@@ -64,6 +61,14 @@ internal class ForecastApiImpl @Inject constructor(
             accept(ContentType.Application.Json)
         }
         return json.parse(DetailForecastInfo.serializer(), rawResponse)
+    }
+
+    override suspend fun getWeeklyForecastFromLatLon(lat: Float, lon: Float): WeeklyForecastInfo {
+        val rawResponse = httpClient.get<String> {
+            url("${API_BASE_URL}/onecall?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
+            accept(ContentType.Application.Json)
+        }
+        return json.parse(WeeklyForecastInfo.serializer(), rawResponse)
     }
 
     /**
