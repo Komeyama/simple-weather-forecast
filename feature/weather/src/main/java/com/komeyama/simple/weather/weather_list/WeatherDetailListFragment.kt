@@ -111,7 +111,9 @@ class WeatherDetailListFragment : DaggerFragment() {
                         if (this != null) {
                             val navigateId =
                                 WeatherDetailListFragmentDirections.actionWeatherDetailListToDetailForecast(
-                                    cityId = this
+                                    cityId = this,
+                                    cityLat = subPageContent.cityLatLon[0] ?: 0.0F,
+                                    cityLon = subPageContent.cityLatLon[1] ?: 0.0F
                                 )
                             Navigation.findNavController(v).navigate(navigateId)
                         }

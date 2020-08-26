@@ -31,7 +31,7 @@ class DetailForecastFragment : DaggerFragment() {
     @Inject
     lateinit var detailForecastViewModelFactory: DetailForecastViewModel.Factory
     private val detailForecastViewModel by assistedViewModels {
-        detailForecastViewModelFactory.create(navArgs.cityId)
+        detailForecastViewModelFactory.create(navArgs.cityId, navArgs.cityLat, navArgs.cityLon)
     }
 
     private val navArgs: DetailForecastFragmentArgs by navArgs()
@@ -71,6 +71,8 @@ class DetailForecastFragment : DaggerFragment() {
                 })
             })
         groupAdapter.add(section)
+
+        detailForecastViewModel.dummyLatLong()
     }
 
     /**

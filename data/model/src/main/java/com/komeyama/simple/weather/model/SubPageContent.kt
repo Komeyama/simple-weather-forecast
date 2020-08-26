@@ -3,12 +3,13 @@ package com.komeyama.simple.weather.model
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-data class SubPageContent (
+data class SubPageContent(
     val cityName: String,
     val imgUrl: String,
     val telop: String,
     val minTemperature: String,
     val maxTemperature: String,
+    val cityLatLon: List<Float?>,
     val isFavorite: Boolean = false
 )
 
@@ -20,9 +21,10 @@ fun List<SubPageContent>.makeSubPageContents(favoriteList: List<String>): List<S
 
 fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageContent {
     var favoriteState: Boolean
-    CityIds.values().firstOrNull { it.id.conversionsInSpecialCases() == this.cityName.conversionsInSpecialCases() }?.id.apply {
-        favoriteState = isFavoriteList.contains(this)
-    }
+    CityIds.values()
+        .firstOrNull { it.id.conversionsInSpecialCases() == this.cityName.conversionsInSpecialCases() }?.id.apply {
+            favoriteState = isFavoriteList.contains(this)
+        }
 
     return SubPageContent(
         cityName = this.cityName,
@@ -30,7 +32,9 @@ fun SubPageContent.makeSubSubPageContent(isFavoriteList: List<String>): SubPageC
         telop = this.telop,
         minTemperature = this.minTemperature,
         maxTemperature = this.maxTemperature,
-        isFavorite = favoriteState)
+        cityLatLon = this.cityLatLon,
+        isFavorite = favoriteState
+    )
 }
 
 fun Flow<List<ForecastInfo>>.toSubPageContentFlow(): Flow<List<SubPageContent>> {
@@ -64,9 +68,10 @@ fun ForecastInfo.toSubPageContent(): SubPageContent {
             } else {
                 ""
             }
-        } ?: "" ,
+        } ?: "",
         minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
         maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString(),
+        cityLatLon = listOf(this.coord?.lat, this.coord?.lon),
         isFavorite = this.isFavorite
     )
 }

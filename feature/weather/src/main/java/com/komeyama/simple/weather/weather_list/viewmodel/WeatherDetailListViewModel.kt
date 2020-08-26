@@ -30,6 +30,7 @@ class WeatherDetailListViewModel @AssistedInject constructor(
                         telop = "",
                         minTemperature = "",
                         maxTemperature = "",
+                        cityLatLon = listOf(0.0F, 0.0F),
                         isFavorite = false
                     )
                 ), listOf("")

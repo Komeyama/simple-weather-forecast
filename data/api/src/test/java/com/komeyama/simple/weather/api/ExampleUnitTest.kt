@@ -5,7 +5,6 @@ import com.komeyama.simple.weather.model.*
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.containsString
-import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import java.lang.Exception

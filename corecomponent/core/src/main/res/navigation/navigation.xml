@@ -41,6 +41,14 @@
             android:name="cityId"
             android:defaultValue='""'
             app:argType="string" />
+        <argument
+            android:name="cityLat"
+            android:defaultValue='0.0'
+            app:argType="float" />
+        <argument
+            android:name="cityLon"
+            android:defaultValue='0.0'
+            app:argType="float" />
 
     </fragment>
 
