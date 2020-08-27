@@ -25,6 +25,8 @@ class FavoriteSiteViewModel @Inject constructor(
                         telop = "",
                         minTemperature = "",
                         maxTemperature = "",
+                        lat = 0.0F,
+                        lon = 0.0F,
                         isFavorite = false
                     )
                 ), listOf("")

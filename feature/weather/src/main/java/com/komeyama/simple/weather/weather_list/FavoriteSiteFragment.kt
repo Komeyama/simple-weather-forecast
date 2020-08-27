@@ -110,7 +110,9 @@ class FavoritePlaceFragment : DaggerFragment() {
                         if (this != null) {
                             val navigateId =
                                 FavoritePlaceFragmentDirections.actionFavoriteSiteToDetailForecast(
-                                    cityId = this
+                                    cityId = this,
+                                    cityLat = favoritePlaceTopContent.lat ?: 0.0F,
+                                    cityLon = favoritePlaceTopContent.lon ?: 0.0F
                                 )
                             Navigation.findNavController(v).navigate(navigateId)
                         }

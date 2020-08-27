@@ -9,6 +9,8 @@ data class FavoritePlaceTopContent (
     val telop: String,
     val minTemperature: String,
     val maxTemperature: String,
+    val lat: Float?,
+    val lon: Float?,
     val isFavorite: Boolean = false
 )
 
@@ -30,6 +32,8 @@ fun FavoritePlaceTopContent.makeFavoritePlaceTopContent(isFavoriteList: List<Str
         telop = this.telop,
         minTemperature = this.minTemperature,
         maxTemperature = this.maxTemperature,
+        lat = this.lat,
+        lon = this.lon,
         isFavorite = favoriteState)
 }
 
@@ -67,6 +71,8 @@ fun ForecastInfo.toFavoritePlaceTopContent(): FavoritePlaceTopContent {
         } ?: "" ,
         minTemperature = this.main?.temp_min?.toFromKelvinToCelsius()?.toInt().toString(),
         maxTemperature = this.main?.temp_max?.toFromKelvinToCelsius()?.toInt().toString(),
+        lat = this.coord?.lat,
+        lon = this.coord?.lon,
         isFavorite = this.isFavorite
     )
 }
