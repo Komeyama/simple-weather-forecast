@@ -1,7 +1,7 @@
 package com.komeyama.simple.weather.model
 
 class SearchResult(
-    val forecastInfo: List<ForecastInfo>,
+    val forecastInfo: List<CityIds>,
     val query: String?
 ) {
     fun isEmpty() = this == EMPTY
