@@ -11,8 +11,10 @@ import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
+import com.komeyama.simple.weather.model.DailyWeather
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
+import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBindingImpl
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
 import com.xwray.groupie.GroupAdapter
@@ -24,6 +26,8 @@ import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.detail_forecast.*
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class DetailForecastFragment : DaggerFragment() {
@@ -72,7 +76,18 @@ class DetailForecastFragment : DaggerFragment() {
             })
         groupAdapter.add(section)
 
-        detailForecastViewModel.dummyLatLong()
+        val dailyWeatherGroupAdapter = GroupAdapter<GroupieViewHolder<*>>()
+        forecast_daily_weather_recycler_view.adapter = dailyWeatherGroupAdapter
+        val dailyWeatherSection = Section()
+
+        detailForecastViewModel.dailyForecastInfoLiveData.observe(viewLifecycleOwner,
+            Observer {
+                dailyWeatherSection.update(it.daily.map { dailyWeather ->
+                    DailyWeatherContentItem(dailyWeather)
+                })
+            })
+        dailyWeatherGroupAdapter.add(dailyWeatherSection)
+
     }
 
     /**
@@ -97,6 +112,50 @@ class DetailForecastFragment : DaggerFragment() {
             viewBinding.threeHoursWeatherImage.load(detailWeatherInfo.weather[0].icon?.toIconUrl())
             viewBinding.threeHoursWeatherTemp.text =
                 detailWeatherInfo.main.temp.toFromKelvinToCelsius().toInt().toString()
+        }
+    }
+
+    internal class DailyWeatherContentItem(private val dailyWeather: DailyWeather) :
+        BindableItem<ItemWeatherDailyBindingImpl>(dailyWeather.dt.hashCode().toLong()) {
+        override fun getLayout() = R.layout.item_weather_daily
+
+        override fun bind(viewBinding: ItemWeatherDailyBindingImpl, position: Int) {
+
+            viewBinding.dailyWeatherDate.text = dateToMonthDay(dailyWeather.dt.toLong())
+            viewBinding.dailyWeatherDaysOfWeeks.text = dateToDaysOfWeeks(dailyWeather.dt.toLong())
+            viewBinding.dailyWeatherImage.load(dailyWeather.weather[0].icon?.toIconUrl())
+            viewBinding.dailyWeatherTempMax.text = dailyWeather.temp.max.toFromKelvinToCelsius().toInt().toString()
+            viewBinding.dailyWeatherTempMin.text = dailyWeather.temp.min.toFromKelvinToCelsius().toInt().toString()
+        }
+
+        private fun dateToMonthDay(dateTime: Long): String {
+            val df = SimpleDateFormat("M/dd")
+            val date = Date(dateTime * 1000)
+            return df.format(date)
+        }
+
+        private fun dateToDaysOfWeeks(dateTime: Long): String {
+            val dfYear = SimpleDateFormat("yyyy")
+            val dfMonth = SimpleDateFormat("MM")
+            val dfDay = SimpleDateFormat("dd")
+
+            val date = Date(dateTime * 1000)
+            val cal = Calendar.getInstance()
+            cal.set(
+                dfYear.format(date).toInt(),
+                dfMonth.format(date).toInt() - 1,
+                dfDay.format(date).toInt()
+            )
+            return when (cal.get(Calendar.DAY_OF_WEEK)) {
+                Calendar.SUNDAY -> "Sun"
+                Calendar.MONDAY -> "Mon"
+                Calendar.TUESDAY -> "The"
+                Calendar.WEDNESDAY -> "Wed"
+                Calendar.THURSDAY -> "Thu"
+                Calendar.FRIDAY -> "Fri"
+                Calendar.SATURDAY -> "Sat"
+                else -> ""
+            }
         }
     }
 }

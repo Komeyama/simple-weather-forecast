@@ -59,6 +59,10 @@ internal class DataWeatherRepository @Inject constructor(
         }.asFlow()
     }
 
+    override suspend fun dailyForecastContent(lat: Float, lon: Float): Flow<WeeklyForecastInfo> {
+        return suspend{ forecastApi.getWeeklyForecastFromLatLon(lat, lon) }.asFlow()
+    }
+
     override suspend fun forecastFavoriteCityContents(): Flow<List<ForecastInfo>> {
         val forecastInfoList: MutableList<ForecastInfo> = mutableListOf()
         return favoritePlaceDatabase.favoriteStateFlow().map { favoriteStateList ->

@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.komeyama.simple.weather.model.DetailForecastInfo
+import com.komeyama.simple.weather.model.WeeklyForecastInfo
 import com.komeyama.simple.weather.repository.ForecastRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import timber.log.Timber
 
 class DetailForecastViewModel @AssistedInject constructor(
     @Assisted private val cityId: String,
@@ -23,8 +23,10 @@ class DetailForecastViewModel @AssistedInject constructor(
         )
     }
 
-    fun dummyLatLong() {
-        Timber.d("lat lon: %s %s", cityLat, cityLon)
+    val dailyForecastInfoLiveData: LiveData<WeeklyForecastInfo> = liveData {
+        emitSource(
+            weatherRepository.dailyForecastContent(cityLat, cityLon).asLiveData()
+        )
     }
 
     @AssistedInject.Factory
