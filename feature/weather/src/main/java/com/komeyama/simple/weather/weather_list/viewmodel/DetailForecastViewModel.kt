@@ -1,14 +1,12 @@
 package com.komeyama.simple.weather.weather_list.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.komeyama.simple.weather.model.DetailForecastInfo
 import com.komeyama.simple.weather.model.WeeklyForecastInfo
 import com.komeyama.simple.weather.repository.ForecastRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
+import kotlinx.coroutines.launch
 
 class DetailForecastViewModel @AssistedInject constructor(
     @Assisted private val cityId: String,
@@ -23,10 +21,25 @@ class DetailForecastViewModel @AssistedInject constructor(
         )
     }
 
+    fun hasLatLong(): Boolean {
+        if (cityLat == 0F && cityLon == 0F) {
+            return false
+        }
+        return true
+    }
+
     val dailyForecastInfoLiveData: LiveData<WeeklyForecastInfo> = liveData {
         emitSource(
             weatherRepository.dailyForecastContent(cityLat, cityLon).asLiveData()
         )
+    }
+
+    fun dailyForecastInfoLiveDataWithLatLon(lat: Float, lon: Float): LiveData<WeeklyForecastInfo>? {
+        var weeklyForecastInfo : LiveData<WeeklyForecastInfo>? = null
+        viewModelScope.launch {
+            weeklyForecastInfo = weatherRepository.dailyForecastContent(lat, lon).asLiveData()
+        }
+        return weeklyForecastInfo
     }
 
     @AssistedInject.Factory

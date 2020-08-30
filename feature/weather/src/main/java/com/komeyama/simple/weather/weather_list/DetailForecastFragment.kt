@@ -25,7 +25,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.detail_forecast.*
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -59,9 +58,12 @@ class DetailForecastFragment : DaggerFragment() {
         forecast_three_hours_weather_recycler_view.adapter = groupAdapter
         val section = Section()
 
+        val dailyWeatherGroupAdapter = GroupAdapter<GroupieViewHolder<*>>()
+        forecast_daily_weather_recycler_view.adapter = dailyWeatherGroupAdapter
+        val dailyWeatherSection = Section()
+
         detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
             Observer {
-                Timber.d("detail forecast data %s", it)
                 detail_today_weather_image.load(it.list[0].weather[0].icon?.toIconUrl())
                 detail_today_weather_main.text = it.list[0].weather[0].main
                 detail_today_temp.text =
@@ -73,20 +75,41 @@ class DetailForecastFragment : DaggerFragment() {
                 section.update(it.list.map { detailWeatherInfo ->
                     ForecastContentItem(detailWeatherInfo)
                 })
+
+                /**
+                 *  Because longitude and latitude cannot be acquired by transitioning from search view.
+                 */
+                if (!detailForecastViewModel.hasLatLong()) {
+                    it.city.coord.let { coordInfo ->
+                        detailForecastViewModel.dailyForecastInfoLiveDataWithLatLon(
+                            coordInfo.lat!!,
+                            coordInfo.lon!!
+                        )?.observe(viewLifecycleOwner,
+                            Observer { weeklyForecastInfo ->
+                                dailyWeatherSection.update(weeklyForecastInfo.daily.map { dailyWeather ->
+                                    DailyWeatherContentItem(dailyWeather)
+                                })
+                            })
+                        dailyWeatherGroupAdapter.add(dailyWeatherSection)
+                    }
+
+                }
             })
         groupAdapter.add(section)
 
-        val dailyWeatherGroupAdapter = GroupAdapter<GroupieViewHolder<*>>()
-        forecast_daily_weather_recycler_view.adapter = dailyWeatherGroupAdapter
-        val dailyWeatherSection = Section()
-
-        detailForecastViewModel.dailyForecastInfoLiveData.observe(viewLifecycleOwner,
-            Observer {
-                dailyWeatherSection.update(it.daily.map { dailyWeather ->
-                    DailyWeatherContentItem(dailyWeather)
+        /**
+         * Used for transitions from other than search view.
+         */
+        if (detailForecastViewModel.hasLatLong()) {
+            detailForecastViewModel.dailyForecastInfoLiveData.observe(viewLifecycleOwner,
+                Observer {
+                    dailyWeatherSection.update(it.daily.map { dailyWeather ->
+                        DailyWeatherContentItem(dailyWeather)
+                    })
                 })
-            })
-        dailyWeatherGroupAdapter.add(dailyWeatherSection)
+            dailyWeatherGroupAdapter.add(dailyWeatherSection)
+        }
+
 
     }
 
@@ -124,8 +147,10 @@ class DetailForecastFragment : DaggerFragment() {
             viewBinding.dailyWeatherDate.text = dateToMonthDay(dailyWeather.dt.toLong())
             viewBinding.dailyWeatherDaysOfWeeks.text = dateToDaysOfWeeks(dailyWeather.dt.toLong())
             viewBinding.dailyWeatherImage.load(dailyWeather.weather[0].icon?.toIconUrl())
-            viewBinding.dailyWeatherTempMax.text = dailyWeather.temp.max.toFromKelvinToCelsius().toInt().toString()
-            viewBinding.dailyWeatherTempMin.text = dailyWeather.temp.min.toFromKelvinToCelsius().toInt().toString()
+            viewBinding.dailyWeatherTempMax.text =
+                dailyWeather.temp.max.toFromKelvinToCelsius().toInt().toString()
+            viewBinding.dailyWeatherTempMin.text =
+                dailyWeather.temp.min.toFromKelvinToCelsius().toInt().toString()
         }
 
         private fun dateToMonthDay(dateTime: Long): String {
