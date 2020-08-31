@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.weather_list
 
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -38,6 +39,8 @@ class WeatherListFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
+        val customTitle = requireActivity().findViewById<TextView>(R.id.custom_toolbar_title)
+        customTitle.text = ""
         return inflater.inflate(
             R.layout.weather_list,
             container,

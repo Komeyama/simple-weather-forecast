@@ -36,7 +36,11 @@
     <fragment
         android:id="@+id/detail_forecast"
         android:name="com.komeyama.simple.weather.weather_list.DetailForecastFragment"
-        android:label="" >
+        android:label="">
+        <argument
+            android:name="detailTitle"
+            android:defaultValue='""'
+            app:argType="string" />
         <argument
             android:name="cityId"
             android:defaultValue='""'

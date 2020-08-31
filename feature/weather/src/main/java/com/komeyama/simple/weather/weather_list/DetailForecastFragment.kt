@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -44,6 +46,9 @@ class DetailForecastFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).title = ""
+        requireActivity().findViewById<TextView>(R.id.custom_toolbar_title).text = navArgs.detailTitle
+
         return inflater.inflate(
             R.layout.detail_forecast,
             container,

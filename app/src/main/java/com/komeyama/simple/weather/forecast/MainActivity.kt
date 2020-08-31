@@ -1,12 +1,15 @@
 package com.komeyama.simple.weather.forecast
 
 import android.os.Bundle
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.forecast.ui.BottomNavigationBehavior
 import com.komeyama.simple.weather.weather_list.*
@@ -14,7 +17,6 @@ import com.komeyama.simple.weather.weather_list.di.AssistedInjectModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : DaggerAppCompatActivity() {
 
@@ -29,14 +31,16 @@ class MainActivity : DaggerAppCompatActivity() {
          */
         val navController =
             (supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment).navController
-        setupWithNavController(bottom_navigation_view, navController)
+        setupWithNavController(findViewById<BottomNavigationView>(R.id.bottom_navigation_view), navController)
+
+
 
         val layoutParams: CoordinatorLayout.LayoutParams =
-            bottom_navigation_view.layoutParams as CoordinatorLayout.LayoutParams
+            findViewById<BottomNavigationView>(R.id.bottom_navigation_view).layoutParams as CoordinatorLayout.LayoutParams
         bottomNavigationBehavior = BottomNavigationBehavior(this)
         layoutParams.behavior = bottomNavigationBehavior
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -44,7 +48,7 @@ class MainActivity : DaggerAppCompatActivity() {
             layoutParams.behavior
             bottomNavigationBehavior.scrolledDown = true
             bottomNavigationBehavior.scrolledUp = true
-            bottom_navigation_view.animate().translationY(0f)
+            (findViewById<BottomNavigationView>(R.id.bottom_navigation_view).animate().translationY(0f))
         }
 
     }

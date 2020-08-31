@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.weather_list
 
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -43,6 +44,8 @@ class SearchPlacesFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val customTitle = requireActivity().findViewById<TextView>(R.id.custom_toolbar_title)
+        customTitle.text = ""
         return inflater.inflate(
             R.layout.search_place,
             container,
@@ -73,7 +76,6 @@ class SearchPlacesFragment : DaggerFragment() {
                             Timber.d("forecast!! %s", cityName)
                             ForecastContentItem(
                                 cityName = cityName,
-                                //forecastImageUrl = forecastInfo.weather?.get(0)?.icon?.toIconUrl() ?: ""
                                 forecastImageUrl = ""
                             )
                         }
@@ -121,7 +123,8 @@ class SearchPlacesFragment : DaggerFragment() {
                         if (this != null) {
                             val navigateId =
                                 SearchPlacesFragmentDirections.actionSearchPlaceToDetailForecast(
-                                    cityId = this
+                                    cityId = this,
+                                    detailTitle = cityName
                                 )
                             Navigation.findNavController(v).navigate(navigateId)
                         }

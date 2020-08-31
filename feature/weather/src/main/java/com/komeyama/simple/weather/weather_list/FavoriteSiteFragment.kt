@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -39,6 +40,8 @@ class FavoritePlaceFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val customTitle = requireActivity().findViewById<TextView>(R.id.custom_toolbar_title)
+        customTitle.text = ""
         return inflater.inflate(
             R.layout.favorite_place,
             container,
@@ -112,7 +115,8 @@ class FavoritePlaceFragment : DaggerFragment() {
                                 FavoritePlaceFragmentDirections.actionFavoriteSiteToDetailForecast(
                                     cityId = this,
                                     cityLat = favoritePlaceTopContent.lat ?: 0.0F,
-                                    cityLon = favoritePlaceTopContent.lon ?: 0.0F
+                                    cityLon = favoritePlaceTopContent.lon ?: 0.0F,
+                                    detailTitle = favoritePlaceTopContent.cityName
                                 )
                             Navigation.findNavController(v).navigate(navigateId)
                         }
