@@ -16,6 +16,7 @@ import com.komeyama.simple.weather.core.extentions.assistedViewModels
 import com.komeyama.simple.weather.model.DailyWeather
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
+import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBindingImpl
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
@@ -150,10 +151,10 @@ class DetailForecastFragment : DaggerFragment() {
     }
 
     internal class DailyWeatherContentItem(private val dailyWeather: DailyWeather) :
-        BindableItem<ItemWeatherDailyBindingImpl>(dailyWeather.dt.hashCode().toLong()) {
+        BindableItem<ItemWeatherDailyBinding>(dailyWeather.dt.hashCode().toLong()) {
         override fun getLayout() = R.layout.item_weather_daily
 
-        override fun bind(viewBinding: ItemWeatherDailyBindingImpl, position: Int) {
+        override fun bind(viewBinding: ItemWeatherDailyBinding, position: Int) {
 
             viewBinding.dailyWeatherDate.text = timeStampToMonthDay(dailyWeather.dt.toLong())
             viewBinding.dailyWeatherDaysOfWeeks.text = timeStampToDaysOfWeeks(dailyWeather.dt.toLong())
