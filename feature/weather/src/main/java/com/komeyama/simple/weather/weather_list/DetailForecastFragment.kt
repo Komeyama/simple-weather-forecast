@@ -131,10 +131,16 @@ class DetailForecastFragment : DaggerFragment() {
             /**
              * TODO: time
              */
-            viewBinding.threeHoursWeatherTime.text = "9:00"
+            viewBinding.threeHoursWeatherTime.text = timeStampToTime(detailWeatherInfo.dt.toLong())
             viewBinding.threeHoursWeatherImage.load(detailWeatherInfo.weather[0].icon?.toIconUrl())
             viewBinding.threeHoursWeatherTemp.text =
                 detailWeatherInfo.main.temp.toFromKelvinToCelsius().toInt().toString()
+        }
+
+        private fun timeStampToTime(dateTime: Long): String {
+            val df = SimpleDateFormat("H:mm")
+            val date = Date(dateTime * 1000)
+            return df.format(date)
         }
     }
 
@@ -144,8 +150,8 @@ class DetailForecastFragment : DaggerFragment() {
 
         override fun bind(viewBinding: ItemWeatherDailyBindingImpl, position: Int) {
 
-            viewBinding.dailyWeatherDate.text = dateToMonthDay(dailyWeather.dt.toLong())
-            viewBinding.dailyWeatherDaysOfWeeks.text = dateToDaysOfWeeks(dailyWeather.dt.toLong())
+            viewBinding.dailyWeatherDate.text = timeStampToMonthDay(dailyWeather.dt.toLong())
+            viewBinding.dailyWeatherDaysOfWeeks.text = timeStampToDaysOfWeeks(dailyWeather.dt.toLong())
             viewBinding.dailyWeatherImage.load(dailyWeather.weather[0].icon?.toIconUrl())
             viewBinding.dailyWeatherTempMax.text =
                 dailyWeather.temp.max.toFromKelvinToCelsius().toInt().toString()
@@ -153,13 +159,13 @@ class DetailForecastFragment : DaggerFragment() {
                 dailyWeather.temp.min.toFromKelvinToCelsius().toInt().toString()
         }
 
-        private fun dateToMonthDay(dateTime: Long): String {
+        private fun timeStampToMonthDay(dateTime: Long): String {
             val df = SimpleDateFormat("M/dd")
             val date = Date(dateTime * 1000)
             return df.format(date)
         }
 
-        private fun dateToDaysOfWeeks(dateTime: Long): String {
+        private fun timeStampToDaysOfWeeks(dateTime: Long): String {
             val dfYear = SimpleDateFormat("yyyy")
             val dfMonth = SimpleDateFormat("MM")
             val dfDay = SimpleDateFormat("dd")
