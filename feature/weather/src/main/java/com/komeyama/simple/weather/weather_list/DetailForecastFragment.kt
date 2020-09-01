@@ -1,10 +1,9 @@
 package com.komeyama.simple.weather.weather_list
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -28,6 +27,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.detail_forecast.*
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -41,6 +41,11 @@ class DetailForecastFragment : DaggerFragment() {
     }
 
     private val navArgs: DetailForecastFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -115,7 +120,16 @@ class DetailForecastFragment : DaggerFragment() {
                 })
             dailyWeatherGroupAdapter.add(dailyWeatherSection)
         }
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.toolbar_favorite_meun, menu)
+        val favoriteButton = menu.findItem(R.id.detail_favorite_button)
+        favoriteButton.setOnMenuItemClickListener {
+            Timber.d("tap favorite button!")
+            false
+        }
 
     }
 
