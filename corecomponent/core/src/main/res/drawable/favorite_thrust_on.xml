@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/ic_baseline_favorite_24_01" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_02" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_03" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_04" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_05" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_06" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_07" android:duration="50" />
+    <item android:drawable="@drawable/ic_baseline_favorite_24_08" android:duration="50" />
+</animation-list>

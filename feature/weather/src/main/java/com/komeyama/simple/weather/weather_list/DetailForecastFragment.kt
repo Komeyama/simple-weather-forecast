@@ -1,9 +1,10 @@
 package com.komeyama.simple.weather.weather_list
 
+import android.graphics.drawable.Animatable
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.TextView
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -16,7 +17,6 @@ import com.komeyama.simple.weather.model.DailyWeather
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBinding
-import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBindingImpl
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
 import com.xwray.groupie.GroupAdapter
@@ -53,7 +53,8 @@ class DetailForecastFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().findViewById<Toolbar>(R.id.toolbar).title = ""
-        requireActivity().findViewById<TextView>(R.id.custom_toolbar_title).text = navArgs.detailTitle
+        requireActivity().findViewById<TextView>(R.id.custom_toolbar_title).text =
+            navArgs.detailTitle
 
         return inflater.inflate(
             R.layout.detail_forecast,
@@ -126,8 +127,22 @@ class DetailForecastFragment : DaggerFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_favorite_meun, menu)
         val favoriteButton = menu.findItem(R.id.detail_favorite_button)
+
+        var anim = (favoriteButton.icon as Animatable)
+        var tempCount = 0
         favoriteButton.setOnMenuItemClickListener {
             Timber.d("tap favorite button!")
+            anim.start()
+            Handler().postDelayed({
+                if (tempCount % 2 == 0) {
+                    val aa = favoriteButton.setIcon(R.drawable.favorite_thrust_off)
+                    anim = (aa.icon as Animatable)
+                } else {
+                    val aa = favoriteButton.setIcon(R.drawable.favorite_thrust_on)
+                    anim = (aa.icon as Animatable)
+                }
+                tempCount += 1
+            }, 400)
             false
         }
 
@@ -171,7 +186,8 @@ class DetailForecastFragment : DaggerFragment() {
         override fun bind(viewBinding: ItemWeatherDailyBinding, position: Int) {
 
             viewBinding.dailyWeatherDate.text = timeStampToMonthDay(dailyWeather.dt.toLong())
-            viewBinding.dailyWeatherDaysOfWeeks.text = timeStampToDaysOfWeeks(dailyWeather.dt.toLong())
+            viewBinding.dailyWeatherDaysOfWeeks.text =
+                timeStampToDaysOfWeeks(dailyWeather.dt.toLong())
             viewBinding.dailyWeatherImage.load(dailyWeather.weather[0].icon?.toIconUrl())
             viewBinding.dailyWeatherTempMax.text =
                 dailyWeather.temp.max.toFromKelvinToCelsius().toInt().toString()
