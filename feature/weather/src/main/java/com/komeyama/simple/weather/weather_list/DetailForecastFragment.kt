@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
+import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.DailyWeather
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
@@ -126,23 +127,31 @@ class DetailForecastFragment : DaggerFragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_favorite_meun, menu)
-        val favoriteButton = menu.findItem(R.id.detail_favorite_button)
 
+        val favoriteButton = menu.findItem(R.id.detail_favorite_button)
         var anim = (favoriteButton.icon as Animatable)
-        var tempCount = 0
-        favoriteButton.setOnMenuItemClickListener {
-            Timber.d("tap favorite button!")
-            anim.start()
-            Handler().postDelayed({
-                if (tempCount % 2 == 0) {
-                    val aa = favoriteButton.setIcon(R.drawable.favorite_thrust_off)
-                    anim = (aa.icon as Animatable)
-                } else {
-                    val aa = favoriteButton.setIcon(R.drawable.favorite_thrust_on)
-                    anim = (aa.icon as Animatable)
+
+        detailForecastViewModel.favoriteIdLiveData.observe(
+            viewLifecycleOwner,
+            Observer {
+                it.forEach { cityId ->
+                    anim = favoriteButton.setIcon(R.drawable.favorite_thrust_on).icon as Animatable
+                    if (cityId.conversionsInSpecialCases() == navArgs.cityId.conversionsInSpecialCases()) {
+                        anim = favoriteButton.setIcon(R.drawable.favorite_thrust_off).icon as Animatable
+                        return@Observer
+                    }
                 }
-                tempCount += 1
-            }, 400)
+            }
+        )
+
+        favoriteButton.setOnMenuItemClickListener {
+            CityIds.values()
+                .firstOrNull { it.id.conversionsInSpecialCases() == navArgs.cityId.conversionsInSpecialCases() }?.id.apply {
+                    this?.let { id ->
+                        detailForecastViewModel.favorite(id)
+                    }
+                }
+            anim.start()
             false
         }
 

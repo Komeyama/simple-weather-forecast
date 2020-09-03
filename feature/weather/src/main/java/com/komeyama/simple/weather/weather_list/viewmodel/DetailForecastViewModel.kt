@@ -7,6 +7,7 @@ import com.komeyama.simple.weather.repository.ForecastRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class DetailForecastViewModel @AssistedInject constructor(
     @Assisted private val cityId: String,
@@ -34,12 +35,27 @@ class DetailForecastViewModel @AssistedInject constructor(
         )
     }
 
+    val favoriteIdLiveData: LiveData<List<String>> = liveData {
+        emitSource(
+            weatherRepository.getFavoriteIds().asLiveData()
+        )
+    }
+
     fun dailyForecastInfoLiveDataWithLatLon(lat: Float, lon: Float): LiveData<WeeklyForecastInfo>? {
         var weeklyForecastInfo : LiveData<WeeklyForecastInfo>? = null
         viewModelScope.launch {
             weeklyForecastInfo = weatherRepository.dailyForecastContent(lat, lon).asLiveData()
         }
         return weeklyForecastInfo
+    }
+
+    fun favorite(favoriteId: String) {
+        viewModelScope.launch {
+            try {
+                weatherRepository.toggleFavorite(favoriteId)
+            } catch (e: Exception) {
+            }
+        }
     }
 
     @AssistedInject.Factory
