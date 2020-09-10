@@ -22,7 +22,7 @@ data class CurrentWeather (
     var pressure: Int,
     var humidity: Int,
     var dew_point: Float,
-    var uvi: Float,
+    var uvi: Float? = null,
     var clouds: Int,
     var visibility: Int,
     var wind_speed: Float,
@@ -45,8 +45,9 @@ data class DailyWeather (
     var weather: List<WeatherInfo>,
     var clouds: Int,
     var pop: Float,
-    var rain: Float? = null,
-    var uvi: Float
+    var uvi: Float? = null,
+    var rain: Float? = null
+
 )
 
 @Serializable
