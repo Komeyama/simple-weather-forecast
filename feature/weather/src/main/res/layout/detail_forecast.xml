@@ -2,7 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/dummy_bg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/detail_today_weather_forecast_top"
@@ -32,7 +33,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:contentDescription="@string/top_card_today_weather_image"
-                android:src="@color/colorWhite"
+                android:src="@drawable/weather_image_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/detail_today_weather_main"
                 app:layout_constraintHorizontal_chainStyle="packed"
