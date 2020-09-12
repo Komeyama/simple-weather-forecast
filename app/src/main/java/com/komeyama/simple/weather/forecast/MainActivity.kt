@@ -51,6 +51,8 @@ class MainActivity : DaggerAppCompatActivity() {
             (findViewById<BottomNavigationView>(R.id.bottom_navigation_view).animate().translationY(0f))
         }
 
+        window.statusBarColor = getColor(R.color.colorStatusBar_01)
+
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()

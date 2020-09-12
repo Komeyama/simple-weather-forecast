@@ -13,5 +13,6 @@
     <color name="colorBlack_t32">#32000000</color>
     <color name="colorBlack_t64">#64000000</color>
     <color name="colorBlack_tC8">#C8000000</color>
+    <color name="colorStatusBar_01">#598bd7</color>
     <color name="colorBottomNav_01">#84b8f7</color>
 </resources>
