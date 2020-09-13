@@ -17,6 +17,7 @@ import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.DailyWeather
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
+import com.komeyama.simple.weather.weather_list.databinding.ItemDateOfThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
@@ -66,6 +67,18 @@ class DetailForecastFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val groupDateAdapter = GroupAdapter<GroupieViewHolder<*>>()
+        date_of_three_hours_day_recycler_view.adapter = groupDateAdapter
+        val dateSection = Section()
+        dateSection.update(listOf(
+            DateOfThreeDaysWeatherItem(),
+            DateOfThreeDaysWeatherItem(),
+            DateOfThreeDaysWeatherItem(),
+            DateOfThreeDaysWeatherItem(),
+            DateOfThreeDaysWeatherItem()
+        ))
+        groupDateAdapter.add(dateSection)
 
         val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
         forecast_three_hours_weather_recycler_view.adapter = groupAdapter
@@ -164,6 +177,13 @@ class DetailForecastFragment : DaggerFragment() {
         return "http://openweathermap.org/img/wn/$this.png"
     }
 
+    internal class DateOfThreeDaysWeatherItem() : BindableItem<ItemDateOfThreeHoursBinding>(){
+        override fun getLayout() = R.layout.item_date_of_three_hours
+
+        override fun bind(viewBinding: ItemDateOfThreeHoursBinding, position: Int) {}
+
+    }
+
     internal class ForecastContentItem(
         private val detailWeatherInfo: DetailWeatherInfo
     ) : BindableItem<ItemWeatherThreeHoursBinding>(
@@ -179,6 +199,8 @@ class DetailForecastFragment : DaggerFragment() {
             viewBinding.threeHoursWeatherImage.load(detailWeatherInfo.weather[0].icon?.toIconUrl())
             viewBinding.threeHoursWeatherTemp.text =
                 detailWeatherInfo.main.temp.toFromKelvinToCelsius().toInt().toString()
+
+            Timber.d("pos: %s, time%s", position, timeStampToTime(detailWeatherInfo.dt.toLong()))
         }
 
         private fun timeStampToTime(dateTime: Long): String {
