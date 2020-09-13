@@ -2,7 +2,6 @@ package com.komeyama.simple.weather.weather_list
 
 import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.os.Handler
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -68,18 +67,32 @@ class DetailForecastFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /**
+         * date info of every three hours
+         */
         val groupDateAdapter = GroupAdapter<GroupieViewHolder<*>>()
         date_of_three_hours_day_recycler_view.adapter = groupDateAdapter
         val dateSection = Section()
-        dateSection.update(listOf(
-            DateOfThreeDaysWeatherItem(),
-            DateOfThreeDaysWeatherItem(),
-            DateOfThreeDaysWeatherItem(),
-            DateOfThreeDaysWeatherItem(),
-            DateOfThreeDaysWeatherItem()
-        ))
+        val dateInfo: MutableList<String> = mutableListOf()
+        detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
+            Observer {
+                it.list.map { detailWeatherInfo ->
+                    detailWeatherInfo.dt
+                    dateInfo.add(
+                        timeStampToMonthDay(detailWeatherInfo.dt.toLong()) + " (" + timeStampToDaysOfWeeks(
+                            detailWeatherInfo.dt.toLong()
+                        ) + ")"
+                    )
+                }
+                dateSection.update(dateInfo.distinct().map { datetime ->
+                    DateOfThreeDaysWeatherItem(datetime)
+                })
+            })
         groupDateAdapter.add(dateSection)
 
+        /**
+         *  weather info
+         */
         val groupAdapter = GroupAdapter<GroupieViewHolder<*>>()
         forecast_three_hours_weather_recycler_view.adapter = groupAdapter
         val section = Section()
@@ -150,7 +163,8 @@ class DetailForecastFragment : DaggerFragment() {
                 it.forEach { cityId ->
                     anim = favoriteButton.setIcon(R.drawable.favorite_thrust_on).icon as Animatable
                     if (cityId.conversionsInSpecialCases() == navArgs.cityId.conversionsInSpecialCases()) {
-                        anim = favoriteButton.setIcon(R.drawable.favorite_thrust_off).icon as Animatable
+                        anim =
+                            favoriteButton.setIcon(R.drawable.favorite_thrust_off).icon as Animatable
                         return@Observer
                     }
                 }
@@ -177,11 +191,14 @@ class DetailForecastFragment : DaggerFragment() {
         return "http://openweathermap.org/img/wn/$this.png"
     }
 
-    internal class DateOfThreeDaysWeatherItem() : BindableItem<ItemDateOfThreeHoursBinding>(){
+    internal class DateOfThreeDaysWeatherItem(
+        private val dateAndDaysOfWeeks: String
+    ) : BindableItem<ItemDateOfThreeHoursBinding>() {
         override fun getLayout() = R.layout.item_date_of_three_hours
 
-        override fun bind(viewBinding: ItemDateOfThreeHoursBinding, position: Int) {}
-
+        override fun bind(viewBinding: ItemDateOfThreeHoursBinding, position: Int) {
+            viewBinding.dateOfThreeHoursWeatherTime.text = dateAndDaysOfWeeks
+        }
     }
 
     internal class ForecastContentItem(
@@ -225,36 +242,42 @@ class DetailForecastFragment : DaggerFragment() {
             viewBinding.dailyWeatherTempMin.text =
                 dailyWeather.temp.min.toFromKelvinToCelsius().toInt().toString()
         }
+    }
+}
 
-        private fun timeStampToMonthDay(dateTime: Long): String {
-            val df = SimpleDateFormat("M/dd")
-            val date = Date(dateTime * 1000)
-            return df.format(date)
-        }
+/**
+ * TODO:
+ */
+private fun timeStampToMonthDay(dateTime: Long): String {
+    val df = SimpleDateFormat("M/dd")
+    val date = Date(dateTime * 1000)
+    return df.format(date)
+}
 
-        private fun timeStampToDaysOfWeeks(dateTime: Long): String {
-            val dfYear = SimpleDateFormat("yyyy")
-            val dfMonth = SimpleDateFormat("MM")
-            val dfDay = SimpleDateFormat("dd")
+/**
+ * TODO:
+ */
+private fun timeStampToDaysOfWeeks(dateTime: Long): String {
+    val dfYear = SimpleDateFormat("yyyy")
+    val dfMonth = SimpleDateFormat("MM")
+    val dfDay = SimpleDateFormat("dd")
 
-            val date = Date(dateTime * 1000)
-            val cal = Calendar.getInstance()
-            cal.set(
-                dfYear.format(date).toInt(),
-                dfMonth.format(date).toInt() - 1,
-                dfDay.format(date).toInt()
-            )
-            return when (cal.get(Calendar.DAY_OF_WEEK)) {
-                Calendar.SUNDAY -> "Sun"
-                Calendar.MONDAY -> "Mon"
-                Calendar.TUESDAY -> "The"
-                Calendar.WEDNESDAY -> "Wed"
-                Calendar.THURSDAY -> "Thu"
-                Calendar.FRIDAY -> "Fri"
-                Calendar.SATURDAY -> "Sat"
-                else -> ""
-            }
-        }
+    val date = Date(dateTime * 1000)
+    val cal = Calendar.getInstance()
+    cal.set(
+        dfYear.format(date).toInt(),
+        dfMonth.format(date).toInt() - 1,
+        dfDay.format(date).toInt()
+    )
+    return when (cal.get(Calendar.DAY_OF_WEEK)) {
+        Calendar.SUNDAY -> "Sun"
+        Calendar.MONDAY -> "Mon"
+        Calendar.TUESDAY -> "The"
+        Calendar.WEDNESDAY -> "Wed"
+        Calendar.THURSDAY -> "Thu"
+        Calendar.FRIDAY -> "Fri"
+        Calendar.SATURDAY -> "Sat"
+        else -> ""
     }
 }
 
