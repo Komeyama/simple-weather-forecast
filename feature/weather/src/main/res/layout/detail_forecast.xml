@@ -199,6 +199,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="scrollable"
+            app:tabIndicatorColor="@color/colorStatusBar_01"
             app:layout_constraintBottom_toTopOf="@+id/forecast_three_hours_weather_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

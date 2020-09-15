@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
@@ -71,7 +69,6 @@ class DetailForecastFragment : DaggerFragment() {
         /**
          * date info of every three hours
          */
-        val dateSection = Section()
         val dateInfo: MutableList<String> = mutableListOf()
         detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
             Observer {
@@ -208,7 +205,6 @@ class DetailForecastFragment : DaggerFragment() {
 
             Timber.d("pos: %s, time%s", position, timeStampToTime(detailWeatherInfo.dt.toLong()))
             if (position > 7 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "21:00") {
-                Timber.d("okokok")
 
             }
         }
