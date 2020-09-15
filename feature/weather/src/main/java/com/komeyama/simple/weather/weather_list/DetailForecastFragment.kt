@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.get
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
@@ -16,7 +18,6 @@ import com.komeyama.simple.weather.model.CityIds
 import com.komeyama.simple.weather.model.DailyWeather
 import com.komeyama.simple.weather.model.DetailWeatherInfo
 import com.komeyama.simple.weather.model.toFromKelvinToCelsius
-import com.komeyama.simple.weather.weather_list.databinding.ItemDateOfThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherDailyBinding
 import com.komeyama.simple.weather.weather_list.databinding.ItemWeatherThreeHoursBinding
 import com.komeyama.simple.weather.weather_list.viewmodel.DetailForecastViewModel
@@ -70,8 +71,6 @@ class DetailForecastFragment : DaggerFragment() {
         /**
          * date info of every three hours
          */
-        val groupDateAdapter = GroupAdapter<GroupieViewHolder<*>>()
-        date_of_three_hours_day_recycler_view.adapter = groupDateAdapter
         val dateSection = Section()
         val dateInfo: MutableList<String> = mutableListOf()
         detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
@@ -84,11 +83,11 @@ class DetailForecastFragment : DaggerFragment() {
                         ) + ")"
                     )
                 }
-                dateSection.update(dateInfo.distinct().map { datetime ->
-                    DateOfThreeDaysWeatherItem(datetime)
-                })
+                dateInfo.distinct().map { datetime ->
+                    date_tab_layout.addTab(date_tab_layout.newTab().setText(datetime))
+                }
             })
-        groupDateAdapter.add(dateSection)
+
 
         /**
          *  weather info
@@ -191,16 +190,6 @@ class DetailForecastFragment : DaggerFragment() {
         return "http://openweathermap.org/img/wn/$this.png"
     }
 
-    internal class DateOfThreeDaysWeatherItem(
-        private val dateAndDaysOfWeeks: String
-    ) : BindableItem<ItemDateOfThreeHoursBinding>() {
-        override fun getLayout() = R.layout.item_date_of_three_hours
-
-        override fun bind(viewBinding: ItemDateOfThreeHoursBinding, position: Int) {
-            viewBinding.dateOfThreeHoursWeatherTime.text = dateAndDaysOfWeeks
-        }
-    }
-
     internal class ForecastContentItem(
         private val detailWeatherInfo: DetailWeatherInfo
     ) : BindableItem<ItemWeatherThreeHoursBinding>(
@@ -218,6 +207,10 @@ class DetailForecastFragment : DaggerFragment() {
                 detailWeatherInfo.main.temp.toFromKelvinToCelsius().toInt().toString()
 
             Timber.d("pos: %s, time%s", position, timeStampToTime(detailWeatherInfo.dt.toLong()))
+            if (position > 7 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "21:00") {
+                Timber.d("okokok")
+
+            }
         }
 
         private fun timeStampToTime(dateTime: Long): String {
