@@ -2,6 +2,7 @@ package com.komeyama.simple.weather.weather_list
 
 import android.graphics.drawable.Animatable
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -10,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import coil.api.load
+import com.google.android.material.tabs.TabLayout
 import com.komeyama.simple.weather.core.di.PageScope
 import com.komeyama.simple.weather.core.extentions.assistedViewModels
 import com.komeyama.simple.weather.model.CityIds
@@ -83,7 +85,8 @@ class DetailForecastFragment : DaggerFragment() {
                 dateInfo.distinct().map { datetime ->
                     date_tab_layout.addTab(date_tab_layout.newTab().setText(datetime))
                 }
-            })
+            }
+        )
 
 
         /**
@@ -108,7 +111,7 @@ class DetailForecastFragment : DaggerFragment() {
                 detail_today_temp_min_value.text =
                     it.list[0].main.temp_min.toFromKelvinToCelsius().toInt().toString()
                 section.update(it.list.map { detailWeatherInfo ->
-                    ForecastContentItem(detailWeatherInfo)
+                    ForecastContentItem(detailWeatherInfo, date_tab_layout)
                 })
 
                 /**
@@ -188,25 +191,37 @@ class DetailForecastFragment : DaggerFragment() {
     }
 
     internal class ForecastContentItem(
-        private val detailWeatherInfo: DetailWeatherInfo
+        private val detailWeatherInfo: DetailWeatherInfo,
+        private val tabLayout: TabLayout
     ) : BindableItem<ItemWeatherThreeHoursBinding>(
         detailWeatherInfo.dt_txt.hashCode().toLong()
     ) {
+        companion object {
+            var count = 0
+            var currentPos = 0
+        }
         override fun getLayout() = R.layout.item_weather_three_hours
 
         override fun bind(viewBinding: ItemWeatherThreeHoursBinding, position: Int) {
-            /**
-             * TODO: time
-             */
             viewBinding.threeHoursWeatherTime.text = timeStampToTime(detailWeatherInfo.dt.toLong())
             viewBinding.threeHoursWeatherImage.load(detailWeatherInfo.weather[0].icon?.toIconUrl())
             viewBinding.threeHoursWeatherTemp.text =
                 detailWeatherInfo.main.temp.toFromKelvinToCelsius().toInt().toString()
 
-            Timber.d("pos: %s, time%s", position, timeStampToTime(detailWeatherInfo.dt.toLong()))
-            if (position > 7 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "21:00") {
+            /**
+             * TODO：refactor
+             */
+            Timber.d("pos: %s, time: %s curretpos: %s %s", position, timeStampToTime(detailWeatherInfo.dt.toLong()), currentPos, viewBinding.root)
+            if (currentPos < position && ((position + 1) % 4) == 0 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "12:00") {
+                count += 1
 
+            } else if (currentPos > position && ((position + 1) % 4) == 0 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "12:00") {
+                count -= 1
             }
+            Handler().postDelayed(
+                { tabLayout.getTabAt(count - 1)?.select() }, 300
+            )
+            currentPos = position
         }
 
         private fun timeStampToTime(dateTime: Long): String {
