@@ -199,7 +199,9 @@ class DetailForecastFragment : DaggerFragment() {
         companion object {
             var count = 0
             var currentPos = 0
+            var twelvePosition = -1
         }
+
         override fun getLayout() = R.layout.item_weather_three_hours
 
         override fun bind(viewBinding: ItemWeatherThreeHoursBinding, position: Int) {
@@ -211,15 +213,31 @@ class DetailForecastFragment : DaggerFragment() {
             /**
              * TODO：refactor
              */
-            Timber.d("pos: %s, time: %s curretpos: %s %s", position, timeStampToTime(detailWeatherInfo.dt.toLong()), currentPos, viewBinding.root)
-            if (currentPos < position && ((position + 1) % 4) == 0 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "12:00") {
+            if (twelvePosition == -1 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "12:00") {
+                twelvePosition =  4 - position
+            }
+
+            Timber.d(
+                "pos: %s, time: %s curretpos: %s %s",
+                position,
+                timeStampToTime(detailWeatherInfo.dt.toLong()),
+                currentPos,
+                viewBinding.root
+            )
+            if (currentPos < position && ((position + twelvePosition) % 4) == 0 && timeStampToTime(
+                    detailWeatherInfo.dt.toLong()
+                ) == "12:00"
+            ) {
                 count += 1
 
-            } else if (currentPos > position && ((position + 1) % 4) == 0 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "12:00") {
+            } else if (currentPos > position && ((position + twelvePosition) % 4) == 0 && timeStampToTime(
+                    detailWeatherInfo.dt.toLong()
+                ) == "12:00"
+            ) {
                 count -= 1
             }
             Handler().postDelayed(
-                { tabLayout.getTabAt(count - 1)?.select() }, 300
+                { tabLayout.getTabAt(count - 1)?.select() }, 100
             )
             currentPos = position
         }
