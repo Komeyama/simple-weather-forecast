@@ -100,6 +100,7 @@ class DetailForecastFragment : DaggerFragment() {
         forecast_daily_weather_recycler_view.adapter = dailyWeatherGroupAdapter
         val dailyWeatherSection = Section()
 
+        initForecastContentItem()
         detailForecastViewModel.detailForecastInfoLiveData.observe(viewLifecycleOwner,
             Observer {
                 detail_today_weather_image.load(it.list[0].weather[0].icon?.toIconUrl())
@@ -183,6 +184,12 @@ class DetailForecastFragment : DaggerFragment() {
 
     }
 
+    private fun initForecastContentItem() {
+        ForecastContentItem.currentPos = 0
+        ForecastContentItem.twelvePosition = -1
+        ForecastContentItem.count = 0
+    }
+
     /**
      * TODO: fix emergency
      */
@@ -218,11 +225,12 @@ class DetailForecastFragment : DaggerFragment() {
             }
 
             Timber.d(
-                "pos: %s, time: %s curretpos: %s %s",
+                "pos: %s, time: %s currentPos %s, twelvePos %s, count %s",
                 position,
                 timeStampToTime(detailWeatherInfo.dt.toLong()),
                 currentPos,
-                viewBinding.root
+                twelvePosition,
+                count
             )
             if (currentPos < position && ((position + twelvePosition) % 4) == 0 && timeStampToTime(
                     detailWeatherInfo.dt.toLong()
