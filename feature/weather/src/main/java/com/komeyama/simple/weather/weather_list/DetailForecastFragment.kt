@@ -221,7 +221,7 @@ class DetailForecastFragment : DaggerFragment() {
              * TODO：refactor
              */
             if (twelvePosition == -1 && timeStampToTime(detailWeatherInfo.dt.toLong()) == "12:00") {
-                twelvePosition =  4 - position
+                twelvePosition = 4 - position
             }
 
             Timber.d(
@@ -232,6 +232,12 @@ class DetailForecastFragment : DaggerFragment() {
                 twelvePosition,
                 count
             )
+            if (twelvePosition == -1 && position < 4 && timeStampToTime(
+                    detailWeatherInfo.dt.toLong()
+                ) == "0:00"
+            ) {
+                count += 1
+            }
             if (currentPos < position && ((position + twelvePosition) % 4) == 0 && timeStampToTime(
                     detailWeatherInfo.dt.toLong()
                 ) == "12:00"
