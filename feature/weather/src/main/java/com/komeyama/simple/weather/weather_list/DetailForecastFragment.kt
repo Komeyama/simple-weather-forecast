@@ -88,6 +88,15 @@ class DetailForecastFragment : DaggerFragment() {
             }
         )
 
+        date_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                Timber.d("tap tab: %s", p0?.position)
+            }
+        })
 
         /**
          *  weather info
