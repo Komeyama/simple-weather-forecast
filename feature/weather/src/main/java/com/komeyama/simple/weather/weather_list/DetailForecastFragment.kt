@@ -94,7 +94,7 @@ class DetailForecastFragment : DaggerFragment() {
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                Timber.d("tap tab: %s", p0?.position)
+                if (ForecastContentItem.twelvePosition != -1) {}
             }
         })
 
@@ -241,12 +241,7 @@ class DetailForecastFragment : DaggerFragment() {
                 twelvePosition,
                 count
             )
-            if (twelvePosition == -1 && position < 4 && timeStampToTime(
-                    detailWeatherInfo.dt.toLong()
-                ) == "0:00"
-            ) {
-                count += 1
-            }
+
             if (currentPos < position && ((position + twelvePosition) % 4) == 0 && timeStampToTime(
                     detailWeatherInfo.dt.toLong()
                 ) == "12:00"
@@ -260,7 +255,10 @@ class DetailForecastFragment : DaggerFragment() {
                 count -= 1
             }
             Handler().postDelayed(
-                { tabLayout.getTabAt(count - 1)?.select() }, 100
+                {
+                    tabLayout.isSmoothScrollingEnabled = true
+                    tabLayout.setScrollPosition(count - 1, 0f, true)
+                }, 100
             )
             currentPos = position
         }
