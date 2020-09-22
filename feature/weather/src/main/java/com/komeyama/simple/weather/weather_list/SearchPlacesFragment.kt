@@ -76,7 +76,8 @@ class SearchPlacesFragment : DaggerFragment() {
                             Timber.d("forecast!! %s", cityName)
                             ForecastContentItem(
                                 cityName = cityName,
-                                forecastImageUrl = ""
+                                forecastImageUrl = "",
+                                viewModel = searchPlacesViewModel
                             )
                         }
                     }
@@ -110,7 +111,8 @@ class SearchPlacesFragment : DaggerFragment() {
 
     internal data class ForecastContentItem(
         private val cityName: String,
-        private val forecastImageUrl: String?
+        private val forecastImageUrl: String?,
+        private val viewModel: SearchPlacesViewModel
     ) : BindableItem<ItemPlaceNameBinding>() {
         override fun getLayout() = R.layout.item_place_name
 
@@ -121,6 +123,7 @@ class SearchPlacesFragment : DaggerFragment() {
                 CityIds.values()
                     .firstOrNull { it.id.conversionsInSpecialCases() == cityName.conversionsInSpecialCases() }?.id.apply {
                         if (this != null) {
+                            viewModel.refreshRepository(this)
                             val navigateId =
                                 SearchPlacesFragmentDirections.actionSearchPlaceToDetailForecast(
                                     cityId = this,
