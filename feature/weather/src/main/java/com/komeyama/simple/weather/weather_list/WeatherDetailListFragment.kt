@@ -26,7 +26,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.weather_detail_list.*
-import kotlinx.android.synthetic.main.weather_detail_list.progress_bar
 import javax.inject.Inject
 
 class WeatherDetailListFragment : DaggerFragment() {
@@ -61,16 +60,16 @@ class WeatherDetailListFragment : DaggerFragment() {
         val section = Section()
         section.setHeader(HeaderItem())
 
-        progress_bar.visibility = View.VISIBLE
+        detail_progress_bar.visibility = View.VISIBLE
         weatherDetailListViewModel.detailListUiData.observe(
             viewLifecycleOwner,
             Observer { forecastInfoList ->
-                progress_bar.visibility = View.GONE
                 forecastInfoList.subPageContents.map {
                     if (it.cityName == "") {
                         return@Observer
                     }
                 }
+                detail_progress_bar.visibility = View.GONE
                 section.update(forecastInfoList.subPageContents.map { subPageContent ->
                     ForecastContentItem(
                         weatherDetailListViewModel,
