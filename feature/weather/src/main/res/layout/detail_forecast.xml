@@ -50,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/top_card_today_weather_name"
+                    android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/detail_today_weather_image"
@@ -94,8 +95,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="⚪︎"
-                        android:textStyle="bold"
                         android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_max_top"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="max"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_min_notation"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -127,6 +129,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:text="--"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toTopOf="@+id/detail_today_temp_min_value"
                             app:layout_constraintEnd_toStartOf="@+id/detail_today_temp_max_unit"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -150,6 +153,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="min"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_max_notation" />
@@ -159,6 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="--"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/detail_today_temp_min_unit"
                             app:layout_constraintTop_toBottomOf="@+id/detail_today_temp_max_value" />
@@ -238,10 +243,10 @@
                 android:id="@+id/forecast_daily_weather_footer"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                app:layout_constraintTop_toBottomOf="@+id/forecast_daily_weather_recycler_view"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/forecast_daily_weather_recycler_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
