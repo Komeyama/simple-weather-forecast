@@ -4,6 +4,7 @@ import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LifecycleOwner
@@ -85,6 +86,8 @@ class DetailForecastFragment : DaggerFragment() {
                 dateInfo.distinct().map { datetime ->
                     date_tab_layout.addTab(date_tab_layout.newTab().setText(datetime))
                 }
+                val touchableList = date_tab_layout?.touchables
+                touchableList?.forEach { t -> t.isEnabled = false }
             }
         )
 
@@ -94,7 +97,8 @@ class DetailForecastFragment : DaggerFragment() {
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                if (ForecastContentItem.twelvePosition != -1) {}
+                if (ForecastContentItem.twelvePosition != -1) {
+                }
             }
         })
 
