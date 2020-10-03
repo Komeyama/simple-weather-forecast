@@ -86,6 +86,7 @@ class DetailForecastFragment : DaggerFragment() {
                 dateInfo.distinct().map { datetime ->
                     date_tab_layout.addTab(date_tab_layout.newTab().setText(datetime))
                 }
+                // TODO: I will be able to integrate with RecycleView in the future.
                 val touchableList = date_tab_layout?.touchables
                 touchableList?.forEach { t -> t.isEnabled = false }
             }
