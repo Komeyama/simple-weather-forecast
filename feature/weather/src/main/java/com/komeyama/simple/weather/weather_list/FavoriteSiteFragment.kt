@@ -110,7 +110,7 @@ class FavoritePlaceFragment : DaggerFragment() {
             }
 
         })
-        itemTouchHelper.attachToRecyclerView(forecast_favorite_place_recycler_view)
+        itemTouchHelper.attachToRecyclerView(forecast_favorite_place_recycler_viewa )
     }
 
     internal data class ForecastContentItem(
