@@ -9,6 +9,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.komeyama.simple.weather.core.extentions.assistedActivityViewModels
 import com.komeyama.simple.weather.model.CityIds
@@ -34,6 +36,8 @@ class FavoritePlaceFragment : DaggerFragment() {
     private val favoriteSiteViewModel: FavoriteSiteViewModel by assistedActivityViewModels {
         favoriteSiteViewModelProvider.get()
     }
+
+    private var previewViewHolder: RecyclerView.ViewHolder? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +79,38 @@ class FavoritePlaceFragment : DaggerFragment() {
                 })
             })
         groupAdapter.add(section)
+
+
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPosition = viewHolder.adapterPosition
+                val toPosition = target.adapterPosition
+                forecast_favorite_place_recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
+
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+                when(actionState) {
+                    2 -> {
+                        previewViewHolder = viewHolder
+                        viewHolder?.itemView?.alpha = 0.5f
+                    }
+                    else -> previewViewHolder?.itemView?.alpha = 1f
+                }
+            }
+
+        })
+        itemTouchHelper.attachToRecyclerView(forecast_favorite_place_recycler_view)
     }
 
     internal data class ForecastContentItem(
