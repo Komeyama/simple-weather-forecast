@@ -82,7 +82,7 @@ class FavoritePlaceFragment : DaggerFragment() {
 
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.UP or ItemTouchHelper.DOWN) {
             override fun onMove(
                 recyclerView: RecyclerView,
