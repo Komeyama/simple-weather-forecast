@@ -26,6 +26,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.favorite_place.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -91,7 +92,10 @@ class FavoritePlaceFragment : DaggerFragment() {
             ): Boolean {
                 val fromPosition = viewHolder.adapterPosition
                 val toPosition = target.adapterPosition
-                forecast_favorite_place_recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
+
+                if (toPosition != 0) {
+                    forecast_favorite_place_recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
+                }
 
                 return true
             }
