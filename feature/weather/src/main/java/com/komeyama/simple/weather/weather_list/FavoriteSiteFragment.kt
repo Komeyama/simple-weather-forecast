@@ -26,6 +26,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.favorite_place.*
+import kotlinx.android.synthetic.main.item_forecast_favorite_place_content.view.*
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
@@ -84,7 +85,8 @@ class FavoritePlaceFragment : DaggerFragment() {
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN) {
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -94,7 +96,21 @@ class FavoritePlaceFragment : DaggerFragment() {
                 val toPosition = target.adapterPosition
 
                 if (toPosition != 0) {
-                    forecast_favorite_place_recycler_view.adapter?.notifyItemMoved(fromPosition, toPosition)
+
+                    CityIds.values()
+                        .firstOrNull {
+                            it.id.conversionsInSpecialCases() == target.itemView.rootView.top_card_favorite_place_text.text.toString()
+                                .conversionsInSpecialCases()
+                        }?.id.apply {
+                            this?.let { id ->
+                                // TODO: database update process
+                            }
+                        }
+
+                    forecast_favorite_place_recycler_view.adapter?.notifyItemMoved(
+                        fromPosition,
+                        toPosition
+                    )
                 }
 
                 return true
@@ -104,7 +120,7 @@ class FavoritePlaceFragment : DaggerFragment() {
 
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
-                when(actionState) {
+                when (actionState) {
                     2 -> {
                         previewViewHolder = viewHolder
                         viewHolder?.itemView?.alpha = 0.5f
