@@ -23,5 +23,6 @@
     <string name="weather_detail_list_title">"Today's weather"</string>
     <string name="weather_list">weather list</string>
     <string name="weather_list_title">"Today's weather"</string>
+    <string name="search_hint_title">Search…</string>
 
 </resources>

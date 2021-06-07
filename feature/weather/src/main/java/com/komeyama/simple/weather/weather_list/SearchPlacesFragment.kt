@@ -1,8 +1,10 @@
 package com.komeyama.simple.weather.weather_list
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -22,7 +24,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.search_place.*
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -72,14 +73,11 @@ class SearchPlacesFragment : DaggerFragment() {
                  */
                 section.update(
                     it.searchResult.forecastInfo.map { forecastInfo ->
-                        forecastInfo.id.let { cityName ->
-                            Timber.d("forecast!! %s", cityName)
-                            ForecastContentItem(
-                                cityName = cityName,
-                                forecastImageUrl = "",
-                                viewModel = searchPlacesViewModel
-                            )
-                        }
+                        ForecastContentItem(
+                            cityName = forecastInfo.id,
+                            forecastImageUrl = "",
+                            viewModel = searchPlacesViewModel
+                        )
                     }
                 )
             }
@@ -91,6 +89,7 @@ class SearchPlacesFragment : DaggerFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.toolbar_search_menu, menu)
         val searchView = menu.findItem(R.id.search_view).actionView as SearchView
+        searchView.queryHint = activity?.getString(R.string.search_hint_title)
         searchView.isIconified = false
         searchView.clearFocus()
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
