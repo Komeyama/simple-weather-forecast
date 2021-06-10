@@ -1,5 +1,4 @@
 import dependencies.Dep
-import java.util.Properties
 
 plugins {
     id("com.android.library")
@@ -7,6 +6,7 @@ plugins {
     id("kotlin-android-extensions")
     id("kotlin-kapt")
     id("kotlinx-serialization")
+    id("com.google.secrets_gradle_plugin") version "0.6"
 }
 
 android {
@@ -20,14 +20,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        /**
-         * TODO
-         */
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-        val API_KEY = properties.getProperty("api_key")
-        buildConfigField("String", "API_KEY", "\"${API_KEY}\"")
     }
 
     buildTypes {

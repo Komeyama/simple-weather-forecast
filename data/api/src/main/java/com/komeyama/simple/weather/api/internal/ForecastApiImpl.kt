@@ -41,7 +41,7 @@ internal class ForecastApiImpl @Inject constructor(
      */
     override suspend fun getForecastListFromLatLon(lat: Float, lon: Float): ForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("${API_BASE_URL}/weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
+            url("${API_BASE_URL}/weather?lat=${lat}&lon=${lon}&APPID=${BuildConfig.apiKey}")
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)
@@ -49,7 +49,7 @@ internal class ForecastApiImpl @Inject constructor(
 
     override suspend fun getForecastListFromName(name: String): ForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("${API_BASE_URL}/weather?q=${name}&APPID=${BuildConfig.API_KEY}")
+            url("${API_BASE_URL}/weather?q=${name}&APPID=${BuildConfig.apiKey}")
             accept(ContentType.Application.Json)
         }
         return json.parse(ForecastInfo.serializer(), rawResponse)
@@ -57,7 +57,7 @@ internal class ForecastApiImpl @Inject constructor(
 
     override suspend fun getDetailForecastListFromName(name: String): DetailForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("${API_BASE_URL}/forecast?q=${name}&APPID=${BuildConfig.API_KEY}")
+            url("${API_BASE_URL}/forecast?q=${name}&APPID=${BuildConfig.apiKey}")
             accept(ContentType.Application.Json)
         }
         return json.parse(DetailForecastInfo.serializer(), rawResponse)
@@ -65,7 +65,7 @@ internal class ForecastApiImpl @Inject constructor(
 
     override suspend fun getWeeklyForecastFromLatLon(lat: Float, lon: Float): WeeklyForecastInfo {
         val rawResponse = httpClient.get<String> {
-            url("${API_BASE_URL}/onecall?lat=${lat}&lon=${lon}&APPID=${BuildConfig.API_KEY}")
+            url("${API_BASE_URL}/onecall?lat=${lat}&lon=${lon}&APPID=${BuildConfig.apiKey}")
             accept(ContentType.Application.Json)
         }
         return json.parse(WeeklyForecastInfo.serializer(), rawResponse)
