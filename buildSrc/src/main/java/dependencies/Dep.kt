@@ -3,7 +3,7 @@ package dependencies
 object Dep {
 
     object GradlePlugin {
-        val android = "com.android.tools.build:gradle:4.0.0"
+        val android = "com.android.tools.build:gradle:4.1.3"
         val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
         val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${AndroidX.Navigation.version}"

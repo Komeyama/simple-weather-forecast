@@ -1,8 +1,0 @@
-include 'data:model'
-include 'data:repository'
-include 'data:db'
-include 'data:api'
-include 'corecomponent:core'
-include 'feature:weather'
-include ':app'
-rootProject.name = "simple-weather-forecast"
