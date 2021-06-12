@@ -1,5 +1,6 @@
 # Simple Weather app
-A simple weather app for Android. Weather forecast data is gathered from [OpenWeatherMap](https://openweathermap.org/).
+This is a simple Japanese weather forecast app for Android. 
+Weather forecast data is gathered from [OpenWeatherMap](https://openweathermap.org/).
 The purpose of this repository is to learn about the modern architecture and libraries of Android app development. 
 Referring to [conference-app-2020](https://github.com/DroidKaigi/conference-app-2020).
 
