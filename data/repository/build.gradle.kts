@@ -20,6 +20,10 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildTypes {
         getByName("release") {
             minifyEnabled(false)
@@ -53,5 +57,6 @@ dependencies {
     testImplementation(Dep.Test.junit)
     androidTestImplementation(Dep.Test.extJunit)
     androidTestImplementation(Dep.Test.espressoCore)
-
+    testImplementation(Dep.Test.Mockk.mockk)
+    testImplementation(Dep.Test.Coroutines.coroutines)
 }

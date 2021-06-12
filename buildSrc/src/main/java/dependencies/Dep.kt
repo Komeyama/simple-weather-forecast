@@ -88,5 +88,15 @@ object Dep {
         val junit = "junit:junit:4.12"
         val extJunit = "androidx.test.ext:junit:1.1.1"
         val espressoCore = "androidx.test.espresso:espresso-core:3.2.0"
+
+        object Mockk {
+            val version = "1.11.0"
+            val mockk = "io.mockk:mockk:$version"
+        }
+
+        object Coroutines {
+            val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Kotlin.Coroutines.version}"
+        }
+
     }
 }

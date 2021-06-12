@@ -10,11 +10,10 @@ import dagger.Module
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class DataWeatherRepository @Inject constructor(
+internal class DataForecastRepository @Inject constructor(
     private val favoritePlaceDatabase: FavoritePlaceDatabase,
     private val forecastApi: ForecastApi,
     private val forecastInfoDatabase: ForecastInfoDatabase
@@ -59,6 +58,7 @@ internal class DataWeatherRepository @Inject constructor(
         }.asFlow()
     }
 
+    @FlowPreview
     override suspend fun dailyForecastContent(lat: Float, lon: Float): Flow<WeeklyForecastInfo> {
         return suspend{ forecastApi.getWeeklyForecastFromLatLon(lat, lon) }.asFlow()
     }
@@ -88,5 +88,5 @@ internal class DataWeatherRepository @Inject constructor(
 internal abstract class RepositoryModule {
 
     @Binds
-    abstract fun forecastRepository(impl: DataWeatherRepository): ForecastRepository
+    abstract fun forecastRepository(impl: DataForecastRepository): ForecastRepository
 }
